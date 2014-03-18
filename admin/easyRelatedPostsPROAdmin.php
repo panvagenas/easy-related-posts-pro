@@ -1,5 +1,5 @@
 <?php
-
+namespace admin;
 /**
  * Easy related posts PRO.
  *
