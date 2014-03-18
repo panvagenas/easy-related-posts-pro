@@ -1,7 +1,7 @@
 <?php
 
 namespace display;
-
+use \display\erpPROTemplates;
 /**
  *
  * @author Vagenas Panagiotis <pan.vagenas@gmail.com>

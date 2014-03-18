@@ -47,8 +47,8 @@ if ( !defined( 'ERP_PRO_RELATIVE_TABLE' ) ) {
 if ( !class_exists( 'erpPRODefaults' ) ) {
 	require_once EPR_PRO_BASE_PATH . 'core/options/defaults.php';
 }
-if ( !class_exists( 'erpPROHelper' ) ) {
-	require_once EPR_PRO_BASE_PATH . 'core/helpers/helper.php';
+if ( !class_exists( 'erpPROPaths' ) ) {
+	require_once EPR_PRO_BASE_PATH . 'core/helpers/erpPROPaths.php';
 }
 
 /*----------------------------------------------------------------------------*
@@ -98,11 +98,9 @@ add_action( 'widgets_init', function (){register_widget( "erpPROWidget" );} );
  * Dashboard and Administrative Functionality
  *----------------------------------------------------------------------------*/
 
-/*
- *
+/**
  */
 if ( is_admin() ) {
-
 	require_once( plugin_dir_path( __FILE__ ) . 'admin/easyRelatedPostsPROAdmin.php' );
 	add_action( 'plugins_loaded', array( 'easyRelatedPostsPROAdmin', 'get_instance' ) );
 }

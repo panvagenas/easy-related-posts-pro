@@ -1,26 +1,53 @@
 <?php
 
 namespace display;
+use \display\erpPROTemplates;
+/**
+ * Easy related posts PRO.
+ *
+ * @package   Easy_Related_Posts_Core_display
+ * @author    Your Name <email@example.com>
+ * @license   GPL-2.0+
+ * @link      http://example.com
+ * @copyright 2014 Your Name or Company Name
+ */
 
 /**
+ * Main plugin templates class
  *
- * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+ * @package Easy_Related_Posts_Core_display
+ * @author Your Name <email@example.com>
  */
 class erpPROMainTemplates extends erpPROTemplates {
-	// TODO - Insert your code here
+	public static $supressOthers = false;
 
 	/**
 	 */
 	function __construct( ) {
-
-		// TODO - Insert your code here
+		parent::__construct();
 	}
 
 	/**
 	 */
 	function __destruct( ) {
-
-		// TODO - Insert your code here
+		parent::__destruct();
+	}
+	/**
+	 * (non-PHPdoc)
+	 * @see \display\erpPROTemplates::display()
+	 * @since 1.0.0
+	 */
+	public function display(WP_Query $wpq, $supressOthers = FALSE, $additionalOptions = array(), $ratings = array()) {
+		// Check if we should return empty content
+		if (self::$supressOthers === true) {
+			return '';
+		}
+		// Check if we should suppress others
+		if ($supressOthers) {
+			self::$supressOthers = true;
+		}
+		// Return content
+		return parent::display($wpq, $additionalOptions, $ratings);
 	}
 }
 

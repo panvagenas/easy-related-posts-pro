@@ -2,6 +2,9 @@
 
 namespace helpers;
 
+use cache\erpPRODBActions;
+use helpers\erpPROPaths;
+
 /**
  *
  * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
@@ -32,7 +35,7 @@ class erpPRODBHelper {
 	 * @since 1.0.0
 	 */
 	public static function addDisplayed( $pid, Array $pids ) {
-		require_once erpPRODefaults::getPath( 'db_actions' );
+		require_once erpPROPaths::requireOnce(erpPROPaths::$erpPRODBActions);
 		$db = erpPRODBActions::getInstance();
 		$db->addDisplayed( $pid, $pids );
 	}

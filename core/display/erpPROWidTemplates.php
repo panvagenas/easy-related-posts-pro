@@ -1,19 +1,26 @@
 <?php
 
 namespace display;
+use \display\erpPROTemplates;
 
 /**
  *
  * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
  */
 class erpPROWidTemplates extends erpPROTemplates {
-	// TODO - Insert your code here
+	/**
+	 * Widget number
+	 *
+	 * @since 1.0.0
+	 * @var int
+	 */
+	private $widIDNumber;
 
 	/**
 	 */
-	function __construct( ) {
-
-		// TODO - Insert your code here
+	function __construct( $widIDNumber = null ) {
+		parent::__construct();
+		$this->widIDNumber = $widIDNumber;
 	}
 
 	/**
@@ -21,6 +28,43 @@ class erpPROWidTemplates extends erpPROTemplates {
 	function __destruct( ) {
 
 		// TODO - Insert your code here
+	}
+	/**
+	 * Render setting for given instance
+	 * @see \display\erpPROTemplates::renderSettings()
+	 * @since 1.0.0
+	 */
+	public function renderSettings($widInstance) {
+		// TODO Remove debug
+		do_action('debug',__FUNCTION__.' rendering');
+		$widIns = array('widgetInstance'=>$widInstance);
+		return erpPROView::render($this->settingsFilePath, array_merge($this->getOptions(), $widIns), false);
+	}
+	/**
+	 * Render contend for wid insance
+	 * @see \display\erpPROTemplates::render()
+	 * @since 1.0.0
+	 */
+	public function render($postData, $echo = FALSE){
+		$postData['widIDNumber'] = $this->widIDNumber;
+		return parent::render($postData, $echo);
+	}
+	/**
+	 * Save options for given instance
+	 * @see \display\erpPROTemplates::saveTemplateOptions()
+	 * @since 1.0.0
+	 */
+	public function saveTemplateOptions($newOptions) {
+		if (empty($newOptions) ) {
+			return array();
+		}
+		foreach ($newOptions as $k => $v){
+			if (!array_key_exists($k, $this->options)) {
+				unset($newOptions[$k]);
+			}
+		}
+		$this->setOptions(apply_filters('erpPROTemplateOptionsSaveValidation', $newOptions));
+		return $this->options;
 	}
 }
 

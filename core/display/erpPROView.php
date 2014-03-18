@@ -5,7 +5,7 @@ namespace display;
 /**
  * Easy Related Posts PRO
  *
- * @package   Easy_Related_Posts
+ * @package   Easy_Related_Posts_Core_display
  * @author    Panagiotis Vagenas <pan.vagenas@gmail.com>
  * @license   GPL-2.0+
  * @link      http://example.com
@@ -15,7 +15,7 @@ namespace display;
 /**
  * Renderer class.
  *
- * @package Easy_related_posts
+ * @package Easy_Related_Posts_Core_display
  * @author Your Name <email@example.com>
  */
 class erpPROView {
