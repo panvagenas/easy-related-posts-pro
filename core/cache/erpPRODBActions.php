@@ -1,6 +1,5 @@
 <?php
 
-namespace cache;
 
 /**
  * Easy related posts PRO.
@@ -342,7 +341,6 @@ class erpPRODBActions {
 				if ( !empty( $chk ) || !isset( $v [ 'post_date1' ] ) || !isset( $v [ 'post_date2' ] ) ) {
 					continue;
 				}
-
 				$query .= '(' . $v [ 'pid1' ] . ',';
 				$query .= $v [ 'pid2' ] . ',';
 				$query .= (isset( $v [ 'score1_cats' ] ) ? $v [ 'score1_cats' ] : 0) . ',';
@@ -355,7 +353,7 @@ class erpPRODBActions {
 				$query .= (isset( $v [ 'displayed1' ] ) ? $v [ 'displayed1' ] : 0) . ',';
 				$query .= (isset( $v [ 'displayed2' ] ) ? $v [ 'displayed2' ] : 0) . ',';
 				$query .= '"' . $v [ 'post_date1' ] . '",';
-				$query .= ',"' . $v [ 'post_date2' ] . '"';
+				$query .= '"' . $v [ 'post_date2' ] . '"';
 				$query .= '),';
 			}
 		}

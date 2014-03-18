@@ -1,7 +1,5 @@
 <?php
 
-namespace display;
-use \display\erpPROTemplates;
 /**
  * Easy related posts PRO.
  *
@@ -11,7 +9,7 @@ use \display\erpPROTemplates;
  * @link      http://example.com
  * @copyright 2014 Your Name or Company Name
  */
-
+erpPROPaths::requireOnce(erpPROPaths::$erpPROTemplates);
 /**
  * Main plugin templates class
  *
@@ -25,6 +23,7 @@ class erpPROMainTemplates extends erpPROTemplates {
 	 */
 	function __construct( ) {
 		parent::__construct();
+		$this->templatesBasePath = parent::getTemplatesBasePath() . '/main';
 	}
 
 	/**

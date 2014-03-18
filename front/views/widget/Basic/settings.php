@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * Basic widget template settings.
+ *
+ * This file will be loaded in widget settings page
+ * when basic template is sellected
+ *
+ * @package   Easy_Related_Posts_Templates_Widget
+ * @author    Your Name <email@example.com>
+ * @license   GPL-2.0+
+ * @link      http://example.com
+ * @copyright 2014 Your Name or Company Name
+ */
+?>
+<label for="<?php echo $widgetInstance->get_field_id('thumbCaption'); ?>">Use thumbnail captions: </label>
+<input class="erp-optchbx" id="<?php echo $widgetInstance->get_field_id('thumbCaption'); ?>" name="<?php echo $widgetInstance->get_field_name('thumbCaption'); ?>" type="checkbox" <?php checked( (bool)$thumbCaption ); ?> />

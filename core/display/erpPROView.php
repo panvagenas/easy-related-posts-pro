@@ -1,7 +1,5 @@
 <?php
 
-namespace display;
-
 /**
  * Easy Related Posts PRO
  *

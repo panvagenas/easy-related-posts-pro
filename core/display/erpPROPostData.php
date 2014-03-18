@@ -1,8 +1,5 @@
 <?php
 
-namespace display;
-
-use helpers\erpPROPaths;
 /**
  * Easy related posts PRO.
  *

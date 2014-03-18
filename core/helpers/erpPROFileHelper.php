@@ -1,6 +1,5 @@
 <?php
 
-namespace helpers;
 
 /**
  * Easy Related Posts PRO.

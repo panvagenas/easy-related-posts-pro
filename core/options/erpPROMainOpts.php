@@ -9,8 +9,8 @@
  * @link      http://example.com
  * @copyright 2014 Your Name or Company Name
  */
-namespace options;
 
+erpPROPaths::requireOnce(erpPROPaths::$erpPROOptions);
 /**
  * Main plugin options class.
  *
@@ -71,7 +71,52 @@ class erpPROMainOpts extends erpPROOptions {
 	}
 
 	public function saveOptions( $newOptions ) {
-		parent::saveOptions( $newOptions );
+	if ( isset( $newOptions [ 'title' ] ) ) {
+			$this->options [ 'title' ] = strip_tags( $newOptions [ 'title' ] );
+		}
+		if ( isset( $newOptions [ 'numberOfPostsToDisplay' ] ) && $newOptions [ 'numberOfPostsToDisplay' ] > 0 ) {
+			$this->options [ 'numberOfPostsToDisplay' ] = ( int ) $newOptions [ 'numberOfPostsToDisplay' ];
+		}
+		if ( isset( $newOptions [ 'fetchBy' ] ) ) {
+			$this->options [ 'fetchBy' ] = strip_tags( $newOptions [ 'fetchBy' ] );
+		}
+		if ( isset( $newOptions [ 'offset' ] ) && $newOptions [ 'offset' ] >= 0 ) {
+			$this->options [ 'offset' ] = ( int ) $newOptions [ 'offset' ];
+		}
+		if ( isset( $newOptions [ 'contentPositioning' ] ) ) {
+			$this->options [ 'contentPositioning' ] = strip_tags( $newOptions [ 'contentPositioning' ] );
+		}
+		if ( isset( $newOptions [ 'sortRelatedBy' ] ) ) {
+			$this->options [ 'sortRelatedBy' ] = strip_tags( $newOptions [ 'sortRelatedBy' ] );
+		}
+		if ( isset( $newOptions [ 'dsplThumbnail' ] ) ) {
+			$this->options [ 'dsplThumbnail' ] = true;
+		} else {
+			$this->options [ 'dsplThumbnail' ] = false;
+		}
+		if ( isset( $newOptions [ 'postTitleFontSize' ] ) && $newOptions [ 'postTitleFontSize' ] >= 0 ) {
+			$this->options [ 'postTitleFontSize' ] = ( int ) $newOptions [ 'postTitleFontSize' ];
+		}
+		if ( isset( $newOptions [ 'excFontSize' ] ) && $newOptions [ 'excFontSize' ] >= 0 ) {
+			$this->options [ 'excFontSize' ] = ( int ) $newOptions [ 'excFontSize' ];
+		}
+		if ( isset( $newOptions [ 'excLength' ] ) && $newOptions [ 'excLength' ] > 0 ) {
+			$this->options [ 'excLength' ] = ( int ) $newOptions [ 'excLength' ];
+		}
+		if ( isset( $newOptions [ 'moreTxt' ] ) ) {
+			$this->options [ 'moreTxt' ] = strip_tags( $newOptions [ 'moreTxt' ] );
+		}
+		if ( isset( $newOptions [ 'thumbnailHeight' ] ) && $newOptions [ 'thumbnailHeight' ] > 0 ) {
+			$this->options [ 'thumbnailHeight' ] = ( int ) $newOptions [ 'thumbnailHeight' ];
+		}
+		if ( isset( $newOptions [ 'thumbnailWidth' ] ) && $newOptions [ 'thumbnailWidth' ] > 0 ) {
+			$this->options [ 'thumbnailWidth' ] = ( int ) $newOptions [ 'thumbnailWidth' ];
+		}
+		if ( isset( $newOptions [ 'cropThumbnail' ] ) ) {
+			$this->options [ 'cropThumbnail' ] = true;
+		} else {
+			$this->options [ 'cropThumbnail' ] = false;
+		}
 
 		if ( isset( $newOptions [ 'activate' ] ) ) {
 			$this->options [ 'activate' ] = true;

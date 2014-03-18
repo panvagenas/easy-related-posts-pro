@@ -1,0 +1,36 @@
+<?php
+
+/**
+ * Grid template settings.
+ *
+ * This file will be loaded in plugin settings page
+ * when grid template is sellected
+ *
+ * @package   Easy_Related_Posts_Templates_Main
+ * @author    Your Name <email@example.com>
+ * @license   GPL-2.0+
+ * @link      http://example.com
+ * @copyright 2014 Your Name or Company Name
+ */
+?>
+<p>
+<label for="position">Possition: </label>
+<select class="" id="position" name="position">
+	<option value="top" <?php echo selected($position, 'top'); ?>>Top</option>
+	<option value="right" <?php echo selected($position, 'right'); ?>>Right</option>
+	<option value="bottom" <?php echo selected($position, 'bottom'); ?>>Bottom</option>
+	<option value="left" <?php echo selected($position, 'left'); ?>>Left</option>
+</select>
+</p>
+<p>
+<label for="backgroundColor">Background color: </label>
+<input class="erp-opttxt" id="carouselMinVisible" name="carouselMinVisible" type="number"value="<?php echo $backgroundColor; ?>"/>
+</p>
+<p>
+<label for="backgroundTransparency">Background transparency: </label>
+<input class="erp-opttxt" id="backgroundTransparency" name="backgroundTransparency" type="number"value="<?php echo $backgroundTransparency; ?>"/>
+</p>
+<p>
+<label for="triggerAfter">Trigger after: </label>
+<input class="erp-opttxt" id="triggerAfter" name="triggerAfter" type="number"value="<?php echo $triggerAfter; ?>"/>
+</p>

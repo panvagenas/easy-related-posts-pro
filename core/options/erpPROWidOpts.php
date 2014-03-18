@@ -9,10 +9,7 @@
  * @link      http://example.com
  * @copyright 2014 Your Name or Company Name
  */
-namespace options;
-
-use \options\erpPRODefaults;
-
+erpPROPaths::requireOnce(erpPROPaths::$erpPROOptions);
 /**
  * Widget options class.
  *

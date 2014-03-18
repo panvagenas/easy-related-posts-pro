@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<template>
+	<name>Carousel</name>
+	<description>Display your related posts as a delegant carousel
+	</description>
+	<optionsArrayName>erpPROCarouselOptions</optionsArrayName>
+	<options>
+		<carouselAutoTime>2</carouselAutoTime>
+		<carouselMaxVisible>6</carouselMaxVisible>
+		<carouselPauseHover>true</carouselPauseHover>
+	</options>
+	<optionSaveValidation>
+		<file>optionSaveValidation.php</file>
+		<function>validateOptionSave</function>
+	</optionSaveValidation>
+	<settingsPageFilePath>settings.php</settingsPageFilePath>
+	<viewFilePath>carousel.php</viewFilePath>
+	<jsFilePath>
+		<carousel>assets/carousel.js</carousel>
+	</jsFilePath>
+	<cssFilePath>
+		<carousel>assets/carousel.css</carousel>
+	</cssFilePath>
+</template>

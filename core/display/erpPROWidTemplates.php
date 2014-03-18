@@ -1,8 +1,5 @@
 <?php
-
-namespace display;
-use \display\erpPROTemplates;
-
+erpPROPaths::requireOnce(erpPROPaths::$erpPROTemplates);
 /**
  *
  * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
@@ -21,6 +18,7 @@ class erpPROWidTemplates extends erpPROTemplates {
 	function __construct( $widIDNumber = null ) {
 		parent::__construct();
 		$this->widIDNumber = $widIDNumber;
+		$this->templatesBasePath = parent::getTemplatesBasePath() . '/widget';
 	}
 
 	/**
@@ -31,10 +29,10 @@ class erpPROWidTemplates extends erpPROTemplates {
 	}
 	/**
 	 * Render setting for given instance
-	 * @see \display\erpPROTemplates::renderSettings()
+	 * @see erpPROTemplates::renderSettings()
 	 * @since 1.0.0
 	 */
-	public function renderSettings($widInstance) {
+	public function renderSettings($widInstance = false) {
 		// TODO Remove debug
 		do_action('debug',__FUNCTION__.' rendering');
 		$widIns = array('widgetInstance'=>$widInstance);

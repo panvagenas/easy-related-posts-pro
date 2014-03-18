@@ -9,7 +9,6 @@
  * @copyright 2014 Your Name or Company Name
  */
 
-namespace admin;
 /**
  * Plugin class.
  * This class should ideally be used to work with the
@@ -137,8 +136,8 @@ class easyRelatedPostsPROAdmin {
 			return;
 		}
 
-		require_once erpPRODefaults::getPath( 'related' );
-		require_once erpPRODefaults::getPath( 'options' );
+		erpPROPaths::requireOnce(erpPROPaths::$erpProRelated);
+		erpPROPaths::requireOnce(erpPROPaths::$erpPROMainOpts);
 
 		$opts = new erpPROMainOpts();
 
@@ -233,7 +232,7 @@ class easyRelatedPostsPROAdmin {
 	 */
 	public function display_plugin_admin_page( ) {
 		if ( !class_exists( 'erpPROView' ) ) {
-			require_once erpPRODefaults::getPath( 'viewer' );
+			erpPROPaths::requireOnce(erpPROPaths::$erpPROView);
 		}
 		$defaultOptions = erpPRODefaults::$mainOpts + erpPRODefaults::$comOpts;
 		$optObj = new erpPROMainOpts();
@@ -264,17 +263,18 @@ class easyRelatedPostsPROAdmin {
 		if ( !current_user_can( 'manage_options' ) ) {
 			wp_die( 'Not allowed' );
 		}
-		require_once erpPRODefaults::getPath( 'options' );
+		erpPROPaths::requireOnce(erpPROPaths::$erpPROMainOpts);
+		erpPROPaths::requireOnce(erpPROPaths::$erpPROMainTemplates);
 		// Save template options
 		if ( isset( $_POST [ 'dsplLayout' ] ) ) {
-			erpPROHelper::requireFileHelper();
-			require_once erpPRODefaults::getPath( 'templates' );
-			$templateXMLPath = erpPROFileHelper::getTemplateXMLPath( $_POST [ 'dsplLayout' ], erpPRODefaults::getPath( 'mainTemplates' ) );
-			$templateObj = new erpPROTemplates( $templateXMLPath );
-			$templateObj->saveTemplateOptions( $_POST );
-			$templateOptions = $templateObj->getOptions();
-			foreach ( $templateOptions as $key => $value ) {
-				unset( $_POST [ $key ] );
+			$templateObj = new erpPROMainTemplates();
+			$templateObj->load($_POST [ 'dsplLayout' ]);
+			if ($templateObj->isLoaded()) {
+				$templateObj->saveTemplateOptions( $_POST );
+				$templateOptions = $templateObj->getOptions();
+				foreach ( $templateOptions as $key => $value ) {
+					unset( $_POST [ $key ] );
+				}
 			}
 		}
 		// Save the rest of the options
@@ -297,12 +297,11 @@ class easyRelatedPostsPROAdmin {
 			echo json_encode('false');
 			die();
 		}
-		require_once erpPRODefaults::getPath('templates');
-		erpPROHelper::requireFileHelper();
-
-		$templateXMLPath = erpPROFileHelper::getTemplateXMLPath($_POST['template'], $_POST['templateRoot']);
+		erpPROPaths::requireOnce(erpPROPaths::$erpPROMainTemplates);
 
 		$templateObj = new erpPROTemplates($templateXMLPath);
+		$templateObj->load($_POST['template']);
+
 		$data = array(
 			'content' => $templateObj->renderSettings(false),
 				'optionValues' => $templateObj->getOptions()

@@ -9,8 +9,7 @@
  * @link      http://example.com
  * @copyright 2014 Your Name or Company Name
  */
-namespace options;
-
+erpPROPaths::requireOnce(erpPROPaths::$erpPROOptions);
 /**
  * Shortcode options class.
  *

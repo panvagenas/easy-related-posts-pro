@@ -1,7 +1,5 @@
 <?php
-
-namespace display;
-use \display\erpPROTemplates;
+erpPROPaths::requireOnce(erpPROPaths::$erpPROTemplates);
 /**
  *
  * @author Vagenas Panagiotis <pan.vagenas@gmail.com>

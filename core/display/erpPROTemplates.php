@@ -1,10 +1,5 @@
 <?php
 
-namespace display;
-
-use helpers\erpPROFileHelper;
-use helpers\erpPROPaths;
-use helpers\erpPRODBHelper;
 /**
  * Easy related posts PRO.
  *
@@ -105,14 +100,13 @@ abstract class erpPROTemplates {
 	 * @since 1.0.0
 	 * @var string
 	 */
-	protected $uniqueInstanceID;
+	protected $uniqueInstanceID = null;
 
 	/**
 	 */
 	function __construct( ) {
-
-		// TODO - Insert your code here
-		erpPROPaths::requireOnce(erpPROPaths::erpPROView);
+		erpPROPaths::requireOnce(erpPROPaths::$erpPROView);
+		$this->templatesBasePath = EPR_PRO_BASE_PATH . '/front/views';
 	}
 
 	/**
@@ -120,6 +114,10 @@ abstract class erpPROTemplates {
 	function __destruct( ) {
 
 		// TODO - Insert your code here
+	}
+
+	public function isLoaded() {
+		return !empty($this->uniqueInstanceID);
 	}
 	/**
 	 * Get the absolute path to the template folder
@@ -131,7 +129,8 @@ abstract class erpPROTemplates {
 	 */
 	public function getTemplatePath($templateName){
 		// Get dirs in templates root folder
-		$templates = self::dirToArray($this->templatesBasePath);
+		erpPROPaths::requireOnce(erpPROPaths::$erpPROFileHelper);
+		$templates = erpPROFileHelper::dirToArray($this->templatesBasePath);
 		// Search for the given template name
 		foreach ($templates as $k => $v){
 			if (strnatcasecmp($v, $templateName) == 0) {
@@ -158,7 +157,8 @@ abstract class erpPROTemplates {
 
 		$xmlFilePath = '';
 		// Get contents of folder
-		$dirContents = self::filesToArray($this->basePath);
+		erpPROPaths::requireOnce(erpPROPaths::$erpPROFileHelper);
+		$dirContents = erpPROFileHelper::filesToArray($this->basePath);
 		// Search for an xml file
 		foreach ($dirContents as $k => $v){
 			// If we found one break the loop
@@ -189,14 +189,10 @@ abstract class erpPROTemplates {
 	 * @since 1.0.0
 	 */
 	public function load($templateName){
-		// Check if folder exists
-		if (!in_array($templateName, $this->getTemplateNames())) {
-			wp_die('Template not found!');
-		}
 		// Get xml path
 		$templateXMLPath = $this->getTemplateXMLPath($templateName);
 		if (empty($templateXMLPath)) {
-			wp_die('Template XML not found!');
+			return;
 		}
 		// initialize template components
 		// TODO Remove debug
@@ -216,9 +212,9 @@ abstract class erpPROTemplates {
 		// read name
 		if (isset($xml->name)) {
 			$this->name = (string)$xml->name;
+		} else {
+			return ;
 		}
-		// Generate a unique id
-		$this->uniqueInstanceID = uniqid($this->name);
 		// read description
 		if (isset($xml->description)) {
 			$this->description = (string)$xml->description;
@@ -240,6 +236,8 @@ abstract class erpPROTemplates {
 		// read view file path
 		if (isset($xml->viewFilePath)) {
 			$this->viewFilePath = dirname($templateXMLPath).DIRECTORY_SEPARATOR.(string)$xml->viewFilePath;
+		} else {
+			return ;
 		}
 		// read settings view file path
 		if (isset($xml->settingsPageFilePath)) {
@@ -256,13 +254,17 @@ abstract class erpPROTemplates {
 			$this->enqueJS();
 		}
 		// hook validation function
-		if (isset($xml->optionSaveValidation)) {
+		if (isset($xml->optionSaveValidation) && !empty($this->options) && !empty($this->optionsArrayName)) {
 			$this->optionSaveValidation = $this->xmlToArray($xml->optionSaveValidation);
 			if (isset($this->optionSaveValidation['file']) && isset($this->optionSaveValidation['function'])) {
 				require_once dirname($templateXMLPath).DIRECTORY_SEPARATOR.$this->optionSaveValidation['file'];
 				add_filter('erpPROTemplateOptionsSaveValidation', $this->optionSaveValidation['function']);
 			}
+		} else {
+			return ;
 		}
+		// Generate a unique id
+		$this->uniqueInstanceID = uniqid($this->name);
 	}
 	/**
 	 * Converts an xml ellement to an assoc array
@@ -493,4 +495,9 @@ abstract class erpPROTemplates {
 	public function getOptions() {
 		return $this->options;
 	}
+
+	public function getTemplatesBasePath() {
+		return $this->templatesBasePath;
+	}
+
 }

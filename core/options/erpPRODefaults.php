@@ -9,7 +9,6 @@
  * @link      http://example.com
  * @copyright 2014 Your Name or Company Name
  */
-namespace options;
 
 /**
  * Default options class.

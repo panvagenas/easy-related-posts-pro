@@ -1,6 +1,6 @@
 <?php
 /**
- * Easy Related Posts PRO for WP
+ * Easy Related Posts PRO
  *
  * @package   Easy related posts
  * @author    Your Name <email@example.com>
@@ -44,12 +44,6 @@ if ( !defined( 'EPR_PRO_BASE_URL' ) ){
 if ( !defined( 'ERP_PRO_RELATIVE_TABLE' ) ) {
 	define( 'ERP_PRO_RELATIVE_TABLE', ERP_PRO_SLUG . '_related' );
 }
-if ( !class_exists( 'erpPRODefaults' ) ) {
-	require_once EPR_PRO_BASE_PATH . 'core/options/defaults.php';
-}
-if ( !class_exists( 'erpPROPaths' ) ) {
-	require_once EPR_PRO_BASE_PATH . 'core/helpers/erpPROPaths.php';
-}
 
 /*----------------------------------------------------------------------------*
  * Session functionality
@@ -71,12 +65,18 @@ if ( !class_exists( 'WP_Session' ) ) {
  * Core classes
 *----------------------------------------------------------------------------*/
 
+if ( !class_exists( 'erpPRODefaults' ) ) {
+	require_once EPR_PRO_BASE_PATH . 'core/options/erpPRODefaults.php';
+}
+if ( !class_exists( 'erpPROPaths' ) ) {
+	require_once EPR_PRO_BASE_PATH . 'core/helpers/erpPROPaths.php';
+}
 
 /*----------------------------------------------------------------------------*
  * Public-Facing Functionality
  *----------------------------------------------------------------------------*/
-require_once( plugin_dir_path( __FILE__ ) . 'admin/widget.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'public/easyRelatedPostsPRO.php' );
+erpPROPaths::requireOnce(erpPROPaths::$erpPROWidget);
+erpPROPaths::requireOnce(erpPROPaths::$easyRelatedPostsPRO);
 
 /*
  * Register hooks that are fired when the plugin is activated or deactivated.
@@ -90,7 +90,9 @@ register_deactivation_hook( __FILE__, array( 'easyRelatedPostsPRO', 'deactivate'
  */
 add_filter( 'cron_schedules', array('easyRelatedPostsPRO', 'addWeeklyCron') );
 add_action( 'erpPRO_weekly_event_hook', array('easyRelatedPostsPRO','weeklyCronJob') );
-
+/**
+ * Register plugin and widget
+ */
 add_action( 'plugins_loaded', array( 'easyRelatedPostsPRO', 'get_instance' ) );
 add_action( 'widgets_init', function (){register_widget( "erpPROWidget" );} );
 
@@ -101,6 +103,6 @@ add_action( 'widgets_init', function (){register_widget( "erpPROWidget" );} );
 /**
  */
 if ( is_admin() ) {
-	require_once( plugin_dir_path( __FILE__ ) . 'admin/easyRelatedPostsPROAdmin.php' );
+	erpPROPaths::requireOnce(erpPROPaths::$easyRelatedPostsPROAdmin);
 	add_action( 'plugins_loaded', array( 'easyRelatedPostsPROAdmin', 'get_instance' ) );
 }
