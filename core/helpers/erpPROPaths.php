@@ -13,6 +13,7 @@ class erpPROPaths {
 	public static final $erpPROFileHelper = '/core/helpers/erpPROFileHelper.php';
 	// Display
 	public static final $erpPROPostData = '/core/display/erpPROPostData.php';
+	public static final $erpPROView = '/core/display/erpPROView.php';
 	// Admin
 	public static final $easyRelatedPostsPROAdmin = '/core/helpers/easyRelatedPostsPROAdmin.php';
 	// Cache
