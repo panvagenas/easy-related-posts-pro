@@ -1,5 +1,4 @@
 <?php
-namespace admin;
 /**
  * Easy related posts PRO.
  *
@@ -10,6 +9,7 @@ namespace admin;
  * @copyright 2014 Your Name or Company Name
  */
 
+namespace admin;
 /**
  * Plugin class.
  * This class should ideally be used to work with the
