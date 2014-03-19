@@ -9,7 +9,7 @@
  * @link      http://example.com
  * @copyright 2014 Your Name or Company Name
  */
-
+erpPROPaths::requireOnce(erpPROPaths::$erpPROHTMLHelper);
 ?>
 
 <div id="erp-opt-general" class="wrap">
@@ -32,12 +32,9 @@
 						<th colspan="2">General Options</th>
 					</tr>
 					<?php
-					echo erpPROHelper::optArrayRenderer($erpPROOptions,  'checkbox', 'Activate plugin', 'activate' );
-					echo erpPROHelper::optArrayRenderer($erpPROOptions,  'text', 'Title to display', 'title' );
-					echo erpPROHelper::optArrayRenderer($erpPROOptions,  'select', 'Get posts by', 'fetchBy', array (
-							'Categories',
-							'Tags'
-					) );
+					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'checkbox', 'Activate plugin', 'activate' );
+					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'text', 'Title to display', 'title' );
+					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'select', 'Rate posts by', 'fetchBy', erpPRODefaults::$fetchByOptions );
 					?>
 				</table>
 			</div>
@@ -48,18 +45,18 @@
 						<th colspan="2">Content Options</th>
 					</tr>
 					<?php
-					echo erpPROHelper::optArrayRenderer($erpPROOptions,  'number', 'Number of posts to display', 'numberOfPostsToDisplay', array (
+					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'number', 'Number of posts to display', 'numberOfPostsToDisplay', array (
 							'size' => '2pt'
 					) );
-					echo erpPROHelper::optArrayRenderer($erpPROOptions,  'number', 'Offset', 'offset', array (
+					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'number', 'Offset', 'offset', array (
 							'size' => '2pt'
 					) );
 					// TODO This should be transfered to layout as contentPositioning
-					echo erpPROHelper::optArrayRenderer($erpPROOptions,  'select', 'Content', 'content', array (
+					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'select', 'Content', 'content', array (
 							'Post title',
 							'Title + excerpt'
 					) );
-					echo erpPROHelper::optArrayRenderer($erpPROOptions,  'select', 'Sort related by', 'sortRelatedBy', array (
+					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'select', 'Sort related by', 'sortRelatedBy', array (
 							'Date descending',
 							'Date ascending',
 							'Rating descending',
@@ -73,16 +70,16 @@
 							'Rating descending then Date ascending',
 							'Rating ascending then Date ascending',
 					) );
-					echo erpPROHelper::optArrayRenderer($erpPROOptions,  'number', 'Post title size (px)', 'postTitleFontSize', array (
+					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'number', 'Post title size (px)', 'postTitleFontSize', array (
 							'size' => '2pt'
 					) );
-					echo erpPROHelper::optArrayRenderer($erpPROOptions,  'number', 'Post excerpt size (px)', 'excFontSize', array (
+					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'number', 'Post excerpt size (px)', 'excFontSize', array (
 							'size' => '2pt'
 					) );
-					echo erpPROHelper::optArrayRenderer($erpPROOptions,  'number', 'Excerpt length (words)', 'excLength', array (
+					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'number', 'Excerpt length (words)', 'excLength', array (
 							'size' => '2pt'
 					) );
-					echo erpPROHelper::optArrayRenderer($erpPROOptions,  'text', 'Read more text', 'moreTxt' );
+					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'text', 'Read more text', 'moreTxt' );
 					?>
 				</table>
 			</div>
@@ -92,19 +89,25 @@
 					<tr>
 						<th colspan="2">Layout Options</th>
 					</tr>
-				</table>
-					<?php
-					echo erpPROHelper::optArrayRenderer($erpPROOptions,  'checkbox', 'Display thumbnail', 'dsplThumbnail' );
-					echo erpPROHelper::optArrayRenderer($erpPROOptions,  'checkbox', 'Crop thumbnail', 'cropThumbnail' );
-					echo erpPROHelper::optArrayRenderer($erpPROOptions,  'number', 'Thumbnail height', 'thumbnailHeight', array (
-							'size' => '2pt'
-					) );
-					echo erpPROHelper::optArrayRenderer($erpPROOptions,  'number', 'Thumbnail width (optional)', 'thumbnailWidth', array (
-							'size' => '2pt'
-					) );
 
-					erpPROHelper::requireFileHelper();
-					$templates = erpPROFileHelper::dirToArray(erpPRODefaults::getPath('mainTemplates'));
+					<?php
+					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'checkbox', 'Display thumbnail', 'dsplThumbnail' );
+					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'checkbox', 'Crop thumbnail', 'cropThumbnail' );
+					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'number', 'Thumbnail height', 'thumbnailHeight', array (
+							'size' => '2pt'
+					) );
+					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'number', 'Thumbnail width (optional)', 'thumbnailWidth', array (
+							'size' => '2pt'
+					) );
+				?>
+				</table>
+				<?php
+// 					erpPROHTMLHelper::requireFileHelper();
+// 					$templates = erpPROFileHelper::dirToArray(erpPRODefaults::getPath('mainTemplates'));
+
+					erpPROPaths::requireOnce(erpPROPaths::$erpPROMainTemplates);
+					$temp = new erpPROMainTemplates();
+					$templates = $temp->getTemplateNames();
 
 					echo '<label for="dsplLayout">Display layout :</label>';
 					echo '<select class="dsplLayout"  name="dsplLayout">';
@@ -242,7 +245,7 @@
 		<?php echo get_submit_button( 'Update options', 'primary large', 'Save' ); ?>
 		<input id="tab-spec" type="hidden" name="tab-spec">
 		<script type="text/javascript">
-			var templateRoot = "<?php echo erpPRODefaults::getPath('mainTemplates'); ?>";
+			var templateRoot = "<?php echo $temp->getTemplatesBasePath(); ?>";
 			var options = {};
 			<?php
 			if ( isset( $_GET [ 'tab-spec' ] ) && !empty( $_GET [ 'tab-spec' ] ) ) {

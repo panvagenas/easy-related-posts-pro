@@ -26,27 +26,36 @@
 		name="<?php echo $widgetInstance->get_field_name('numberOfPostsToDisplay'); ?>"
 		type="number"
 		value="<?php echo esc_attr($options['numberOfPostsToDisplay']); ?>" />
-	</label>
-	<label style="margin-left: 10px;" for="<?php echo $widgetInstance->get_field_id('offset'); ?>"><?php _e('Offset:'); ?>
+	</label> <label style="margin-left: 10px;"
+		for="<?php echo $widgetInstance->get_field_id('offset'); ?>"><?php _e('Offset:'); ?>
 		<input class="" size="3pt"
 		id="<?php echo $widgetInstance->get_field_id('offset'); ?>"
 		name="<?php echo $widgetInstance->get_field_name('offset'); ?>"
-		type="number" value="<?php echo esc_attr($options['offset']); ?>" /> </label>
+		type="number" value="<?php echo esc_attr($options['offset']); ?>" />
+	</label>
 </p>
 <p>
-	<label for="<?php echo $widgetInstance->get_field_id('fetchBy'); ?>"><?php echo 'Get posts by: '; ?>
+	<label for="<?php echo $widgetInstance->get_field_id('fetchBy'); ?>"><?php echo 'Rate posts by: '; ?>
 		<select class=""
 		id="<?php echo $widgetInstance->get_field_id('fetchBy'); ?>"
 		name="<?php echo $widgetInstance->get_field_name('fetchBy'); ?>">
-			<option value="categories"
-				<?php selected($options['fetchBy'], 'categories'); ?>>categories</option>
-			<option value="tags" <?php selected($options['fetchBy'], 'tags'); ?>>tags</option>
-	</select> </label> |
-	<label for="<?php echo $widgetInstance->get_field_id('sortRelatedBy'); ?>"><?php echo 'Sort posts by: '; ?>
+			<?php
+			foreach (erpPRODefaults::$fetchByOptions as $k => $v){
+				$valLow = strtolower( str_replace(',','',str_replace( ' ', '_', $v )) );
+				?>
+				<option value="<?php echo $valLow; ?>" <?php selected($valLow, $options['fetchBy']); ?>><?php echo $v; ?></option>
+				<?php
+			}
+			?>
+	</select> </label>
+</p>
+<p>
+	<label
+		for="<?php echo $widgetInstance->get_field_id('sortRelatedBy'); ?>"><?php echo 'Sort posts by: '; ?>
 		<select class=""
 		id="<?php echo $widgetInstance->get_field_id('sortRelatedBy'); ?>"
 		name="<?php echo $widgetInstance->get_field_name('sortRelatedBy'); ?>">
-		<?php
+			<?php
 		$sortOptions = array (
 							'Date descending',
 							'Date ascending',
@@ -63,8 +72,11 @@
 					);
 		foreach ($sortOptions as $key => $value) {
 			?>
-			<option value="<?php echo strtolower(str_replace(' ', '_', $value)); ?>"
-				<?php selected($options['sortRelatedBy'], strtolower(str_replace(' ', '_', $value))); ?>><?php echo $value; ?></option>
+			<option
+				value="<?php echo strtolower(str_replace(' ', '_', $value)); ?>"
+				<?php selected($options['sortRelatedBy'], strtolower(str_replace(' ', '_', $value))); ?>>
+				<?php echo $value; ?>
+			</option>
 			<?php
 		}
 		?>
@@ -93,8 +105,7 @@
 <p>
 	<label
 		for="<?php echo $widgetInstance->get_field_id('hideIfNoPosts'); ?>">
-		<?php _e('Hide if no posts to show:'); ?>
-		<input class="erp_wid_opt5"
+		<?php _e('Hide if no posts to show:'); ?> <input class="erp_wid_opt5"
 		id="<?php echo $widgetInstance->get_field_id('hideIfNoPosts'); ?>"
 		name="<?php echo $widgetInstance->get_field_name('hideIfNoPosts'); ?>"
 		type="checkbox" <?php echo checked($options['hideIfNoPosts']); ?> />
@@ -108,11 +119,10 @@
 	<label
 		for="<?php echo $widgetInstance->get_field_id('dsplThumbnail'); ?>">
 		<?php _e('Show post thumbnail:'); ?>
-	</label>
-		<input class="erp_wid_opt4"
-			id="<?php echo $widgetInstance->get_field_id('dsplThumbnail'); ?>"
-			name="<?php echo $widgetInstance->get_field_name('dsplThumbnail'); ?>"
-			type="checkbox" <?php echo checked($options['dsplThumbnail']); ?> />
+	</label> <input class="erp_wid_opt4"
+		id="<?php echo $widgetInstance->get_field_id('dsplThumbnail'); ?>"
+		name="<?php echo $widgetInstance->get_field_name('dsplThumbnail'); ?>"
+		type="checkbox" <?php echo checked($options['dsplThumbnail']); ?> />
 </p>
 <p>
 	<label
@@ -121,21 +131,22 @@
 		id="<?php echo $widgetInstance->get_field_id('cropThumbnail'); ?>"
 		name="<?php echo $widgetInstance->get_field_name('cropThumbnail'); ?>"
 		type="checkbox" <?php echo checked($options['cropThumbnail']); ?> />
-	</label>
-	<label style="margin-left: 1%;" for="<?php echo $widgetInstance->get_field_id('thumbnailHeight'); ?>"><?php _e('Height:'); ?>
+	</label> <label style="margin-left: 1%;"
+		for="<?php echo $widgetInstance->get_field_id('thumbnailHeight'); ?>"><?php _e('Height:'); ?>
 		<input class="" size="3pt"
-			id="<?php echo $widgetInstance->get_field_id('thumbnailHeight'); ?>"
-			name="<?php echo $widgetInstance->get_field_name('thumbnailHeight'); ?>"
-			type="number" value="<?php echo esc_attr($options['thumbnailHeight']); ?>" />
-	</label>
-	<label style="margin-left: 1%;" for="<?php echo $widgetInstance->get_field_id('thumbnailWidth'); ?>"><?php _e('Width:'); ?>
+		id="<?php echo $widgetInstance->get_field_id('thumbnailHeight'); ?>"
+		name="<?php echo $widgetInstance->get_field_name('thumbnailHeight'); ?>"
+		type="number"
+		value="<?php echo esc_attr($options['thumbnailHeight']); ?>" /> </label> <label
+		style="margin-left: 1%;"
+		for="<?php echo $widgetInstance->get_field_id('thumbnailWidth'); ?>"><?php _e('Width:'); ?>
 		<input class="erp_wid_opt2" size="3pt"
-			id="<?php echo $widgetInstance->get_field_id('thumbnailWidth'); ?>"
-			name="<?php echo $widgetInstance->get_field_name('thumbnailWidth'); ?>"
-			type="number" value="<?php echo esc_attr($options['thumbnailWidth']); ?>" />
-	</label>
-	<br>
-	<label for="<?php echo $widgetInstance->get_field_id('defaultThumbnail'); ?>">
+		id="<?php echo $widgetInstance->get_field_id('thumbnailWidth'); ?>"
+		name="<?php echo $widgetInstance->get_field_name('thumbnailWidth'); ?>"
+		type="number"
+		value="<?php echo esc_attr($options['thumbnailWidth']); ?>" /> </label> <br>
+	<label
+		for="<?php echo $widgetInstance->get_field_id('defaultThumbnail'); ?>">
 		<?php _e('Default thumbnail:'); ?> <input class=""
 		id="<?php echo $widgetInstance->get_field_id('defaultThumbnail'); ?>"
 		name="<?php echo $widgetInstance->get_field_name('defaultThumbnail'); ?>"
@@ -149,12 +160,17 @@
 </p>
 <p>
 	<?php
-	erpPROHelper::requireFileHelper();
-	$templates = erpPROFileHelper::dirToArray(erpPRODefaults::getPath('widgetTemplates'));
+// 	erpPROHelper::requireFileHelper();
+// 	$templates = erpPROFileHelper::dirToArray(erpPRODefaults::getPath('widgetTemplates'));
+	erpPROPaths::requireOnce(erpPROPaths::$erpPROWidTemplates);
+	$temp = new erpPROWidTemplates();
+	$templates = $temp->getTemplateNames();
 	?>
-	<label for="<?php echo $widgetInstance->get_field_id('dsplLayout'); ?>">Display layout :</label>
-	<select class="dsplLayout"  name="<?php echo $widgetInstance->get_field_name('dsplLayout'); ?>" id="<?php echo $widgetInstance->get_field_id('dsplLayout'); ?>">
-	<?php
+	<label for="<?php echo $widgetInstance->get_field_id('dsplLayout'); ?>">Display
+		layout :</label> <select class="dsplLayout"
+		name="<?php echo $widgetInstance->get_field_name('dsplLayout'); ?>"
+		id="<?php echo $widgetInstance->get_field_id('dsplLayout'); ?>">
+		<?php
 	foreach ( $templates as $key => $val ) {
 	 	$valLow = strtolower( str_replace( ' ', '_', $val ) );
 		echo '<option value="' . $valLow . '"' . selected( $options['dsplLayout'], $valLow, FALSE ) . '>' . $val . '</option>';
@@ -162,14 +178,14 @@
 	?>
 	</select>
 	<?php
-	require_once erpProDefaults::getPath('templates');
+// 	require_once erpProDefaults::getPath('templates');
 
 	foreach ($templates as $key => $value) {
+		$temp->load($value);
 		$valLow = strtolower( str_replace( ' ', '_', $value ) );
 		echo '<span class="templateSettings" data-template="'.$valLow.'" hidden="hidden">';
-			$templ = new erpPROWidTemplates(erpPROFileHelper::getTemplateXMLPath($value, erpPRODefaults::getPath('widgetTemplates')));
-			$templ->setOptions($options);
-			echo $templ->renderSettings($widgetInstance);
+		$temp->setOptions($options);
+		echo $temp->renderSettings($widgetInstance);
 		echo '</span>';
 	}
 	?>
@@ -188,105 +204,102 @@
 	<figure style="width: 50px; height: 50px; background-color: #808080; display: inline-block;">
  	<figcaption>Title Excerpt Thumb</figcaption>
  	</figure> -->
-	<input type="radio"
-		value="thumbnail-title-excerpt"
-		id="<?php echo $widgetInstance->get_field_id('contentPositioning'); ?>-1"
-		name="<?php echo $widgetInstance->get_field_name('contentPositioning'); ?>-group"
-		<?php checked(implode('-', $options['contentPositioning']), 'thumbnail-title-excerpt'); ?>>
-	<label for="<?php echo $widgetInstance->get_field_id('contentPositioning'); ?>-1"> Thumbnail, title, excerpt </label><br>
+<input type="radio" value="thumbnail-title-excerpt"
+	id="<?php echo $widgetInstance->get_field_id('contentPositioning'); ?>-1"
+	name="<?php echo $widgetInstance->get_field_name('contentPositioning'); ?>-group"
+	<?php checked(implode('-', $options['contentPositioning']), 'thumbnail-title-excerpt'); ?>>
+<label
+	for="<?php echo $widgetInstance->get_field_id('contentPositioning'); ?>-1">
+	Thumbnail, title, excerpt </label>
+<br>
 
-	<input type="radio"
-		value="title-thumbnail-excerpt"
-		id="<?php echo $widgetInstance->get_field_id('contentPositioning'); ?>-2"
-		name="<?php echo $widgetInstance->get_field_name('contentPositioning'); ?>-group"
-		<?php checked(implode('-', $options['contentPositioning']), 'title-thumbnail-excerpt'); ?>>
-	<label for="<?php echo $widgetInstance->get_field_id('contentPositioning'); ?>-2"> Title, thumbnail, excerpt </label><br>
+<input type="radio" value="title-thumbnail-excerpt"
+	id="<?php echo $widgetInstance->get_field_id('contentPositioning'); ?>-2"
+	name="<?php echo $widgetInstance->get_field_name('contentPositioning'); ?>-group"
+	<?php checked(implode('-', $options['contentPositioning']), 'title-thumbnail-excerpt'); ?>>
+<label
+	for="<?php echo $widgetInstance->get_field_id('contentPositioning'); ?>-2">
+	Title, thumbnail, excerpt </label>
+<br>
 
-	<input type="radio"
-		value="title-excerpt-thumbnail"
-		id="<?php echo $widgetInstance->get_field_id('contentPositioning'); ?>-3"
-		name="<?php echo $widgetInstance->get_field_name('contentPositioning'); ?>-group"
-		<?php checked(implode('-', $options['contentPositioning']), 'title-excerpt-thumbnail'); ?>>
-	<label for="<?php echo $widgetInstance->get_field_id('contentPositioning'); ?>-3"> Title, excerpt, thumbnail </label><br>
+<input type="radio" value="title-excerpt-thumbnail"
+	id="<?php echo $widgetInstance->get_field_id('contentPositioning'); ?>-3"
+	name="<?php echo $widgetInstance->get_field_name('contentPositioning'); ?>-group"
+	<?php checked(implode('-', $options['contentPositioning']), 'title-excerpt-thumbnail'); ?>>
+<label
+	for="<?php echo $widgetInstance->get_field_id('contentPositioning'); ?>-3">
+	Title, excerpt, thumbnail </label>
+<br>
 <hr>
 <p style="text-align: center">
 	<strong>Text properties</strong>
 </p>
-<table style="vertical-align: middle; width:auto;">
+<table style="vertical-align: middle; width: auto;">
 	<tr>
 		<td>Post title size:</td>
-		<td>
-			<label
-				for="<?php echo $widgetInstance->get_field_id('postTitleFontSize'); ?>">
+		<td><label
+			for="<?php echo $widgetInstance->get_field_id('postTitleFontSize'); ?>">
 				<input size="1pt" class=""
 				id="<?php echo $widgetInstance->get_field_id('postTitleFontSize'); ?>"
 				name="<?php echo $widgetInstance->get_field_name('postTitleFontSize'); ?>"
-				type="number" value="<?php echo esc_attr($options['postTitleFontSize']); ?>" />px
-			</label>
-		</td>
+				type="number"
+				value="<?php echo esc_attr($options['postTitleFontSize']); ?>" />px
+		</label></td>
 	</tr>
 	<tr>
 		<td>Post title color:</td>
-		<td>
-			<label
-				for="<?php echo $widgetInstance->get_field_id('postTitleColor'); ?>">
+		<td><label
+			for="<?php echo $widgetInstance->get_field_id('postTitleColor'); ?>">
 				<input class="wp-color-picker-field" data-default-color="#ffffff"
 				size="3pt"
 				id="<?php echo $widgetInstance->get_field_id('postTitleColor'); ?>"
 				name="<?php echo $widgetInstance->get_field_name('postTitleColor'); ?>"
-				type="text" value="<?php echo esc_attr($options['postTitleColor']); ?>" />
-			</label>
-		</td>
-		<td>
-			<label
-				for="<?php echo $widgetInstance->get_field_id('postTitleColorUse'); ?>"><?php _e('Use:'); ?>
+				type="text"
+				value="<?php echo esc_attr($options['postTitleColor']); ?>" />
+		</label></td>
+		<td><label
+			for="<?php echo $widgetInstance->get_field_id('postTitleColorUse'); ?>"><?php _e('Use:'); ?>
 				<input class="erp_wid_opt5"
-					id="<?php echo $widgetInstance->get_field_id('postTitleColorUse'); ?>"
-					name="<?php echo $widgetInstance->get_field_name('postTitleColorUse'); ?>"
-					type="checkbox" <?php echo checked($options['postTitleColorUse']); ?> />
-			</label>
-		</td>
+				id="<?php echo $widgetInstance->get_field_id('postTitleColorUse'); ?>"
+				name="<?php echo $widgetInstance->get_field_name('postTitleColorUse'); ?>"
+				type="checkbox"
+				<?php echo checked($options['postTitleColorUse']); ?> /> </label></td>
 	</tr>
 
 	<tr>
 		<td>Excerpt text size:</td>
-		<td>
-			<label
-				for="<?php echo $widgetInstance->get_field_id('excFontSize'); ?>">
+		<td><label
+			for="<?php echo $widgetInstance->get_field_id('excFontSize'); ?>">
 				<input size="1pt" class="zero-for-theme"
 				id="<?php echo $widgetInstance->get_field_id('excFontSize'); ?>"
 				name="<?php echo $widgetInstance->get_field_name('excFontSize'); ?>"
-				type="number" value="<?php echo esc_attr($options['excFontSize']); ?>" />px
-			</label>
-		</td>
+				type="number"
+				value="<?php echo esc_attr($options['excFontSize']); ?>" />px
+		</label></td>
 	</tr>
 	<tr>
 		<td>Excerpt text color:</td>
-		<td>
-			<label
-				for="<?php echo $widgetInstance->get_field_id('excColor'); ?>">
+		<td><label
+			for="<?php echo $widgetInstance->get_field_id('excColor'); ?>">
 				<input class="wp-color-picker-field" data-default-color="#ffffff"
 				size="3pt"
 				id="<?php echo $widgetInstance->get_field_id('excColor'); ?>"
 				name="<?php echo $widgetInstance->get_field_name('excColor'); ?>"
 				type="text" value="<?php echo esc_attr($options['excColor']); ?>" />
-			</label>
-		</td>
-		<td>
-			<label
-				for="<?php echo $widgetInstance->get_field_id('excColorUse'); ?>"><?php _e('Use:'); ?>
+		</label></td>
+		<td><label
+			for="<?php echo $widgetInstance->get_field_id('excColorUse'); ?>"><?php _e('Use:'); ?>
 				<input class=""
 				id="<?php echo $widgetInstance->get_field_id('excColorUse'); ?>"
 				name="<?php echo $widgetInstance->get_field_name('excColorUse'); ?>"
 				type="checkbox" <?php echo checked($options['excColorUse']); ?> />
-			</label>
-		</td>
+		</label></td>
 	</tr>
 </table>
 <script type="text/javascript">
-	var templateRoot = "<?php echo erpPRODefaults::getPath('widgetTemplates'); ?>";
+	var templateRoot = "<?php echo $temp->getTemplatesBasePath(); ?>";
             jQuery(document).ready(function($) {
-                <?php // Τα chk δεν δουλεύουν ?>
+                <?php // TODO Τα chk δεν δουλεύουν ?>
             	checkThumbOptions = new ChkObj('#<?php echo $widgetInstance->get_field_id('display_thumbnail'); ?>', '#<?php echo $widgetInstance->get_field_id('crop_thumbnail'); ?>');
                 checkCrop = new ChkObj('#<?php echo $widgetInstance->get_field_id('crop_thumbnail'); ?>', '#<?php echo $widgetInstance->get_field_id('thumbnail_height'); ?>,#<?php echo $widgetInstance->get_field_id('thumbnail_width'); ?>');
 

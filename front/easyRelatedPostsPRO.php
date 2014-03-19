@@ -247,7 +247,7 @@ class easyRelatedPostsPRO {
 					// return TRUE;
 					// }
 					array_push( $catIds, $cat->term_id );
-					$intersect = array_intersect( $catIds, $postCategories );
+					$intersect = array_intersect( $catIds, $exCats );
 					if ( !empty( $intersect ) ) {
 						return TRUE;
 					}
@@ -258,21 +258,20 @@ class easyRelatedPostsPRO {
 		$exTags = $this->mainOpts->getValue( 'tags' );
 		if ( !empty( $exTags ) ) {
 			$postTags = get_the_tags( $post->ID );
-			if ( is_array( $postTags ) && !empty( $post_tags ) ) {
+			if ( is_array( $postTags ) && !empty( $postTags ) ) {
 				$tagsIds = array ();
 				foreach ( $postTags as $tag ) {
 					// if ( in_array( $tag->term_id, $exTags ) ) {
 					// return TRUE;
 					// }
-					array_push( $tagsIds, $tag->term_id );
+					array_push( $tagsIds, (string) $tag->term_id );
 				}
-				$intersect = array_intersect( $tagsIds, $postTags );
+				$intersect = array_intersect( $tagsIds, $exTags );
 				if ( !empty( $intersect ) ) {
 					return TRUE;
 				}
 			}
 		}
-
 		return FALSE;
 	}
 

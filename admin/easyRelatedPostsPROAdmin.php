@@ -299,7 +299,7 @@ class easyRelatedPostsPROAdmin {
 		}
 		erpPROPaths::requireOnce(erpPROPaths::$erpPROMainTemplates);
 
-		$templateObj = new erpPROTemplates($templateXMLPath);
+		$templateObj = new erpPROMainTemplates();
 		$templateObj->load($_POST['template']);
 
 		$data = array(

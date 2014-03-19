@@ -219,7 +219,7 @@ class erpPRODBActions {
 		$query = 'UPDATE ' . $this->tableName . ' SET ';
 
 		foreach ( $data as $index => $value ) {
-			$query .= ' ' . $index . ' = ' . $value . ', ';
+			$query .= ' ' . $index . ' = "' . $value . '", ';
 		}
 		$query = rtrim( $query, ", " );
 		return $this->db->query( $query . ' ' . $where );

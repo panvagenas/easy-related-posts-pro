@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Easy related posts PRO.
  *
@@ -80,6 +81,7 @@ class erpProRelated {
 		self::$instance->options = $options;
 		return self::$instance;
 	}
+
 	/**
 	 *
 	 * @param array $options
@@ -88,16 +90,16 @@ class erpProRelated {
 	 */
 	protected function __construct( $options ) {
 		if ( !class_exists( 'erpPROQueryFormater' ) ) {
-			erpPROPaths::requireOnce(erpPROPaths::$erpPROQueryFormater);
+			erpPROPaths::requireOnce( erpPROPaths::$erpPROQueryFormater );
 		}
 		if ( !class_exists( 'erpPRODBActions' ) ) {
-			erpPROPaths::requireOnce(erpPROPaths::$erpPRODBActions);
+			erpPROPaths::requireOnce( erpPROPaths::$erpPRODBActions );
 		}
 		if ( !class_exists( 'erpPRORatingSystem' ) ) {
-			erpPROPaths::requireOnce(erpPROPaths::$erpPRORatingSystem);
+			erpPROPaths::requireOnce( erpPROPaths::$erpPRORatingSystem );
 		}
 		if ( !class_exists( 'erpPRORelData' ) ) {
-			erpPROPaths::requireOnce(erpPROPaths::$erpPRORelData);
+			erpPROPaths::requireOnce( erpPROPaths::$erpPRORelData );
 		}
 		$this->options = $options;
 		$this->dbActions = erpPRODBActions::getInstance();
@@ -348,21 +350,33 @@ class erpProRelated {
 		 */
 		if ( easyRelatedPostsPRO::get_instance()->isRatingSystemOn() == TRUE ) {
 			$weights [ 'clicks' ] = 0.15;
-			if ( $this->options [ 'fetchBy' ] == 'categories' ) {
-				$weights [ 'categories' ] = 0.85;
-				$weights [ 'tags' ] = 0;
-			} else {
+			if ( $this->options [ 'fetchBy' ] == 'tags_first_then_categories' ) {
+				$weights [ 'categories' ] = 0.25;
+				$weights [ 'tags' ] = 0.60;
+			} elseif ( $this->options [ 'fetchBy' ] == 'tags' ) {
 				$weights [ 'categories' ] = 0;
 				$weights [ 'tags' ] = 0.85;
+			} elseif ( $this->options [ 'fetchBy' ] == 'categories_first_then_tags' ) {
+				$weights [ 'categories' ] = 0.60;
+				$weights [ 'tags' ] = 0.25;
+			} else {
+				$weights [ 'categories' ] = 0.85;
+				$weights [ 'tags' ] = 0;
 			}
 		} else {
 			$weights [ 'clicks' ] = 0;
-			if ( $this->options [ 'fetchBy' ] == 'categories' ) {
-				$weights [ 'categories' ] = 1;
-				$weights [ 'tags' ] = 0;
-			} else {
+			if ( $this->options [ 'fetchBy' ] == 'tags_first_then_categories' ) {
+				$weights [ 'categories' ] = 0.3;
+				$weights [ 'tags' ] = 0.7;
+			} elseif ( $this->options [ 'fetchBy' ] == 'tags' ) {
 				$weights [ 'categories' ] = 0;
 				$weights [ 'tags' ] = 1;
+			} elseif ( $this->options [ 'fetchBy' ] == 'categories_first_then_tags' ) {
+				$weights [ 'categories' ] = 0.7;
+				$weights [ 'tags' ] = 0.3;
+			} else {
+				$weights [ 'categories' ] = 1;
+				$weights [ 'tags' ] = 0;
 			}
 		}
 		return $weights;

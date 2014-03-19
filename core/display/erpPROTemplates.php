@@ -106,7 +106,7 @@ abstract class erpPROTemplates {
 	 */
 	function __construct( ) {
 		erpPROPaths::requireOnce(erpPROPaths::$erpPROView);
-		$this->templatesBasePath = EPR_PRO_BASE_PATH . '/front/views';
+		$this->templatesBasePath = EPR_PRO_BASE_PATH . 'front/views';
 	}
 
 	/**
@@ -150,10 +150,6 @@ abstract class erpPROTemplates {
 		if (empty($templateName) || empty($this->templatesBasePath)) {
 			return '';
 		}
-		// Get template path
-		if (empty($this->basePath)) {
-			$this->basePath = self::getTemplatePath($templateName, $this->templatesBasePath);
-		}
 
 		$xmlFilePath = '';
 		// Get contents of folder
@@ -189,6 +185,8 @@ abstract class erpPROTemplates {
 	 * @since 1.0.0
 	 */
 	public function load($templateName){
+		// define template base path
+		$this->basePath = self::getTemplatePath($templateName, $this->templatesBasePath);
 		// Get xml path
 		$templateXMLPath = $this->getTemplateXMLPath($templateName);
 		if (empty($templateXMLPath)) {
@@ -207,8 +205,6 @@ abstract class erpPROTemplates {
 		}
 		// TODO Remove debug
 		do_action('debug',__FUNCTION__.' reading options');
-		// define template base path
-		$this->basePath = pathinfo($templateXMLPath,PATHINFO_DIRNAME);
 		// read name
 		if (isset($xml->name)) {
 			$this->name = (string)$xml->name;

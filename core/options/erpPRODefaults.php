@@ -84,8 +84,9 @@ class erpPRODefaults {
 			"a:2:{s:6:'rating';a:2:{s:5:'order';s:4:'desc';s:4:'rank';i:1;}s:4:'date';a:2:{s:5:'order';s:4:'desc';s:4:'rank';i:2;}}",  // rating desc date desc
 			"a:2:{s:6:'rating';a:2:{s:5:'order';s:4:'desc';s:4:'rank';i:1;}s:4:'date';a:2:{s:5:'order';s:4:'asc';s:4:'rank';i:2;}}",  // rating desc date asc
 			"a:2:{s:6:'rating';a:2:{s:5:'order';s:4:'asc';s:4:'rank';i:1;}s:4:'date';a:2:{s:5:'order';s:4:'desc';s:4:'rank';i:2;}}",  // rating asc date desc
-			"a:2:{s:6:'rating';a:2:{s:5:'order';s:4:'asc';s:4:'rank';i:1;}s:4:'date';a:2:{s:5:'order';s:4:'asc';s:4:'rank';i:2;}}"  // rating asc date asc
-		);
+			"a:2:{s:6:'rating';a:2:{s:5:'order';s:4:'asc';s:4:'rank';i:1;}s:4:'date';a:2:{s:5:'order';s:4:'asc';s:4:'rank';i:2;}}"
+	);	// rating asc date asc
+
 
 	public static $sortRelatedByOption = array (
 			array (
@@ -207,6 +208,13 @@ class erpPRODefaults {
 			'rating_ascending_then_date_descending' => 9,
 			'rating_descending_then_date_ascending' => 10,
 			'rating_ascending_then_date_ascending' => 11
+	);
+
+	public static $fetchByOptions = array (
+			'Categories',
+			'Tags',
+			'Categories first, then tags',
+			'Tags first, then categories'
 	);
 
 	/**

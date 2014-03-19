@@ -79,7 +79,7 @@ class erpPROHTMLHelper {
 			$output = '<tr><td><label for="' . $optID . '">' . $optName . ' :' . '</td>';
 			$output .= '<td><select class="erp-optsel" id="' . $optID . '" name="' . $optID . '">';
 			foreach ( $optMultiple as $key => $val ) {
-				$valLow = strtolower( str_replace( ' ', '_', $val ) );
+				$valLow = strtolower( str_replace(',','',str_replace( ' ', '_', $val )) );
 				$output .= '<option value="' . $valLow . '"' . selected( $id, $valLow, FALSE ) . '>' . $val . '</option>';
 			}
 			$output .= '</select></label></td></tr>';

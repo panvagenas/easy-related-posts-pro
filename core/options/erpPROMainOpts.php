@@ -71,7 +71,7 @@ class erpPROMainOpts extends erpPROOptions {
 	}
 
 	public function saveOptions( $newOptions ) {
-	if ( isset( $newOptions [ 'title' ] ) ) {
+		if ( isset( $newOptions [ 'title' ] ) ) {
 			$this->options [ 'title' ] = strip_tags( $newOptions [ 'title' ] );
 		}
 		if ( isset( $newOptions [ 'numberOfPostsToDisplay' ] ) && $newOptions [ 'numberOfPostsToDisplay' ] > 0 ) {
@@ -141,14 +141,20 @@ class erpPROMainOpts extends erpPROOptions {
 		if ( isset( $newOptions [ 'dsplLayout' ] ) ) {
 			$this->options [ 'dsplLayout' ] = strip_tags( $newOptions [ 'dsplLayout' ] );
 		}
-		if ( isset( $newOptionse [ 'categories' ] ) ) {
+		if ( isset( $newOptions [ 'categories' ] ) ) {
 			$this->options [ 'categories' ] = ( array ) $newOptions [ 'categories' ];
+		} else {
+			$this->options [ 'categories' ] = array();
 		}
-		if ( isset( $newOptionse [ 'tags' ] ) ) {
+		if ( isset( $newOptions [ 'tags' ] ) ) {
 			$this->options [ 'tags' ] = ( array ) $newOptions [ 'tags' ];
+		} else {
+			$this->options [ 'tags' ] = array();
 		}
-		if ( isset( $newOptionse [ 'postTypes' ] ) ) {
+		if ( isset( $newOptions [ 'postTypes' ] ) ) {
 			$this->options [ 'postTypes' ] = ( array ) $newOptions [ 'postTypes' ];
+		} else {
+			$this->options [ 'postTypes' ] = array();
 		}
 		update_option( $this->optionsArrayName, $this->options );
 	}
