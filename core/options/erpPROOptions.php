@@ -28,19 +28,6 @@ abstract class erpPROOptions {
 		$this->ratingSytem = isset( $this->options [ 'sortRelatedBy' ] ) ? ( bool ) strpos( $this->options [ 'sortRelatedBy' ], 'rating' ) : false;
 	}
 
-	// public function getTemplatePath($templatesPath){
-	// erpPROPaths::requireOnce(erpPROPaths::$erpPROFileHelper);
-	// $templates = erpPROFileHelper::dirToArray(erpPRODefaults::getPath('mainTemplates'));
-	// $templateFolder = '';
-	// foreach ($templates as $key => $value) {
-	// if (strcasecmp(str_replace('_', ' ', $this->options['dsplLayout']), $value) === 0) {
-	// $templateFolder = $value;
-	// break;
-	// }
-	// }
-	// return $templatesPath . '/' . $templateFolder . '/' . $this->options['dsplLayout'] . '.php';
-	// }
-
 	/**
 	 * Loads the options from DB
 	 *
@@ -119,6 +106,7 @@ abstract class erpPROOptions {
 	 * @since 1.0.0
 	 */
 	public function isRatingSystemOn( ) {
+		// TODO This no longer should be consedered since all posts are rated
 		return $this->ratingSytem === NULL ? FALSE : $this->ratingSytem;
 	}
 
@@ -128,13 +116,17 @@ abstract class erpPROOptions {
 	 * @param string $optName
 	 * @return boolean True if option is set, false otherwise
 	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
-	 * @since
-	 *
-	 *
-	 *
-	 *
+	 * @since 1.0.0
 	 */
 	public function isOptionSet( $optName ) {
 		return isset( $this->options [ $optName ] ) ? TRUE : FALSE;
+	}
+
+	public function haveToShowThumbnail() {
+		return isset($this->options['content']) && in_array('thumbnail', $this->options['content']);
+	}
+
+	public function haveToShowExcerpt() {
+		return isset($this->options['content']) && in_array('excerpt', $this->options['content']);
 	}
 }

@@ -188,7 +188,7 @@ class easyRelatedPostsPRO {
 			if (!$template->isLoaded()) {
 				return $content;
 			}
-			$relContent = $template->display( $result, false, $this->mainOpts->getOptions(), $ratings );
+			$relContent = $template->display( $result, $this->mainOpts, $ratings, false );
 
 			// TODO Remove debug
 			do_action( 'debug', __FUNCTION__ . ' returning rel content' );
@@ -243,14 +243,11 @@ class easyRelatedPostsPRO {
 			if ( is_array( $postCategories ) && !empty( $postCategories ) ) {
 				$catIds = array ();
 				foreach ( $postCategories as $cat ) {
-					// if ( in_array( $cat->term_id, $exCats ) ) {
-					// return TRUE;
-					// }
 					array_push( $catIds, $cat->term_id );
-					$intersect = array_intersect( $catIds, $exCats );
-					if ( !empty( $intersect ) ) {
-						return TRUE;
-					}
+				}
+				$intersect = array_intersect( $catIds, $exCats );
+				if ( !empty( $intersect) && count($intersect) == count($postCategories))  {
+					return TRUE;
 				}
 			}
 		}
@@ -261,13 +258,10 @@ class easyRelatedPostsPRO {
 			if ( is_array( $postTags ) && !empty( $postTags ) ) {
 				$tagsIds = array ();
 				foreach ( $postTags as $tag ) {
-					// if ( in_array( $tag->term_id, $exTags ) ) {
-					// return TRUE;
-					// }
 					array_push( $tagsIds, (string) $tag->term_id );
 				}
 				$intersect = array_intersect( $tagsIds, $exTags );
-				if ( !empty( $intersect ) ) {
+				if ( !empty( $intersect )  && count($intersect) == count($postTags)) {
 					return TRUE;
 				}
 			}
@@ -277,7 +271,6 @@ class easyRelatedPostsPRO {
 
 	/**
 	 * Checks if it's time to display related
-	 * TODO Maybe this should be in a class that will be accesible form other plugin components
 	 *
 	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
 	 * @since 1.0.0

@@ -94,9 +94,11 @@ class erpPROPostData {
 		$this->post = $post;
 		$this->ID = $post->ID;
 		$this->setTitle();
-		$this->setExcerpt( $options [ 'excLength' ], $options [ 'moreTxt' ] );
+		// TODO This is called from template
+		//$this->setExcerpt( $options [ 'excLength' ], $options [ 'moreTxt' ] );
 		$this->rating = $rating;
-		$this->setThumbnail( $options [ 'defaultThumbnail' ] );
+		// TODO This is called from template
+		//$this->setThumbnail( $options [ 'defaultThumbnail' ] );
 		$this->setPermalink( $hostPost );
 		$this->setPostDate( 'Y-m-d H:i:s' );
 		$this->setPositions( $options );
@@ -149,6 +151,9 @@ class erpPROPostData {
 	 * @since 1.0.0
 	 */
 	public function getExcerpt( ) {
+		if (!isset($this->excerpt)) {
+			$this->setExcerpt(erpPRODefaults::$comOpts [ 'excLength' ], erpPRODefaults::$comOpts['moreTxt']);
+		}
 		return $this->excerpt;
 	}
 	/**
@@ -158,7 +163,12 @@ class erpPROPostData {
 	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
-	private function setExcerpt( $charlength, $moreText ) {
+	public function setExcerpt( $charlength, $moreText ) {
+		/*
+		 * When no exc is set by the user then apply filters get the excerpt
+		 * loads all post content. As a result much more time and memory
+		 * is used (eg when post has many pictures)
+		 */
 		$excerpt = apply_filters('get_the_excerpt', $this->post->post_excerpt);
 		$charlength++;
 		if ( mb_strlen( $excerpt ) > $charlength ) {
@@ -207,6 +217,10 @@ class erpPROPostData {
 		// TODO Set an option to diplay a default thumbnail
 		erpPROPaths::requireOnce(erpPROPaths::$resize);
 
+		if (!isset($this->thumbnail)) {
+			$this->setThumbnail(erpPRODefaults::$comOpts['defaultThumbnail']);
+		}
+
 		if ( $height && $crop ) {
 			// TODO Find a way to set retina
 			$retina = false;
@@ -229,12 +243,13 @@ class erpPROPostData {
 	/**
 	 * Sets post thumbnail URL
 	 * @param string $defaultThumbnail URL to default thumbnail
-	 * @return \display\erpPROPostData
+	 * @param string $size Optional, default is 'single-post-thumbnail'
+	 * @return erpPROPostData
 	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
-	private function setThumbnail( $defaultThumbnail ) {
-		$thumbnail = wp_get_attachment_image_src( get_post_thumbnail_id( $this->ID ), "single-post-thumbnail" );
+	public function setThumbnail( $defaultThumbnail, $size = 'single-post-thumbnail' ) {
+		$thumbnail = wp_get_attachment_image_src( get_post_thumbnail_id( $this->ID ), $size );
 		$this->thumbnail = isset( $thumbnail [ 0 ] ) ? $thumbnail [ 0 ] : $defaultThumbnail;
 		return $this;
 	}
@@ -266,18 +281,18 @@ class erpPROPostData {
 		return $this;
 	}
 	/**
-	 * Set positions based on options (contentPositioning)
+	 * Set positions based on options (content)
 	 * @param array $options Assoc array
 	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	private function setPositions( $options ) {
-		if ( !isset( $options [ 'contentPositioning' ] ) ) {
+		if ( !isset( $options [ 'content' ] ) ) {
 			$this->positions [ 0 ] = &$this->thumbnail;
 			$this->positions [ 1 ] = &$this->title;
 			$this->positions [ 2 ] = &$this->excerpt;
 		} else {
-			foreach ( $options [ 'contentPositioning' ] as $k => $v ) {
+			foreach ( $options [ 'content' ] as $k => $v ) {
 				if ( $v == 'title' ) {
 					$this->positions [ $k ] = &$this->title;
 				} elseif ( $v == 'thumbnail' ) {
@@ -302,8 +317,6 @@ class erpPROPostData {
 	/**
 	 */
 	function __destruct( ) {
-
-		// TODO - Insert your code here
 	}
 }
 

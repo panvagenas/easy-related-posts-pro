@@ -113,16 +113,26 @@
 </p>
 <hr>
 <p style="text-align: center">
-	<strong>Thumbnail</strong>
+	<strong>Content</strong>
 </p>
 <p>
-	<label
-		for="<?php echo $widgetInstance->get_field_id('dsplThumbnail'); ?>">
-		<?php _e('Show post thumbnail:'); ?>
-	</label> <input class="erp_wid_opt4"
-		id="<?php echo $widgetInstance->get_field_id('dsplThumbnail'); ?>"
-		name="<?php echo $widgetInstance->get_field_name('dsplThumbnail'); ?>"
-		type="checkbox" <?php echo checked($options['dsplThumbnail']); ?> />
+	<label for="<?php echo $widgetInstance->get_field_id('content'); ?>"><?php echo 'Content to display: '; ?>
+		<select class="" id="<?php echo $widgetInstance->get_field_id('content'); ?>"
+			name="<?php echo $widgetInstance->get_field_name('content'); ?>">
+			<?php
+			foreach (erpPRODefaults::$contentPositioningOptions as $key => $value) {
+				$o = strtolower(str_replace(',', '', str_replace(' ', '-', $value)));
+				?>
+				<option
+					value="<?php echo $o; ?>"
+					<?php selected(implode('-',(array)$options['content']), $o); ?>>
+					<?php echo $value; ?>
+				</option>
+				<?php
+			}
+			?>
+		</select>
+	</label>
 </p>
 <p>
 	<label
@@ -156,7 +166,7 @@
 </p>
 <hr>
 <p style="text-align: center">
-	<strong>Layout</strong>
+	<strong>Templates</strong>
 </p>
 <p>
 	<?php
@@ -166,8 +176,8 @@
 	$temp = new erpPROWidTemplates();
 	$templates = $temp->getTemplateNames();
 	?>
-	<label for="<?php echo $widgetInstance->get_field_id('dsplLayout'); ?>">Display
-		layout :</label> <select class="dsplLayout"
+	<label for="<?php echo $widgetInstance->get_field_id('dsplLayout'); ?>">Template :</label>
+	<select class="dsplLayout"
 		name="<?php echo $widgetInstance->get_field_name('dsplLayout'); ?>"
 		id="<?php echo $widgetInstance->get_field_id('dsplLayout'); ?>">
 		<?php
@@ -191,45 +201,6 @@
 	?>
 
 </p>
-<p style="text-align: center">
-	<strong>Content positioning</strong>
-</p>
-<?php // TODO rm this if not to implement it?>
-<!--	<figure style="width: 50px; height: 50px; background-color: #808080; display: inline-block;">
- 	<figcaption>Thumb Title Excerpt</figcaption>
- 	</figure>
-	<figure style="width: 50px; height: 50px; background-color: #808080; display: inline-block;">
- 	<figcaption>Title Thumb Excerpt</figcaption>
- 	</figure>
-	<figure style="width: 50px; height: 50px; background-color: #808080; display: inline-block;">
- 	<figcaption>Title Excerpt Thumb</figcaption>
- 	</figure> -->
-<input type="radio" value="thumbnail-title-excerpt"
-	id="<?php echo $widgetInstance->get_field_id('contentPositioning'); ?>-1"
-	name="<?php echo $widgetInstance->get_field_name('contentPositioning'); ?>-group"
-	<?php checked(implode('-', $options['contentPositioning']), 'thumbnail-title-excerpt'); ?>>
-<label
-	for="<?php echo $widgetInstance->get_field_id('contentPositioning'); ?>-1">
-	Thumbnail, title, excerpt </label>
-<br>
-
-<input type="radio" value="title-thumbnail-excerpt"
-	id="<?php echo $widgetInstance->get_field_id('contentPositioning'); ?>-2"
-	name="<?php echo $widgetInstance->get_field_name('contentPositioning'); ?>-group"
-	<?php checked(implode('-', $options['contentPositioning']), 'title-thumbnail-excerpt'); ?>>
-<label
-	for="<?php echo $widgetInstance->get_field_id('contentPositioning'); ?>-2">
-	Title, thumbnail, excerpt </label>
-<br>
-
-<input type="radio" value="title-excerpt-thumbnail"
-	id="<?php echo $widgetInstance->get_field_id('contentPositioning'); ?>-3"
-	name="<?php echo $widgetInstance->get_field_name('contentPositioning'); ?>-group"
-	<?php checked(implode('-', $options['contentPositioning']), 'title-excerpt-thumbnail'); ?>>
-<label
-	for="<?php echo $widgetInstance->get_field_id('contentPositioning'); ?>-3">
-	Title, excerpt, thumbnail </label>
-<br>
 <hr>
 <p style="text-align: center">
 	<strong>Text properties</strong>

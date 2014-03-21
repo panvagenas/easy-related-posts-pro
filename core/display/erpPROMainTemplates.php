@@ -36,7 +36,7 @@ class erpPROMainTemplates extends erpPROTemplates {
 	 * @see \display\erpPROTemplates::display()
 	 * @since 1.0.0
 	 */
-	public function display(WP_Query $wpq, $supressOthers = FALSE, $additionalOptions = array(), $ratings = array()) {
+	public function display(WP_Query $wpq, erpPROOptions $optObj, $ratings = array(), $supressOthers = FALSE) {
 		// Check if we should return empty content
 		if (self::$supressOthers === true) {
 			return '';
@@ -46,7 +46,7 @@ class erpPROMainTemplates extends erpPROTemplates {
 			self::$supressOthers = true;
 		}
 		// Return content
-		return parent::display($wpq, $additionalOptions, $ratings);
+		return parent::display($wpq, $optObj, $ratings);
 	}
 }
 

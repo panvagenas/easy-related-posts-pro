@@ -382,7 +382,7 @@ abstract class erpPROTemplates {
 	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
-	public function display(WP_Query $wpq, $additionalOptions = array(), $ratings = array()){
+	public function display(WP_Query $wpq, erpPROOptions $optionsObj, $ratings = array()){
 		// TODO Remove debug
 		do_action('debug',__FUNCTION__.' starting display');
 
@@ -394,19 +394,30 @@ abstract class erpPROTemplates {
 		erpPRODBHelper::addDisplayed($from, array_keys($ratings));
 		// TODO Remove debug
 		do_action('debug',__FUNCTION__.' setting additional options');
-		$this->setOptions($additionalOptions);
+		$this->setOptions($optionsObj->getOptions());
 
 		$data = array();
 		$data['title'] = $this->options['title'];
 		$data['options'] = $this->options;
 		$data['posts'] = array();
 		$data['uniqueID'] = $this->uniqueInstanceID;
+		$data['optionsObj'] = $optionsObj;
+
+		$dsplThumb = $optionsObj->haveToShowThumbnail();
+		$dsplExc = $optionsObj->haveToShowExcerpt();
+
 		// TODO Remove debug
 		do_action('debug',__FUNCTION__.' forming postdata');
 		while ($wpq->have_posts()) {
 			$wpq->the_post();
 			$rating = isset($ratings[get_the_ID()]) ? $ratings[get_the_ID()] : null;
 			$postData = new erpPROPostData($wpq->post, $this->options, $rating, $from);
+			if ($dsplExc) {
+				$postData->setExcerpt($optionsObj->getValue('excLength'), $optionsObj->getValue('moreTxt'));
+			}
+			if ($dsplThumb) {
+				$postData->setThumbnail($optionsObj->getValue('defaultThumbnail'));
+			}
 			array_push($data['posts'], $postData);
 		}
 

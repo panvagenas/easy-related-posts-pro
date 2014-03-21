@@ -20,9 +20,9 @@ erpPROPaths::requireOnce(erpPROPaths::$erpPROOptions);
 class erpPROMainOpts extends erpPROOptions {
 
 	public function __construct( ) {
-		parent::__construct();
 		$this->optionsArrayName = EPR_PRO_MAIN_OPTIONS_ARRAY_NAME;
 		$this->loadOptions();
+		parent::__construct();
 	}
 
 	public function loadOptions( ) {
@@ -83,16 +83,11 @@ class erpPROMainOpts extends erpPROOptions {
 		if ( isset( $newOptions [ 'offset' ] ) && $newOptions [ 'offset' ] >= 0 ) {
 			$this->options [ 'offset' ] = ( int ) $newOptions [ 'offset' ];
 		}
-		if ( isset( $newOptions [ 'contentPositioning' ] ) ) {
-			$this->options [ 'contentPositioning' ] = strip_tags( $newOptions [ 'contentPositioning' ] );
+		if ( isset( $newOptions [ 'content' ] ) ) {
+			$this->options [ 'content' ] = explode('-', strip_tags($newOptions [ 'content' ]) );
 		}
 		if ( isset( $newOptions [ 'sortRelatedBy' ] ) ) {
 			$this->options [ 'sortRelatedBy' ] = strip_tags( $newOptions [ 'sortRelatedBy' ] );
-		}
-		if ( isset( $newOptions [ 'dsplThumbnail' ] ) ) {
-			$this->options [ 'dsplThumbnail' ] = true;
-		} else {
-			$this->options [ 'dsplThumbnail' ] = false;
 		}
 		if ( isset( $newOptions [ 'postTitleFontSize' ] ) && $newOptions [ 'postTitleFontSize' ] >= 0 ) {
 			$this->options [ 'postTitleFontSize' ] = ( int ) $newOptions [ 'postTitleFontSize' ];

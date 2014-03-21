@@ -51,11 +51,6 @@ erpPROPaths::requireOnce(erpPROPaths::$erpPROHTMLHelper);
 					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'number', 'Offset', 'offset', array (
 							'size' => '2pt'
 					) );
-					// TODO This should be transfered to layout as contentPositioning
-					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'select', 'Content', 'content', array (
-							'Post title',
-							'Title + excerpt'
-					) );
 					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'select', 'Sort related by', 'sortRelatedBy', array (
 							'Date descending',
 							'Date ascending',
@@ -70,6 +65,43 @@ erpPROPaths::requireOnce(erpPROPaths::$erpPROHTMLHelper);
 							'Rating descending then Date ascending',
 							'Rating ascending then Date ascending',
 					) );
+					?>
+				</table>
+			</div>
+			<div id="tabs-3">
+				<table class="lay-opt-table">
+					<tr>
+						<th colspan="2">Layout Options</th>
+					</tr>
+					<tr>
+						<td>
+							<label for="content">Content to display: </label>
+						</td>
+						<td>
+							<select class="" id="content" name="content">
+								<?php
+								foreach (erpPRODefaults::$contentPositioningOptions as $key => $value) {
+									$o = strtolower(str_replace(',', '', str_replace(' ', '-', $value)));
+									?>
+									<option
+										value="<?php echo $o; ?>"
+										<?php selected(implode('-',(array)$erpPROOptions['content']), $o); ?>>
+										<?php echo $value; ?>
+									</option>
+									<?php
+								}
+								?>
+							</select>
+						</td>
+					</tr>
+					<?php
+					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'checkbox', 'Crop thumbnail', 'cropThumbnail' );
+					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'number', 'Thumbnail height', 'thumbnailHeight', array (
+							'size' => '2pt'
+					) );
+					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'number', 'Thumbnail width (optional)', 'thumbnailWidth', array (
+							'size' => '2pt'
+					) );
 					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'number', 'Post title size (px)', 'postTitleFontSize', array (
 							'size' => '2pt'
 					) );
@@ -80,25 +112,6 @@ erpPROPaths::requireOnce(erpPROPaths::$erpPROHTMLHelper);
 							'size' => '2pt'
 					) );
 					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'text', 'Read more text', 'moreTxt' );
-					?>
-				</table>
-			</div>
-			<div id="tabs-3">
-				<!--<h3>Layout Options</h3>-->
-				<table class="lay-opt-table">
-					<tr>
-						<th colspan="2">Layout Options</th>
-					</tr>
-
-					<?php
-					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'checkbox', 'Display thumbnail', 'dsplThumbnail' );
-					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'checkbox', 'Crop thumbnail', 'cropThumbnail' );
-					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'number', 'Thumbnail height', 'thumbnailHeight', array (
-							'size' => '2pt'
-					) );
-					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'number', 'Thumbnail width (optional)', 'thumbnailWidth', array (
-							'size' => '2pt'
-					) );
 				?>
 				</table>
 				<?php
@@ -206,8 +219,8 @@ erpPROPaths::requireOnce(erpPROPaths::$erpPROHTMLHelper);
 						<td><label for="custom-post-types-<?php echo $k; ?>"><?php echo $v->name; ?>
 								:</label></td>
 						<td><input class="erp-optchbx custom" id="custom-post-types-<?php echo $k; ?>"
-							name="post_types[]" type="checkbox" value="<?php echo $k; ?>"
-							<?php if (in_array($k, $erpPROOptions['post_types'])) echo 'checked="checked"'; ?> />
+							name="postTypes[]" type="checkbox" value="<?php echo $k; ?>"
+							<?php if (in_array($k, $erpPROOptions['postTypes'])) echo 'checked="checked"'; ?> />
 						</td>
 					</tr>
 					<?php
@@ -231,7 +244,7 @@ erpPROPaths::requireOnce(erpPROPaths::$erpPROHTMLHelper);
 						<td><label for="builtin-post-types-<?php echo $k; ?>"><?php echo $v->name; ?>
 								:</label></td>
 						<td><input class="erp-optchbx built-in" id="builtin-post-types-<?php echo $k; ?>"
-							name="post_types[]" type="checkbox" value="<?php echo $k; ?>"
+							name="postTypes[]" type="checkbox" value="<?php echo $k; ?>"
 							<?php if (in_array($k, $erpPROOptions['postTypes'])) echo 'checked="checked"'; ?> />
 						</td>
 					</tr>
@@ -243,6 +256,8 @@ erpPROPaths::requireOnce(erpPROPaths::$erpPROHTMLHelper);
 			<!--</div>-->
 		</div>
 		<?php echo get_submit_button( 'Update options', 'primary large', 'Save' ); ?>
+	<?php //echo get_submit_button('Rebuild cache', 'button', 'rebuidCacheButton', true, 'readonly'); ?>
+<input id="clearCacheButton" class="button" type="button" value="Clear cache" name="clearCacheButton">
 		<input id="tab-spec" type="hidden" name="tab-spec">
 		<script type="text/javascript">
 			var templateRoot = "<?php echo $temp->getTemplatesBasePath(); ?>";

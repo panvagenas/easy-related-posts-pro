@@ -28,7 +28,7 @@ if ( ! defined( 'WPINC' ) ) {
 				<div class="erpProRelContainer erpCol-sm-<?php echo 12 / $options['numOfPostsPerRow']; ?>" style="">
 					<a href="<?php echo $v->getPermalink() ?>" class="erpProPostLink">
 						<?php
-						foreach ($options['contentPositioning'] as $key => $value) {
+						foreach ($options['content'] as $key => $value) {
 							include plugin_dir_path(__FILE__).'components/'.$value.'.php';
 						}
 						?>

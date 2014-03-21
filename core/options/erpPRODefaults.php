@@ -87,7 +87,12 @@ class erpPRODefaults {
 			"a:2:{s:6:'rating';a:2:{s:5:'order';s:4:'asc';s:4:'rank';i:1;}s:4:'date';a:2:{s:5:'order';s:4:'asc';s:4:'rank';i:2;}}"
 	);	// rating asc date asc
 
-
+	/**
+	 * Options available for related storting
+	 *
+	 * @since 1.0.0
+	 * @var array
+	 */
 	public static $sortRelatedByOption = array (
 			array (
 					'date' => array (
@@ -195,6 +200,12 @@ class erpPRODefaults {
 			)
 	);
 
+	/**
+	 * Sortkeys (sort_key_string => $indexInSortOptionsArrays)
+	 *
+	 * @since 1.0.0
+	 * @var array
+	 */
 	public static $sortKeys = array (
 			'date_descending' => 0,
 			'date_ascending' => 1,
@@ -209,12 +220,28 @@ class erpPRODefaults {
 			'rating_descending_then_date_ascending' => 10,
 			'rating_ascending_then_date_ascending' => 11
 	);
-
+	/**
+	 * Options for related fetching options
+	 *
+	 * @since 1.0.0
+	 * @var array
+	 */
 	public static $fetchByOptions = array (
 			'Categories',
 			'Tags',
 			'Categories first, then tags',
 			'Tags first, then categories'
+	);
+
+
+	public static $contentPositioningOptions = array(
+		'Title',
+		'Title, excerpt',
+		'Title, thumbnail',
+		'Thumbnail, title',
+		'Thumbnail, title, excerpt',
+		'Title, thumbnail, excerpt',
+		'Title, excerpt, thumbnail'
 	);
 
 	/**
@@ -228,14 +255,12 @@ class erpPRODefaults {
 			'numberOfPostsToDisplay' => 6,
 			'fetchBy' => 'categories',
 			'offset' => 0,
-			'content' => 'post_title',
-			'contentPositioning' => array (
+			'content' => array (
 					'thumbnail',
 					'title',
 					'excerpt'
 			),
 			'sortRelatedBy' => 'date_descending',
-			'dsplThumbnail' => 1,
 			'defaultThumbnail' => FALSE,  // TODO Set a default thumbnail
 			'postTitleFontSize' => 0,
 			'excFontSize' => 0,

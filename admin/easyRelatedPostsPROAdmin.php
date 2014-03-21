@@ -106,6 +106,10 @@ class easyRelatedPostsPROAdmin {
 				$this,
 				'loadTemplateOptions'
 		) );
+		add_action( 'wp_ajax_erpClearCache', array (
+		$this,
+		'clearCache'
+				) );
 	}
 
 	/**
@@ -190,6 +194,8 @@ class easyRelatedPostsPROAdmin {
 			wp_enqueue_script( 'wp-color-picker' );
 			wp_enqueue_script( 'jquery-effects-fade' );
 			wp_enqueue_script( 'jquery-ui-tabs' );
+			wp_enqueue_script( 'jquery-ui-progressbar' );
+
 			wp_enqueue_script( $this->plugin_slug . '-qtip', plugins_url( 'assets/js/jquery.qtip.min.js', __FILE__ ), array (
 					'jquery'
 			), easyRelatedPostsPRO::VERSION );
@@ -239,6 +245,7 @@ class easyRelatedPostsPROAdmin {
 		$options = $optObj->getOptions();
 
 		$viewData [ 'erpPROOptions' ] = is_array( $options ) ? array_merge( $defaultOptions, $options ) : $defaultOptions;
+		$viewData [ 'optObj' ] = $optObj;
 
 		erpPROView::render( plugin_dir_path( __FILE__ ) . 'views/admin.php', $viewData, TRUE );
 	}
@@ -286,6 +293,65 @@ class easyRelatedPostsPROAdmin {
 		), admin_url( 'options-general.php' ) ) );
 		exit();
 	}
+
+	/**
+	 * Clears cache. !IMPORTAND! Not to be called directly. Only through ajax
+	 *
+	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @since 1.0.0
+	 */
+	public function clearCache(){
+		if (!user_can_access_admin_page()) {
+			echo json_encode(false);
+			die();
+		}
+		erpPROPaths::requireOnce(erpPROPaths::$erpPRODBActions);
+		$db = erpPRODBActions::getInstance();
+		$db->emptyRelTable();
+		echo json_encode(true);
+		die();
+	}
+
+	/**
+	 * This is for a future release. It should be called through ajax and rebuild cache for all posts in that are cached
+	 *
+	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @since 1.0.0
+	 */
+	public function rebuildCache() {
+// 		if (!user_can_access_admin_page()) {
+// 			echo json_encode(false);
+// 			die();
+// 		}
+// 		set_time_limit(0);
+// 		$post_ids = get_posts(array(
+// 				'numberposts'   => -1, // get all posts.
+// 				'fields'        => 'ids', // Only get post IDs
+// 		));
+// 		erpPROPaths::requireOnce(erpPROPaths::$erpPRODBActions);
+// 		erpPROPaths::requireOnce(erpPROPaths::$erpPROMainOpts);
+// 		erpPROPaths::requireOnce(erpPROPaths::$erpProRelated);
+
+// 		$db = erpPRODBActions::getInstance();
+// 		$mainOpts = new erpPROMainOpts();
+// 		$rel = erpProRelated::get_instance($mainOpts->getOptions());
+
+// // 		$exPostTypes = $mainOpts->getValue('postTypes');
+// // 		$exCats = $mainOpts->getValue('categories');
+// // 		$exTags = $mainOpts->getValue('tags');
+
+// 		$allCached = $db->getUniqueIds();
+// 		$db->emptyRelTable();
+
+// 		foreach ($post_ids as $key => $value) {
+// 			$rel->doRating((int)$value);
+// 		}
+
+
+// 		echo json_encode(true);
+// 		die();
+	}
+
 	/**
 	 * This is called through ajax hook and returns the plugin options as defined in template settings file
 	 *

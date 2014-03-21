@@ -62,8 +62,11 @@ class erpPROWidget extends WP_Widget {
 
 			erpPROPaths::requireOnce( erpPROPaths::$erpProRelated );
 			erpPROPaths::requireOnce( erpPROPaths::$erpPROMainOpts );
+			erpPROPaths::requireOnce(erpPROPaths::$erpPROWidOpts);
 
 			$mainOpts = new erpPROMainOpts();
+			$widOpts = new erpPROWidOpts($instance);
+
 			// Check if we have to exclude taxos or post types
 			if ( isset( $new_instance [ "taxExclude" ] ) && $new_instance [ "taxExclude" ] ) {
 				$instance [ 'tags' ] = $mainOpts->getValue( 'tags' );
@@ -94,7 +97,7 @@ class erpPROWidget extends WP_Widget {
 				// else display rel content
 				echo $args [ 'before_widget' ];
 				echo $args [ 'before_title' ] . $instance [ 'title' ] . $args [ 'after_title' ];
-				echo $template->display( $wpQ, $instance, $relatedObj->getRatingsFromRelDataObj() );
+				echo $template->display( $wpQ, $widOpts, $relatedObj->getRatingsFromRelDataObj() );
 				echo $args [ 'after_widget' ];
 			} else {
 				// else diplay empty widget

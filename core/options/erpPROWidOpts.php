@@ -19,13 +19,12 @@ erpPROPaths::requireOnce(erpPROPaths::$erpPROOptions);
 class erpPROWidOpts extends erpPROOptions {
 
 	public function __construct( Array $instance = NULL ) {
-		parent::__construct();
 		$this->optionsArrayName = 'widget_' . erpPRODefaults::erpPROWidgetOptionsArrayName;
+
 		if ( $instance !== NULL && !empty( $instance ) ) {
-			$this->setOptions( $instance );
-		} else {
-			$this->ratingSytem = $this->checkRatingSystem();
+			$this->options = $instance;
 		}
+		$this->ratingSytem = $this->checkRatingSystem();
 	}
 
 	/**
@@ -63,13 +62,8 @@ class erpPROWidOpts extends erpPROOptions {
 		if ( isset( $new_instance [ 'fetchBy' ] ) ) {
 			$instance [ 'fetchBy' ] = strip_tags( $new_instance [ 'fetchBy' ] );
 		}
-		if ( isset( $new_instance [ 'erpcontent' ] ) ) {
-			$instance [ 'erpcontent' ] = strip_tags( $new_instance [ 'erpcontent' ] );
-		}
-		if ( isset( $new_instance [ "dsplThumbnail" ] ) ) {
-			$instance [ 'dsplThumbnail' ] = ( bool ) $new_instance [ "dsplThumbnail" ] ? 1 : 0;
-		} else {
-			$instance [ 'dsplThumbnail' ] = false;
+		if ( isset( $new_instance [ 'content' ] ) ) {
+			$instance [ 'content' ] = explode('-', strip_tags($new_instance [ 'content' ]) );
 		}
 		if ( isset( $new_instance [ "hideIfNoPosts" ] ) ) {
 			$instance [ 'hideIfNoPosts' ] = ( bool ) $new_instance [ "hideIfNoPosts" ] ? 1 : 0;
@@ -124,9 +118,6 @@ class erpPROWidOpts extends erpPROOptions {
 		}
 		if ( isset( $new_instance [ 'defaultThumbnail' ] ) && strpos( $new_instance [ 'defaultThumbnail' ], get_home_url() ) !== FALSE ) {
 			$instance [ 'defaultThumbnail' ] = esc_url( $new_instance [ 'defaultThumbnail' ] );
-		}
-		if ( isset( $new_instance [ 'contentPositioning' ] ) ) {
-			$instance [ 'contentPositioning' ] = explode( '-', strip_tags( $new_instance [ 'contentPositioning' ] ) );
 		}
 		if ( isset( $new_instance [ 'sortRelatedBy' ] ) ) {
 			$instance [ 'sortRelatedBy' ] = strip_tags( $new_instance [ 'sortRelatedBy' ] );

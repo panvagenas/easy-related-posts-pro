@@ -124,10 +124,22 @@ class erpPRODBActions {
 	 * @since 1.0.0
 	 */
 	public function getAllOccurrences( $pid ) {
-		$this->performCachedQueries();
 		$where = ' pid1="' . $pid . '" OR pid2="' . $pid . '" ';
 		$result = $this->db->get_results( 'SELECT * FROM ' . $this->tableName . ' WHERE ' . $where, ARRAY_A );
 		return $result;
+	}
+
+	public function getAll(){
+		return $this->db->get_results( 'SELECT * FROM ' . $this->tableName);
+	}
+
+	public function getUniqueIds(){
+		$res =  $this->db->get_results( 'SELECT DISTINCT(pid1) AS pid FROM ' . $this->tableName, ARRAY_A);
+		return is_array($res) ? $res : array();
+	}
+
+	public function emptyRelTable(){
+		return $this->db->query('DELETE FROM '.$this->tableName);
 	}
 
 	/**
@@ -288,7 +300,7 @@ class erpPRODBActions {
 				$this->addDisplayed( $pid1, $value );
 			}
 		} else {
-			if ( empty( $this->displayed [ $pid1 ] ) && !empty( $pid2 ) ) {
+			if ( empty( $this->displayed [ $pid1 ] ) ) {
 				$this->displayed [ $pid1 ] = array (
 						$pid2
 				);

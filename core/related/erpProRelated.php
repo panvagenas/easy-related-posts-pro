@@ -121,16 +121,20 @@ class erpProRelated {
 				return $this->relData->getResult();
 			}
 		}
-
-		if ( isset( $this->options [ 'sortRelatedBy' ] ) ) {
-			$sortOrder = erpPRODefaults::$sortRelatedByOption [ erpPRODefaults::$sortKeys [ $this->options [ 'sortRelatedBy' ] ] ];
-		} else {
-			$sortOrder = erpPRODefaults::$sortRelatedByOption [ 0 ];
+		// Check if we have relTable in pool
+		foreach ( $this->relDataPool as $key => $value ) {
+			if ($value->pid == $pid) {
+				$relTable = $value->relTable;
+				// TODO Remove debug
+				do_action( 'debug', 'getRelated found relTable in pool' );
+				break;
+			}
 		}
-		/**
-		 * Check if we have cached ratings
-		 */
-		$relTable = $this->dbActions->getAllOccurrences( $pid );
+		// If we couldn't get a relTable search in cache
+		if (!isset($relTable)) {
+			$relTable = $this->dbActions->getAllOccurrences( $pid );
+		}
+
 		// TODO Remove debug
 		do_action( 'debug', __FUNCTION__ . ' creating rel data obj' );
 		$criticalOptions = array_intersect_key( $this->options, array_flip( erpPRODefaults::$criticalOpts ) );
@@ -156,6 +160,12 @@ class erpProRelated {
 			do_action( 'debug', 'getRelated no rel in pool, no rel in cache and empty reltable. returning empty object' );
 			// Normally this should return an empty wp_query
 			return $this->relData->getResult();
+		}
+
+		if ( isset( $this->options [ 'sortRelatedBy' ] ) ) {
+			$sortOrder = erpPRODefaults::$sortRelatedByOption [ erpPRODefaults::$sortKeys [ $this->options [ 'sortRelatedBy' ] ] ];
+		} else {
+			$sortOrder = erpPRODefaults::$sortRelatedByOption [ 0 ];
 		}
 
 		// TODO Remove debug
@@ -225,7 +235,7 @@ class erpProRelated {
 		if ( !empty( $postCats ) ) {
 			$qForm->setCategories( $postCats );
 
-			$qForm->exPostTypes( $this->options [ 'postTypes' ] );
+			$qForm->exPostTypes( $this->options [ 'postTypes' ] )->exCategories($this->options['categories'])->exTags($this->options['tags']);
 			$wpq = new WP_Query( $qForm->getArgsArray() );
 			$postsArray = $wpq->posts;
 			if ( !empty( $postsArray ) ) {
@@ -245,8 +255,8 @@ class erpProRelated {
 			}
 		}
 		if ( !empty( $postTags ) ) {
-			$qForm->clearCategories();
 			$qForm->setTags( $postTags );
+			$qForm->exPostTypes( $this->options [ 'postTypes' ] )->exCategories($this->options['categories'])->exTags($this->options['tags']);
 			$wpq = new WP_Query( $qForm->getArgsArray() );
 			$postsArray = $wpq->posts;
 			if ( !empty( $postsArray ) ) {
