@@ -26,11 +26,15 @@ class erpPROShortCodeOpts extends erpPROOptions {
 	public function loadOptions( Array $optionsArray ) {
 		$this->options = $optionsArray;
 
-		$this->ratingSytem = ( strpos( $this->options [ 'sortRelatedBy' ], 'rating' ) === false );
-		if ( $this->ratingSytem && class_exists( 'easyRelatedPostsPRO' ) ) {
-			$erp = easyRelatedPostsPRO::get_instance();
-			$erp->defineRatingSystem( TRUE );
-		}
+// 		$this->ratingSytem = ( strpos( $this->options [ 'sortRelatedBy' ], 'rating' ) === false );
+// 		if ( $this->ratingSytem && class_exists( 'easyRelatedPostsPRO' ) ) {
+// 			$erp = easyRelatedPostsPRO::get_instance();
+// 			$erp->defineRatingSystem( TRUE );
+// 		}
+	}
+
+	public function loadShortCodeOptions(Array $optionsArray){
+		$this->options = $optionsArray;
 	}
 
 	public function saveOptions( $newOptions ) {

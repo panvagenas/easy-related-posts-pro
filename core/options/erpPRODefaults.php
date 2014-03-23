@@ -56,7 +56,7 @@ class erpPRODefaults {
 	 * @since 1.0.0
 	 * @var bool
 	 */
-	const erpPRORatingSystem = FALSE;
+//	const erpPRORatingSystem = FALSE;
 
 	/**
 	 * This should be upddated if widget class name change
@@ -264,7 +264,7 @@ class erpPRODefaults {
 			'defaultThumbnail' => FALSE,  // TODO Set a default thumbnail
 			'postTitleFontSize' => 0,
 			'excFontSize' => 0,
-			'excLength' => 150,
+			'excLength' => 15,
 			'moreTxt' => ' ...read more',
 			'thumbnailHeight' => 150,
 			'thumbnailWidth' => 300,
@@ -305,10 +305,24 @@ class erpPRODefaults {
 			'excColorUse' => 0,
 			'hideIfNoPosts' => 0,
 			'taxExclude' => 0,
-			'ptypeExclude' => 0,
-			'carouselAutoTime' => 2,
-			'carouselDim' => 800,
-			'carouselPauseHover' => true
+			'ptypeExclude' => 0
+	);
+
+	/**
+	 * Shortcode options
+	 *
+	 * @since 1.0.0
+	 * @var array
+	 */
+	public static $shortCodeOpts = array (
+			'dsplLayout' => 'basic',
+			'postTitleColor' => '#ffffff',
+			'excColor' => '#ffffff',
+			'postTitleColorUse' => 0,
+			'excColorUse' => 0,
+			'hideIfNoPosts' => 0,
+			'taxExclude' => 0,
+			'ptypeExclude' => 0
 	);
 
 	/**

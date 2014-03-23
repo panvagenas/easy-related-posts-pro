@@ -5,13 +5,37 @@ erpPROPaths::requireOnce(erpPROPaths::$erpPROTemplates);
  * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
  */
 class erpPROShortcodeTemplates extends erpPROTemplates {
-	// TODO - Insert your code here
 
 	/**
 	 */
 	function __construct( ) {
+		parent::__construct();
+		$this->templatesBasePath = parent::getTemplatesBasePath() . '/shortcode';
+	}
 
-		// TODO - Insert your code here
+	/**
+	/* Overides parent to prevent sc options to be saved in db
+	 * @see erpPROTemplates::areOthersSuppressed()
+	 * @since 1.0.0
+	 */
+	public function saveTemplateOptions($newOptions) {
+		return false;
+	}
+
+	/**
+	 * (non-PHPdoc)
+	 * @see erpPROTemplates::display()
+	 * @since 1.0.0
+	 */
+	public function display(WP_Query $wpq, erpPROOptions $optObj, $ratings = array()) {
+		// Check if we should return empty content
+		if (parent::areOthersSuppressed() === true) {
+			// TODO Remove debug
+			do_action( 'debug', 'erpPROShortcodeTemplates suppressed' );
+			return '';
+		}
+		// Return content
+		return parent::display($wpq, $optObj, $ratings);
 	}
 
 	/**

@@ -38,6 +38,7 @@ class erpPROPaths {
 	// Front
 	public static $easyRelatedPostsPRO = 'front/easyRelatedPostsPRO.php';
 	public static $erpPROTracker = 'front/erpPROTracker.php';
+	public static $erpPROShortcode = 'front/erpPROShortcode.php';
 
 
 

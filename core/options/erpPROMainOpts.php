@@ -62,13 +62,13 @@ class erpPROMainOpts extends erpPROOptions {
 	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
-	public function checkRatingSystem( ) {
-		if ( empty( $this->options ) ) {
-			$this->loadOptions();
-		}
-		$this->ratingSytem = isset( $this->options [ 'sortRelatedBy' ] ) ? ( strpos( $this->options [ 'sortRelatedBy' ], 'rating' ) === false ) : false;
-		return $this->ratingSytem;
-	}
+// 	public function checkRatingSystem( ) {
+// 		if ( empty( $this->options ) ) {
+// 			$this->loadOptions();
+// 		}
+// 		$this->ratingSytem = isset( $this->options [ 'sortRelatedBy' ] ) ? ( strpos( $this->options [ 'sortRelatedBy' ], 'rating' ) === false ) : false;
+// 		return $this->ratingSytem;
+// 	}
 
 	public function saveOptions( $newOptions ) {
 		if ( isset( $newOptions [ 'title' ] ) ) {

@@ -17,6 +17,16 @@
  * @author Your Name <email@example.com>
  */
 abstract class erpPROTemplates {
+
+	private static $supressOthers = false;
+
+	public static function suppressOthers($value = true) {
+		self::$supressOthers = $value;
+	}
+
+	public static function areOthersSuppressed() {
+		return self::$supressOthers;
+	}
 	/**
 	 * Absolute path to templates folder
 	 *

@@ -35,7 +35,7 @@ abstract class erpPROOptions {
 	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
-	public function loadOptions(  ) {}
+	//public function loadOptions(  ) {}
 
 	/**
 	 * Get option array
@@ -59,7 +59,7 @@ abstract class erpPROOptions {
 	 * @since 1.0.0
 	 */
 	public function setOptions( $options ) {
-		$this->options = array_merge( $this->options, $options );
+		$this->options = array_merge( isset($this->options) ? $this->options : array(), $options );
 		return $this;
 	}
 
@@ -105,10 +105,10 @@ abstract class erpPROOptions {
 	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
-	public function isRatingSystemOn( ) {
-		// TODO This no longer should be consedered since all posts are rated
-		return $this->ratingSytem === NULL ? FALSE : $this->ratingSytem;
-	}
+// 	public function isRatingSystemOn( ) {
+// 		// TODO This no longer should be considered since all posts are rated
+// 		return $this->ratingSytem === NULL ? FALSE : $this->ratingSytem;
+// 	}
 
 	/**
 	 * Checks if specified option exists

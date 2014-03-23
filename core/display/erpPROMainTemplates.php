@@ -17,8 +17,6 @@ erpPROPaths::requireOnce(erpPROPaths::$erpPROTemplates);
  * @author Your Name <email@example.com>
  */
 class erpPROMainTemplates extends erpPROTemplates {
-	public static $supressOthers = false;
-
 	/**
 	 */
 	function __construct( ) {
@@ -36,14 +34,12 @@ class erpPROMainTemplates extends erpPROTemplates {
 	 * @see \display\erpPROTemplates::display()
 	 * @since 1.0.0
 	 */
-	public function display(WP_Query $wpq, erpPROOptions $optObj, $ratings = array(), $supressOthers = FALSE) {
+	public function display(WP_Query $wpq, erpPROOptions $optObj, $ratings = array()) {
 		// Check if we should return empty content
-		if (self::$supressOthers === true) {
+		if (parent::areOthersSuppressed() === true) {
+			// TODO Remove debug
+			do_action( 'debug', 'erpPROMainTemplates suppressed' );
 			return '';
-		}
-		// Check if we should suppress others
-		if ($supressOthers) {
-			self::$supressOthers = true;
 		}
 		// Return content
 		return parent::display($wpq, $optObj, $ratings);

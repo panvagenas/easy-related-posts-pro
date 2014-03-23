@@ -158,32 +158,33 @@ class erpPROPostData {
 	}
 	/**
 	 * Set post excerpt
-	 * @param int $charlength Excerpt length
+	 * @param int $excLength Excerpt length in words
 	 * @param string $moreText More text to be displayed after post excerpt
 	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
-	public function setExcerpt( $charlength, $moreText ) {
-		/*
-		 * When no exc is set by the user then apply filters get the excerpt
-		 * loads all post content. As a result much more time and memory
-		 * is used (eg when post has many pictures)
-		 */
-		$excerpt = apply_filters('get_the_excerpt', $this->post->post_excerpt);
-		$charlength++;
-		if ( mb_strlen( $excerpt ) > $charlength ) {
-			$subex = mb_substr( $excerpt, 0, $charlength - 5 );
-			$exwords = explode( ' ', $subex );
-			$excut = -( mb_strlen( $exwords [ count( $exwords ) - 1 ] ) );
-			if ( $excut < 0 ) {
-				$this->excerpt = mb_substr( $subex, 0, $excut ) . $moreText;
-			} else {
-				$this->excerpt = $subex;
-			}
+	public function setExcerpt( $excLength, $moreText ) {
+		if ( !empty( $this->post->post_excerpt ) ) {
+			$exc = $this->post->post_excerpt;
 		} else {
-			$this->excerpt = $excerpt . $moreText;
+			$exc = $this->post->post_content;
 		}
+
+		$exc = strip_shortcodes( $exc );
+		$exc = str_replace( ']]>', ']]&gt;', $exc );
+		$exc = wp_strip_all_tags( $exc );
+
+		$tokens = explode( ' ', $exc, $excLength + 1 );
+
+		if ( count( $tokens ) > $excLength ) {
+			array_pop( $tokens );
+		}
+
+		array_push( $tokens, ' ' . $moreText );
+		$exc = implode( ' ', $tokens );
+		$this->excerpt = $exc;
 	}
+
 	/**
 	 * Get post rating
 	 * @return float
@@ -271,9 +272,10 @@ class erpPROPostData {
 	 */
 	private function setPermalink( $from ) {
 		$link = get_permalink( $this->ID );
-		if ( !easyRelatedPostsPRO::get_instance()->isRatingSystemOn() ) {
-			$this->permalink = $link;
-		} elseif ( strpos( $link, '?' ) !== FALSE ) {
+// 		if ( !easyRelatedPostsPRO::get_instance()->isRatingSystemOn() ) {
+// 			$this->permalink = $link;
+// 		} else
+		if ( strpos( $link, '?' ) !== FALSE ) {
 			$this->permalink = $link . '&erp_from=' . $from;
 		} else {
 			$this->permalink = $link . '?erp_from=' . $from;
@@ -312,6 +314,10 @@ class erpPROPostData {
 	 */
 	public function getContentAtPosition( $position ) {
 		return $position [ $position - 1 ];
+	}
+
+	public function getTheId(){
+		return $this->ID;
 	}
 
 	/**

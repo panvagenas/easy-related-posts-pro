@@ -24,7 +24,7 @@ class erpPROWidOpts extends erpPROOptions {
 		if ( $instance !== NULL && !empty( $instance ) ) {
 			$this->options = $instance;
 		}
-		$this->ratingSytem = $this->checkRatingSystem();
+// 		$this->ratingSytem = $this->checkRatingSystem();
 	}
 
 	/**
@@ -34,18 +34,18 @@ class erpPROWidOpts extends erpPROOptions {
 	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
-	public function checkRatingSystem( ) {
-		$DBOptionsArray = get_option( $this->optionsArrayName );
-		$this->ratingSytem = false;
-		if ( is_array( $DBOptionsArray ) ) {
-			foreach ( $DBOptionsArray as $key => $value ) {
-				if ( is_array( $value ) && array_key_exists( 'sortRelatedBy', $value ) ) {
-					$this->ratingSytem = $this->ratingSytem || ( strpos( $value [ 'sortRelatedBy' ], 'rating' ) === false );
-				}
-			}
-		}
-		return $this->ratingSytem;
-	}
+// 	public function checkRatingSystem( ) {
+// 		$DBOptionsArray = get_option( $this->optionsArrayName );
+// 		$this->ratingSytem = false;
+// 		if ( is_array( $DBOptionsArray ) ) {
+// 			foreach ( $DBOptionsArray as $key => $value ) {
+// 				if ( is_array( $value ) && array_key_exists( 'sortRelatedBy', $value ) ) {
+// 					$this->ratingSytem = $this->ratingSytem || ( strpos( $value [ 'sortRelatedBy' ], 'rating' ) === false );
+// 				}
+// 			}
+// 		}
+// 		return $this->ratingSytem;
+// 	}
 
 	public function saveOptions( $new_instance, $old_instance ) {
 		$instance = $old_instance + erpPRODefaults::$comOpts + erpPRODefaults::$widOpts;

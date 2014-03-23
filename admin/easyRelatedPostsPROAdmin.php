@@ -89,15 +89,19 @@ class easyRelatedPostsPROAdmin {
 		) );
 
 		// Do rating when saving new posts
-		// TODO Remove 1
-		if ( $plugin->isRatingSystemOn() ) {
+// 		if ( $plugin->isRatingSystemOn() ) {
 			// TODO This action should be fired only with permited post types. This can be done with variable action hooks
 			// save_post_{$post->post_type} http://adambrown.info/p/wp_hooks/hook/save_post_%7B$post-%3Epost_type%7D
-			add_action( 'save_post', array (
+			add_action( 'transition_post_status', array (
 					$this,
 					'doRating'
-			) );
-		}
+			), 10, 3 );
+// 		}
+
+		/**
+		 * Delete cache entries when a post is deleted
+		 */
+		add_action('delete_post', array($this, 'deletePostInCache'), 10);
 
 		/**
 		 * Ajax hooks
@@ -135,22 +139,30 @@ class easyRelatedPostsPROAdmin {
 		return self::$instance;
 	}
 
-	public function doRating( $post_id ) {
-		if ( wp_is_post_revision( $post_id ) ) {
-			return;
+	public function doRating( $newStatus, $oldStatus, $post ) {
+		// If a revision get the pid from parent
+		if ( $revision = wp_is_post_revision( $post->ID ) ) {
+			$pid = $revision;
+		} else {
+			$pid = $post->ID;
 		}
 
-		erpPROPaths::requireOnce(erpPROPaths::$erpProRelated);
-		erpPROPaths::requireOnce(erpPROPaths::$erpPROMainOpts);
+		if ( $oldStatus == 'publish' && $newStatus != 'publish' ) {
+			// Post is now unpublished, we should remove cache entries
+			$this->deletePostInCache($pid);
+		} elseif ($newStatus == 'publish'){
+			erpPROPaths::requireOnce(erpPROPaths::$erpProRelated);
+			erpPROPaths::requireOnce(erpPROPaths::$erpPROMainOpts);
 
-		$opts = new erpPROMainOpts();
+			$opts = new erpPROMainOpts();
 
-		$opts->setOptions( array (
-				'queryLimit' => 300
-		) );
-		$rel = erpProRelated::get_instance( $opts->getOptions() );
+			$opts->setOptions( array (
+					'queryLimit' => 300
+			) );
+			$rel = erpProRelated::get_instance( $opts->getOptions() );
 
-		$rel->doRating( $post_id );
+			$rel->doRating( $pid );
+		}
 	}
 
 	/**
@@ -310,6 +322,12 @@ class easyRelatedPostsPROAdmin {
 		$db->emptyRelTable();
 		echo json_encode(true);
 		die();
+	}
+
+	public function deletePostInCache($pid){
+		erpPROPaths::requireOnce(erpPROPaths::$erpPRODBActions);
+		$db = erpPRODBActions::getInstance();
+		$db->deleteAllOccurrences($pid);
 	}
 
 	/**

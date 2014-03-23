@@ -220,7 +220,7 @@ class erpProRelated {
 	public function doRating( $pid ) {
 		$qForm = new erpPROQueryFormater();
 		$ratingSystem = erpPRORatingSystem::get_instance( $this->relData );
-		$ratingSystemIsOn = easyRelatedPostsPRO::get_instance()->isRatingSystemOn();
+// 		$ratingSystemIsOn = easyRelatedPostsPRO::get_instance()->isRatingSystemOn();
 		// TODO Maybe query limit should follow a dif approach
 		if ( isset( $this->options [ 'queryLimit' ] ) ) {
 			$qForm->setMainArgs( $pid, $this->options [ 'queryLimit' ] );
@@ -246,9 +246,9 @@ class erpProRelated {
 					$relTable [ $value->ID ] [ 'score1_tags' ] = $ratingSystem->rateBasedOnTags( $value->ID, $pid );
 					$relTable [ $value->ID ] [ 'post_date1' ] = get_the_time( 'Y-m-d', $pid );
 					$relTable [ $value->ID ] [ 'post_date2' ] = get_the_time( 'Y-m-d', $value->ID );
-					if ( $ratingSystemIsOn ) {
+// 					if ( $ratingSystemIsOn ) {
 						$this->dbActions->insertRecToRel( $pid, $value->ID, $relTable [ $value->ID ] );
-					}
+// 					}
 					$relTable [ $value->ID ] [ 'pid1' ] = $pid;
 					$relTable [ $value->ID ] [ 'pid2' ] = $value->ID;
 				}
@@ -269,9 +269,9 @@ class erpProRelated {
 						$relTable [ $value->ID ] [ 'score1_tags' ] = $ratingSystem->rateBasedOnTags( $value->ID, $pid );
 						$relTable [ $value->ID ] [ 'post_date1' ] = get_the_time( 'Y-m-d H:i:s', $pid );
 						$relTable [ $value->ID ] [ 'post_date2' ] = get_the_time( 'Y-m-d H:i:s', $value->ID );
-						if ( $ratingSystemIsOn ) {
+// 						if ( $ratingSystemIsOn ) {
 							$this->dbActions->insertRecToRel( $pid, $value->ID, $relTable [ $value->ID ] );
-						}
+// 						}
 						$relTable [ $value->ID ] [ 'pid1' ] = $pid;
 						$relTable [ $value->ID ] [ 'pid2' ] = $value->ID;
 					}
@@ -358,7 +358,7 @@ class erpProRelated {
 		 * TODO This must be instance specific.
 		 * Check local options for this
 		 */
-		if ( easyRelatedPostsPRO::get_instance()->isRatingSystemOn() == TRUE ) {
+// 		if ( easyRelatedPostsPRO::get_instance()->isRatingSystemOn() == TRUE ) {
 			$weights [ 'clicks' ] = 0.15;
 			if ( $this->options [ 'fetchBy' ] == 'tags_first_then_categories' ) {
 				$weights [ 'categories' ] = 0.25;
@@ -373,22 +373,22 @@ class erpProRelated {
 				$weights [ 'categories' ] = 0.85;
 				$weights [ 'tags' ] = 0;
 			}
-		} else {
-			$weights [ 'clicks' ] = 0;
-			if ( $this->options [ 'fetchBy' ] == 'tags_first_then_categories' ) {
-				$weights [ 'categories' ] = 0.3;
-				$weights [ 'tags' ] = 0.7;
-			} elseif ( $this->options [ 'fetchBy' ] == 'tags' ) {
-				$weights [ 'categories' ] = 0;
-				$weights [ 'tags' ] = 1;
-			} elseif ( $this->options [ 'fetchBy' ] == 'categories_first_then_tags' ) {
-				$weights [ 'categories' ] = 0.7;
-				$weights [ 'tags' ] = 0.3;
-			} else {
-				$weights [ 'categories' ] = 1;
-				$weights [ 'tags' ] = 0;
-			}
-		}
+// 		} else {
+// 			$weights [ 'clicks' ] = 0;
+// 			if ( $this->options [ 'fetchBy' ] == 'tags_first_then_categories' ) {
+// 				$weights [ 'categories' ] = 0.3;
+// 				$weights [ 'tags' ] = 0.7;
+// 			} elseif ( $this->options [ 'fetchBy' ] == 'tags' ) {
+// 				$weights [ 'categories' ] = 0;
+// 				$weights [ 'tags' ] = 1;
+// 			} elseif ( $this->options [ 'fetchBy' ] == 'categories_first_then_tags' ) {
+// 				$weights [ 'categories' ] = 0.7;
+// 				$weights [ 'tags' ] = 0.3;
+// 			} else {
+// 				$weights [ 'categories' ] = 1;
+// 				$weights [ 'tags' ] = 0;
+// 			}
+// 		}
 		return $weights;
 	}
 

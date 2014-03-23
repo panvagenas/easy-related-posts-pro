@@ -95,6 +95,27 @@ add_action( 'erpPRO_weekly_event_hook', array('easyRelatedPostsPRO','weeklyCronJ
  */
 add_action( 'plugins_loaded', array( 'easyRelatedPostsPRO', 'get_instance' ) );
 add_action( 'widgets_init', function (){register_widget( "erpPROWidget" );} );
+/**
+ * Shortcode functionality
+ */
+/**
+ * Shortcode function
+ *
+ * @param array $attrs
+ * @return string
+ * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+ * @since 1.0.0
+ */
+function erpPROShortcode( $attrs ) {
+	// TODO Remove debug
+	do_action( 'debug', 'ShortCode tag found. Starting SC functionality' );
+	global $post;
+	erpPROPaths::requireOnce(erpPROPaths::$erpPROShortcode);
+
+	$sc = new erpPROShortcode($attrs);
+	return $sc->display($post->ID);
+}
+add_shortcode( 'erp', 'erpPROShortcode' );
 
 /*----------------------------------------------------------------------------*
  * Dashboard and Administrative Functionality

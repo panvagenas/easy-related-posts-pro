@@ -128,16 +128,53 @@ class erpPRODBActions {
 		$result = $this->db->get_results( 'SELECT * FROM ' . $this->tableName . ' WHERE ' . $where, ARRAY_A );
 		return $result;
 	}
+	/**
+	 * Deletes all occurences of a post in DB
+	 * @param int $pid
+	 * @return int|false Number of rows affected/selected or false on error
+	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @since 1.0.0
+	 */
+	public function deleteAllOccurrences( $pid ){
+		if (!is_int($pid)) {
+			return false;
+		}
+		$where = ' pid1="' . $pid . '" OR pid2="' . $pid . '" ';
+		return $this->db->query('DELETE FROM '.$this->tableName.' WHERE '.$where);
+	}
 
+	/**
+	 * Returns all records from rel table
+	 *
+	 * @return mixed Database query results
+	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @since 1.0.0
+	 */
 	public function getAll(){
 		return $this->db->get_results( 'SELECT * FROM ' . $this->tableName);
 	}
 
+	/**
+	 * Returns unique ids in pid1 field of rel table
+	 *
+	 * @return array If rel table is empty an amty array will be returned
+	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @since 1.0.0
+	 */
 	public function getUniqueIds(){
 		$res =  $this->db->get_results( 'SELECT DISTINCT(pid1) AS pid FROM ' . $this->tableName, ARRAY_A);
 		return is_array($res) ? $res : array();
 	}
 
+	/**
+	 * Flushes all records from rel table in DB.
+	 *
+	 * TODO Maybe we should back up in file firsts to make sure there is a way back in case this happens accidentaly
+	 *
+	 * @return int|false Number of rows affected/selected or false on error
+	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @since 1.0.0
+	 */
 	public function emptyRelTable(){
 		return $this->db->query('DELETE FROM '.$this->tableName);
 	}

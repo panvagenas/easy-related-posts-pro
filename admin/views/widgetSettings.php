@@ -134,6 +134,13 @@
 		</select>
 	</label>
 </p>
+<?php // TODO Thumbnail, title and exc and text mods should be configured per template basis ?>
+<p style="text-align: center">
+	Title
+</p>
+<p style="text-align: center">
+	Thumbnail
+</p>
 <p>
 	<label
 		for="<?php echo $widgetInstance->get_field_id('cropThumbnail'); ?>">
@@ -163,6 +170,9 @@
 		size="24" type="text"
 		value="<?php echo esc_attr($options['defaultThumbnail']); ?>" />
 	</label>
+</p>
+<p style="text-align: center">
+	Excerpt
 </p>
 <hr>
 <p style="text-align: center">

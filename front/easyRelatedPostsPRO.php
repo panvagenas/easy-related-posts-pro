@@ -92,7 +92,7 @@ class easyRelatedPostsPRO {
 	 * @since 1.0.0
 	 * @var boolean
 	 */
-	protected $ratingSystem;
+// 	protected $ratingSystem;
 
 	/**
 	 * Initialize the plugin by setting localization and loading public scripts
@@ -116,13 +116,13 @@ class easyRelatedPostsPRO {
 		/**
 		 * Check if rating system is on in order to call tracker
 		 */
-		if ( $this->isRatingSystemOn() ) {
+// 		if ( $this->isRatingSystemOn() ) {
 			$tracker = new erpPROTracker( $this->DB, $this->wpSession );
 			add_action( 'init', array (
 					$tracker,
 					'tracker'
 			) );
-		}
+// 		}
 		/**
 		 * Call content modifier
 		 */
@@ -164,14 +164,14 @@ class easyRelatedPostsPRO {
 	 */
 	public function contentFilter( $content ) {
 		// TODO Remove debug
-		// do_action('debug',__FUNCTION__.' started');
+		do_action('debug',__FUNCTION__.' started');
 		global $post;
 		/**
 		 * Check if is time to take action
 		 */
 		if ( $this->isShowTime( $post ) && !$this->isInExcludedPostTypes( $post ) && !$this->isInExcludedTaxonomies( $post ) && ( bool ) $this->mainOpts->getValue( 'activate' ) ) {
 			// TODO Remove debug
-			do_action( 'debug', __FUNCTION__ . ' started' );
+			do_action( 'debug', __FUNCTION__ . ' showtime' );
 
 			erpPROPaths::requireOnce(erpPROPaths::$erpPROMainTemplates);
 			erpPROPaths::requireOnce(erpPROPaths::$erpProRelated);
@@ -195,7 +195,7 @@ class easyRelatedPostsPRO {
 			return $relContent . $content;
 		}
 		// TODO Remove debug
-		// do_action('debug',__FUNCTION__.' returning def content');
+		do_action('debug',__FUNCTION__.' returning def content');
 		return $content;
 	}
 
@@ -206,12 +206,12 @@ class easyRelatedPostsPRO {
 	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
-	public function isRatingSystemOn( $overide = FALSE ) {
-		if ( !isset( $this->ratingSystem ) ) {
-			$this->ratingSystem = $overide || $this->mainOpts->checkRatingSystem() || $this->widOpts->checkRatingSystem();
-		}
-		return $this->ratingSystem;
-	}
+// 	public function isRatingSystemOn( $overide = FALSE ) {
+// 		if ( !isset( $this->ratingSystem ) ) {
+// 			$this->ratingSystem = $overide || $this->mainOpts->checkRatingSystem() || $this->widOpts->checkRatingSystem();
+// 		}
+// 		return $this->ratingSystem;
+// 	}
 
 	/**
 	 * Checks if current post belongs in an excluded post type
