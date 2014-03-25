@@ -24,30 +24,49 @@
  	 * @var erpPROShortCodeOpts
  	 */
 	private $optObj;
+	/**
+	 * @deprecated
+	 *
+	 * @since
+	 * @var unknown
+	 */
 	private $scOpts;
 
-	private $transaleKeys = array(
+	/**
+	 * Profile name
+	 *
+	 * @since 1.0.0
+	 * @var string
+	 */
+	private $profile;
 
-	);
+	/**
+	 * The name of the array that holds SC profiles
+	 *
+	 * @since 1.0.0
+	 * @var string
+	 */
+	private $shortCodeProfilesArrayName = 'erpPROShortCodeProfiles';
 
-	public function __construct(Array $shortCodeOptions) {
-		$this->scOpts = $shortCodeOptions;
+	public function __construct($shortCodeProfile) {
+		$this->profile = (string)$shortCodeProfile;
 	}
 
 	public function display($pid) {
 		// TODO Remove debug
 		do_action( 'debug', 'ShortCode started' );
+		// TODO Remove debug
+		do_action( 'debug', 'ShortCode translating options' );
+		if (!isset($this->optObj)) {
+			if(!$this->loadProfileOptions()){
+				return '';
+			}
+		}
+
 		erpPROPaths::requireOnce(erpPROPaths::$erpPROTemplates);
 		if (!is_int($pid) || erpPROTemplates::areOthersSuppressed()) {
 			$this->setSuppressOthers();
 			return '';
-		}
-		// TODO Remove debug
-		do_action( 'debug', 'ShortCode translating options' );
-		if (!isset($this->optObj)) {
-			if(!$this->translateOptions()){
-				return '';
-			}
 		}
 
 		erpPROPaths::requireOnce(erpPROPaths::$erpPROShortcodeTemplates);
@@ -86,6 +105,35 @@
 		return $relContent;
 	}
 
+	/**
+	 * Loads profile options from database and creates options object
+	 * @return boolean true if profile was found, false otherwise
+	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @since 1.0.0
+	 */
+	private function loadProfileOptions(){
+		if (empty($this->profile)) {
+			return false;
+		}
+		$profiles = get_option($this->shortCodeProfilesArrayName);
+
+		if (empty($profiles) || empty($profiles[$this->profile])) {
+			return false;
+		}
+
+		$erpOptions = erpPRODefaults::$comOpts+erpPRODefaults::$shortCodeOpts;
+
+		$this->optObj = new erpPROShortCodeOpts();
+		$this->optObj->setOptions(array_merge($erpOptions, $profiles[$this->profile]));
+		return true;
+	}
+
+	/**
+	 * @deprecated
+	 * @return boolean
+	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @since
+	 */
 	private function translateOptions() {
 		// TODO Remove debug
 		do_action( 'debug', 'ShortCode starting translating loop' );
@@ -132,9 +180,9 @@
 		do_action( 'debug', 'ShortCode chck if have to suppress others' );
 		// Setting supress others option
 		erpPROPaths::requireOnce(erpPROPaths::$erpPROTemplates);
-		if (isset($this->scOpts['suppress_other']) && $this->scOpts['suppress_other'] == 'true') {
+		if (isset($this->optObj->getValue('suppress_other')) && $this->optObj->getValue('suppress_other') === true ) {
 			erpPROTemplates::suppressOthers(true);
-		} elseif (isset($this->scOpts['suppress_other']) && $this->scOpts['suppress_other'] == 'false') {
+		} elseif (isset($this->optObj->getValue('suppress_other')) && $this->optObj->getValue('suppress_other') === false) {
 			erpPROTemplates::suppressOthers(false);
 		}
 	}

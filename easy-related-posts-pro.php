@@ -109,6 +109,12 @@ add_action( 'widgets_init', function (){register_widget( "erpPROWidget" );} );
 function erpPROShortcode( $attrs ) {
 	// TODO Remove debug
 	do_action( 'debug', 'ShortCode tag found. Starting SC functionality' );
+
+	// If no profile is set return empty string
+	if (!isset($attrs['profile'])) {
+		return '';
+	}
+
 	global $post;
 	erpPROPaths::requireOnce(erpPROPaths::$erpPROShortcode);
 
