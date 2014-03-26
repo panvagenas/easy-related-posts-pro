@@ -242,6 +242,9 @@ class easyRelatedPostsPROAdmin {
 			wp_enqueue_style( $this->plugin_slug . '-admin-styles', plugins_url( 'assets/css/admin.css', __FILE__ ), array (), easyRelatedPostsPRO::VERSION );
 			wp_enqueue_style( $this->plugin_slug . '-qtip', plugins_url( 'assets/css/jquery.qtip-min.css', __FILE__ ), array (), easyRelatedPostsPRO::VERSION );
 		}
+		if ($screen->id === 'post') {
+			wp_enqueue_style( $this->plugin_slug . '-admin-styles', plugins_url( 'assets/css/SCHelper.css', __FILE__ ), array (), easyRelatedPostsPRO::VERSION );
+		}
 	}
 
 	/**
@@ -258,6 +261,7 @@ class easyRelatedPostsPROAdmin {
 		}
 
 		$screen = get_current_screen();
+
 		if ( $this->plugin_screen_hook_suffix == $screen->id || 'widgets' == $screen->id ) {
 			wp_enqueue_script( 'jquery' );
 			wp_enqueue_script( 'jquery-ui-core' );
@@ -283,6 +287,11 @@ class easyRelatedPostsPROAdmin {
 		if ( 'widgets' == $screen->id ) {
 			wp_enqueue_script( $this->plugin_slug . '-widget-settings', plugins_url( 'assets/js/widgetSettings.js', __FILE__ ), array (
 					$this->plugin_slug . '-admin-script'
+			), easyRelatedPostsPRO::VERSION );
+		}
+		if ($screen->id === 'post') {
+			wp_enqueue_script( $this->plugin_slug . '-simplemodal', plugins_url( 'assets/js/jquery.simplemodal.js', __FILE__ ), array (
+					'jquery'
 			), easyRelatedPostsPRO::VERSION );
 		}
 	}
@@ -441,7 +450,7 @@ class easyRelatedPostsPROAdmin {
 	 * @since 1.0.0
 	 */
 	public function loadShortcodeProfile(){
-		if (current_user_can('edit_posts')) {
+		if (!current_user_can('edit_posts')) {
 			echo json_encode( array('error' => 'Action not allowed') );
 			die();
 		}
@@ -468,7 +477,7 @@ class easyRelatedPostsPROAdmin {
 	 * @since 1.0.0
 	 */
 	public function saveShortcodeProfile(){
-		if (current_user_can('edit_posts')) {
+		if (!current_user_can('edit_posts')) {
 			echo json_encode( array('error' => 'Action not allowed') );
 			die();
 		}
@@ -501,7 +510,7 @@ class easyRelatedPostsPROAdmin {
 	 * @since 1.0.0
 	 */
 	public function deleteShortCodeProfile() {
-		if (current_user_can('edit_posts')) {
+		if (!current_user_can('edit_posts')) {
 			echo json_encode( array('error' => 'Action not allowed') );
 			die();
 		}
@@ -530,7 +539,7 @@ class easyRelatedPostsPROAdmin {
 	 * @since 1.0.0
 	 */
 	public function getShortCodeProfiles(){
-		if (current_user_can('edit_posts')) {
+		if (!current_user_can('edit_posts')) {
 			echo json_encode( array('error' => 'Action not allowed') );
 			die();
 		}
@@ -542,15 +551,21 @@ class easyRelatedPostsPROAdmin {
 		die();
 	}
 
+	/**
+	 * Echoes html to be desplayed in shortcode helper
+	 *
+	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @since 1.0.0
+	 */
 	public function getShortCodeHelperContent() {
-		if (current_user_can('edit_posts')) {
+		if (!current_user_can('edit_posts')) {
 			echo json_encode( array('error' => 'Action not allowed') );
 			die();
 		}
 
 		erpPROPaths::requireOnce(erpPROPaths::$erpPROShortcodeTemplates);
-		if (isset($_POST['profileName'])) {
-			$profileName = $_POST['profileName'];
+		if (isset($_GET['profileName'])) {
+			$profileName = $_GET['profileName'];
 			$profilesOptionsArray = get_option($this->shortCodeProfilesArrayName);
 			$profileOpts = isset($profilesOptionsArray[$profileName]) ? $profilesOptionsArray[$profileName] : null;
 		}
@@ -561,10 +576,10 @@ class easyRelatedPostsPROAdmin {
 		}
 
 		$template = new erpPROShortcodeTemplates();
-		$template->load($profileName);
+		$template->load($profileOpts['dsplLayout']);
 
 		if (!$template->isLoaded()) {
-			echo json_encode( array('error' => 'Template is not defined') );
+			echo json_encode( array('error' => 'Template is not defined', '->isLoaded()' => $_GET) );
 			die();
 		}
 
@@ -606,7 +621,7 @@ class easyRelatedPostsPROAdmin {
 	 * @since 1.0.0
 	 */
 	function erpPROButtonHook() {
-		if ( current_user_can('edit_posts') && get_user_option('rich_editing') == 'true' ) {
+		if ( current_user_can('edit_posts') && get_user_option('rich_editing') == 'true') {
 			add_filter("mce_external_plugins", array($this, "defineMCEHelperJS"));
 			add_filter('mce_buttons', array($this, 'registerMCEButton'));
 		}
@@ -620,6 +635,10 @@ class easyRelatedPostsPROAdmin {
 	 * @since 1.0.0
 	 */
 	function registerMCEButton($buttons) {
+		$screen = get_current_screen();
+		if (!isset($screen->id) || $screen->id !== 'post') {
+			return $buttons;
+		}
 		array_push($buttons, "|", "erpproshortcodehelper");
 		return $buttons;
 	}
@@ -631,6 +650,10 @@ class easyRelatedPostsPROAdmin {
 	 * @since 1.0.0
 	 */
 	function defineMCEHelperJS($pluginArray) {
+		$screen = get_current_screen();
+		if (!isset($screen->id) || $screen->id !== 'post') {
+			return $pluginArray;
+		}
 		$pluginArray['erpproshortcodehelper'] = plugins_url('/assets/js/erpPROMCEPlugin.js',__FILE__);
 		return $pluginArray;
 	}

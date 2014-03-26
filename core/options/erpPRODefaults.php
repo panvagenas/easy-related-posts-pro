@@ -316,8 +316,7 @@ class erpPRODefaults {
 	 */
 	public static $shortCodeOpts = array (
 			'suppressOthers' => false,
-			'profile' => 'default',
-			'dsplLayout' => 'basic',
+			'dsplLayout' => 'grid',
 			'postTitleColor' => '#ffffff',
 			'excColor' => '#ffffff',
 			'postTitleColorUse' => 0,
