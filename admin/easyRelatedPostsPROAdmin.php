@@ -268,7 +268,7 @@ class easyRelatedPostsPROAdmin {
 			wp_enqueue_script( 'wp-color-picker' );
 			wp_enqueue_script( 'jquery-effects-fade' );
 			wp_enqueue_script( 'jquery-ui-tabs' );
-			wp_enqueue_script( 'jquery-ui-progressbar' );
+			wp_enqueue_script( 'jquery-ui-progressbar' ); // TODO Not needed
 
 			wp_enqueue_script( $this->plugin_slug . '-qtip', plugins_url( 'assets/js/jquery.qtip.min.js', __FILE__ ), array (
 					'jquery'
@@ -290,9 +290,11 @@ class easyRelatedPostsPROAdmin {
 			), easyRelatedPostsPRO::VERSION );
 		}
 		if ($screen->id === 'post') {
-			wp_enqueue_script( $this->plugin_slug . '-simplemodal', plugins_url( 'assets/js/jquery.simplemodal.js', __FILE__ ), array (
-					'jquery'
-			), easyRelatedPostsPRO::VERSION );
+			wp_enqueue_script( 'jquery' );
+			wp_enqueue_script( 'jquery-ui-core' );
+			wp_enqueue_script( 'jquery-ui-tabs' );
+			wp_enqueue_script( 'jquery-ui-dialog' );
+			wp_enqueue_script( $this->plugin_slug . '-jq-form', plugins_url( 'assets/js/jq.form.min.js', __FILE__ ), array ( 'jquery' ), easyRelatedPostsPRO::VERSION );
 		}
 	}
 
@@ -579,14 +581,14 @@ class easyRelatedPostsPROAdmin {
 		$template->load($profileOpts['dsplLayout']);
 
 		if (!$template->isLoaded()) {
-			echo json_encode( array('error' => 'Template is not defined', '->isLoaded()' => $_GET) );
+			echo json_encode( array('error' => 'Template is not defined') );
 			die();
 		}
 
 		erpPROPaths::requireOnce(erpPROPaths::$erpPROView);
 
-		erpPROView::render(plugin_dir_path(__FILE__) . '/views/shortcodeHelper.php', array('erpPROOptions' => $profileOpts), true);
-
+		echo erpPROView::render(plugin_dir_path(__FILE__) . '/views/shortcodeHelper.php', array('erpPROOptions' => $profileOpts, 'shortCodeProfilesArrayName' => $this->shortCodeProfilesArrayName));
+		die();
 	}
 
 	/**
