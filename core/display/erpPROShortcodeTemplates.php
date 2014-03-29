@@ -19,7 +19,16 @@ class erpPROShortcodeTemplates extends erpPROTemplates {
 	 * @since 1.0.0
 	 */
 	public function saveTemplateOptions($newOptions) {
-		return false;
+		if (empty($newOptions) ) {
+			return array();
+		}
+		foreach ($newOptions as $k => $v){
+			if (!array_key_exists($k, $this->options)) {
+				unset($newOptions[$k]);
+			}
+		}
+		$this->setOptions(apply_filters('erpPROTemplateOptionsSaveValidation', $newOptions));
+		return is_array($this->options) ? $this->options : array();
 	}
 
 	/**

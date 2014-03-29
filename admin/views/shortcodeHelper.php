@@ -25,26 +25,29 @@ erpPROPaths::requireOnce(erpPROPaths::$erpPROHTMLHelper);
 			<div id="tabs-0">
 				<?php
 				$profile = get_option( $shortCodeProfilesArrayName );
-	// 			if (!empty($profile)) {
+				if (!empty($profile)) {
+					?>
+					<p>
+						Profile: <select id="profile" class="erp-optsel" name="profile">
+							<?php
+							foreach ((array)$profile as $key => $value) {
+								echo '<option value="' . $key . '">' . $key . '</option>';
+							}
+							?>
+						</select>
+					</p>
+					<?php
+					// TODO Set this dynamicaly based on the selection of profile field
+					$temp = $profile;
+					$erpPROOptions = array_merge($erpPROOptions, array_shift($temp));
+				}
 				?>
 				<p>
-					Profile: <select id="profile" class="erp-optsel" name="profile">
-						<?php
-						foreach ((array)$profile as $key => $value) {
-							echo '<option value="' . $value . '">' . $value . '</option>';
-						}
-						?>
-					</select>
-				</p>
-				<p>
-					New profile name: <input id="newProfile" class="erp-opttxt"
-						type="text" name="newProfile">
+					New profile name: <input id="profileName" class="erp-opttxt"
+						type="text" name="profileName">
 					<button type="submit" style="margin-left: 20px;"id"storeNewProfile">Save new
 						profile</button>
 				</p>
-				<?php
-	// 			}
-				?>
 			</div>
 			<div id="tabs-1">
 				<table class="gen-opt-table">
@@ -52,7 +55,7 @@ erpPROPaths::requireOnce(erpPROPaths::$erpPROHTMLHelper);
 						<th colspan="2">General Options</th>
 					</tr>
 					<?php
-					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'checkbox', 'Activate plugin', 'activate' );
+					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'checkbox', 'Suppress others', 'suppressOthers' );
 					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'text', 'Title to display', 'title' );
 					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'select', 'Rate posts by', 'fetchBy', erpPRODefaults::$fetchByOptions );
 					?>
@@ -130,9 +133,6 @@ erpPROPaths::requireOnce(erpPROPaths::$erpPROHTMLHelper);
 				?>
 				</table>
 				<?php
-	// 					erpPROHTMLHelper::requireFileHelper();
-	// 					$templates = erpPROFileHelper::dirToArray(erpPRODefaults::getPath('mainTemplates'));
-
 						erpPROPaths::requireOnce(erpPROPaths::$erpPROShortcodeTemplates);
 						$temp = new erpPROShortcodeTemplates();
 						$templates = $temp->getTemplateNames();
@@ -279,13 +279,110 @@ erpPROPaths::requireOnce(erpPROPaths::$erpPROHTMLHelper);
 			$('#tabs-holder').tabs();
 			// Store new profile functionality
 			var formOptions = {
-					url: ajaxurl,
-					data: {action: 'erpsaveShortcodeProfile'},
-				    success:    function() {
-				        alert('Thanks for your comment!');
-				    }
+				url: ajaxurl,
+				data: {action: 'erpsaveShortcodeProfile'},
+			    success:    function() {
+			        alert('Thanks for your comment!');
+			    }
+			}
+			$('#scForm').ajaxForm(formOptions);
+
+			/***********************************************************************
+			 * Load templates options
+			 **********************************************************************/
+			$('.dsplLayout')
+					.change(
+							function() {
+								var data = {
+									action : 'loadSCTemplateOptions',
+									template : $(this).val(),
+									profileName : $('#profile').val()
+								};
+								var that = $(this).parent().children('.templateSettings');
+								jQuery
+										.post(
+												ajaxurl,
+												data,
+												function(response) {
+													if (response == false) {
+														alert('Template has no options or template folder couldn\'t be found');
+														that.fadeOut('slow', null, function(){$(this).html('');});
+													} else {
+														that
+																.html(
+																		response['content']).fadeIn('slow');
+													}
+												}, 'json');
+							});
+			$('.dsplLayout').trigger('change');
+
+			/***********************************************************************
+			 * Check all checkboxes
+			 **********************************************************************/
+			$('#select-all-custom').click(function() {
+				if (!$(this).is(':checked')) {
+					$('.custom').attr('checked', false);
+				} else {
+					$('.custom').attr('checked', 'checked');
 				}
-				$('#scForm').ajaxForm(formOptions);
+			});
+
+			$('.custom').change(function() {
+				if ($('.custom:checked').length === $('.custom').length) {
+					$('#select-all-custom').attr('checked', 'checked');
+				} else {
+					$('#select-all-custom').attr('checked', false);
+				}
+			});
+
+			$('#select-all-built-in').click(function() {
+				if (!$(this).is(':checked')) {
+					$('.built-in').attr('checked', false);
+				} else {
+					$('.built-in').attr('checked', 'checked');
+				}
+			});
+
+			$('.built-in').change(function() {
+				if ($('.built-in:checked').length === $('.built-in').length) {
+					$('#select-all-built-in').attr('checked', 'checked');
+				} else {
+					$('#select-all-built-in').attr('checked', false);
+				}
+			});
+
+			$('#select-all-tag').click(function() {
+				if (!$(this).is(':checked')) {
+					$('.tag').attr('checked', false);
+				} else {
+					$('.tag').attr('checked', 'checked');
+				}
+			});
+
+			$('.tag').change(function() {
+				if ($('.tag:checked').length === $('.tag').length) {
+					$('#select-all-tag').attr('checked', 'checked');
+				} else {
+					$('#select-all-tag').attr('checked', false);
+				}
+			});
+
+			$('#select-all-cat').click(function() {
+				if (!$(this).is(':checked')) {
+					$('.cat').attr('checked', false);
+				} else {
+					$('.cat').attr('checked', 'checked');
+				}
+			});
+
+			$('.cat').change(function() {
+				if ($('.cat:checked').length === $('.cat').length) {
+					$('#select-all-cat').attr('checked', 'checked');
+				} else {
+					$('#select-all-cat').attr('checked', false);
+				}
+			});
+
 		})(jQuery);
 	</script>
 </div>

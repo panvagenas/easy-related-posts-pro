@@ -40,14 +40,6 @@
 	 */
 	private $profile;
 
-	/**
-	 * The name of the array that holds SC profiles
-	 *
-	 * @since 1.0.0
-	 * @var string
-	 */
-	private $shortCodeProfilesArrayName = 'erpPROShortCodeProfiles';
-
 	public function __construct($shortCodeProfile) {
 		$this->profile = (string)$shortCodeProfile;
 	}
@@ -115,7 +107,8 @@
 		if (empty($this->profile)) {
 			return false;
 		}
-		$profiles = get_option($this->shortCodeProfilesArrayName);
+		erpPROPaths::requireOnce(erpPROPaths::$erpPROShortCodeOpts);
+		$profiles = get_option(erpPROShortCodeOpts::$shortCodeProfilesArrayName);
 
 		if (empty($profiles) || empty($profiles[$this->profile])) {
 			return false;
@@ -180,9 +173,9 @@
 		do_action( 'debug', 'ShortCode chck if have to suppress others' );
 		// Setting supress others option
 		erpPROPaths::requireOnce(erpPROPaths::$erpPROTemplates);
-		if (isset($this->optObj->getValue('suppress_other')) && $this->optObj->getValue('suppress_other') === true ) {
+		if ( $this->optObj->getValue('suppress_other') === true ) {
 			erpPROTemplates::suppressOthers(true);
-		} elseif (isset($this->optObj->getValue('suppress_other')) && $this->optObj->getValue('suppress_other') === false) {
+		} elseif ( $this->optObj->getValue('suppress_other') === false) {
 			erpPROTemplates::suppressOthers(false);
 		}
 	}

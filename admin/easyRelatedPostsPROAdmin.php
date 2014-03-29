@@ -130,6 +130,10 @@ class easyRelatedPostsPROAdmin {
 				'clearCache'
 		) );
 
+		add_action( 'wp_ajax_loadSCTemplateOptions', array (
+				$this,
+				'loadSCTemplateOptions'
+		) );
 		add_action( 'wp_ajax_erploadShortcodeProfile', array (
 				$this,
 				'loadShortcodeProfile'
@@ -460,8 +464,8 @@ class easyRelatedPostsPROAdmin {
 			echo json_encode( array('error' => 'You must set a profile name') );
 			die();
 		}
-
-		$profile = get_option( $this->shortCodeProfilesArrayName );
+		erpPROPaths::requireOnce(erpPROPaths::$erpPROShortCodeOpts);
+		$profile = get_option( erpPROShortCodeOpts::$shortCodeProfilesArrayName );
 
 		if (!$profile || !isset($profile[$_POST [ 'profileName' ]]) || !is_array($profile[$_POST [ 'profileName' ]])) {
 			echo json_encode( array('error' => 'Profile not found in database') );
@@ -483,22 +487,29 @@ class easyRelatedPostsPROAdmin {
 			echo json_encode( array('error' => 'Action not allowed') );
 			die();
 		}
-		if ( !isset( $_POST [ 'profileName' ] ) || !isset( $_POST [ 'profileOptions' ] ) ) {
+		if ( !isset( $_POST [ 'profileName' ] ) ) {
 			echo json_encode( array('error' => 'You must set a profile name and define all options') );
 			die();
 		}
 
 		$profileName = wp_strip_all_tags($_POST [ 'profileName' ]);
-		$profileOptions = is_array($_POST [ 'profileOptions' ]) ? $_POST [ 'profileOptions' ] : array();
+		unset($_POST [ 'profileName' ]);
+		$profileOptions = $_POST;
 
-		$profile = get_option( $this->shortCodeProfilesArrayName );
+		erpPROPaths::requireOnce(erpPROPaths::$erpPROShortCodeOpts);
+		erpPROPaths::requireOnce(erpPROPaths::$erpPROShortcodeTemplates);
+
+		$profile = get_option( erpPROShortCodeOpts::$shortCodeProfilesArrayName );
+
+		$template = new erpPROShortcodeTemplates();
+		$scOpts = new erpPROShortCodeOpts();
 
 		if (is_array($profile)) {
-			$profile[$profileName] =  $profileOptions;
-			$res = update_option($this->shortCodeProfilesArrayName, $profile);
+			$profile[$profileName] =  $scOpts->saveOptions($profileOptions);
+			$res = update_option(erpPROShortCodeOpts::$shortCodeProfilesArrayName, $profile);
 		} else {
-			$profile = array($profileName => $profileOptions);
-			$res = add_option($this->shortCodeProfilesArrayName, $profile);
+			$profile = array($profileName => $scOpts->saveOptions($profileOptions));
+			$res = add_option(erpPROShortCodeOpts::$shortCodeProfilesArrayName, $profile);
 		}
 
 		echo json_encode( $res );
@@ -521,7 +532,8 @@ class easyRelatedPostsPROAdmin {
 			die();
 		}
 
-		$profile = get_option( $this->shortCodeProfilesArrayName );
+		erpPROPaths::requireOnce(erpPROPaths::$erpPROShortCodeOpts);
+		$profile = get_option( erpPROShortCodeOpts::$shortCodeProfilesArrayName );
 		$profileName = wp_strip_all_tags($_POST [ 'profileName' ]);
 
 		if (!$profile || !isset($profile[$profileName]) || !is_array($profile[$profileName])) {
@@ -529,7 +541,7 @@ class easyRelatedPostsPROAdmin {
 			die();
 		} else {
 			unset($profile[$profileName]);
-			echo json_encode( update_option($this->shortCodeProfilesArrayName, $profile));
+			echo json_encode( update_option(erpPROShortCodeOpts::$shortCodeProfilesArrayName, $profile));
 			die();
 		}
 	}
@@ -545,7 +557,10 @@ class easyRelatedPostsPROAdmin {
 			echo json_encode( array('error' => 'Action not allowed') );
 			die();
 		}
-		$profile = get_option( $this->shortCodeProfilesArrayName );
+
+		erpPROPaths::requireOnce(erpPROPaths::$erpPROShortCodeOpts);
+		$profile = get_option( erpPROShortCodeOpts::$shortCodeProfilesArrayName );
+
 		if (!is_array($profile)) {
 			$profile = array();
 		}
@@ -568,7 +583,8 @@ class easyRelatedPostsPROAdmin {
 		erpPROPaths::requireOnce(erpPROPaths::$erpPROShortcodeTemplates);
 		if (isset($_GET['profileName'])) {
 			$profileName = $_GET['profileName'];
-			$profilesOptionsArray = get_option($this->shortCodeProfilesArrayName);
+			erpPROPaths::requireOnce(erpPROPaths::$erpPROShortCodeOpts);
+			$profilesOptionsArray = get_option(erpPROShortCodeOpts::$shortCodeProfilesArrayName);
 			$profileOpts = isset($profilesOptionsArray[$profileName]) ? $profilesOptionsArray[$profileName] : null;
 		}
 
@@ -610,6 +626,44 @@ class easyRelatedPostsPROAdmin {
 		$data = array (
 				'content' => $templateObj->renderSettings( false ),
 				'optionValues' => $templateObj->getOptions()
+		);
+
+		echo json_encode( $data );
+		die();
+	}
+
+	/**
+	 * This is called through ajax hook and returns the plugin options as defined in template settings file
+	 *
+	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @since 1.0.0
+	 */
+	public function loadSCTemplateOptions( ) {
+		if ( !isset( $_POST [ 'template' ] ) ) {
+			echo json_encode( false );
+			die();
+		}
+		erpPROPaths::requireOnce( erpPROPaths::$erpPROShortcodeTemplates );
+
+		if (isset($_POST['profileName'])) {
+			$profileName = $_POST['profileName'];
+			erpPROPaths::requireOnce(erpPROPaths::$erpPROShortCodeOpts);
+			$profilesOptionsArray = get_option(erpPROShortCodeOpts::$shortCodeProfilesArrayName);
+			$profileOpts = isset($profilesOptionsArray[$profileName]) ? $profilesOptionsArray[$profileName] : null;
+		}
+
+		if (empty($profileOpts)) {
+			$profileOpts = erpPRODefaults::$comOpts + erpPRODefaults::$shortCodeOpts;
+			$profileName = 'default';
+		}
+
+		$templateObj = new erpPROShortcodeTemplates();
+		$templateObj->load( $_POST [ 'template' ] );
+		$templateObj->setOptions($profileOpts['templateOptions']);
+
+		$data = array (
+				'content' => $templateObj->renderSettings( false ),
+				'optionValues' => $profilesOptionsArray
 		);
 
 		echo json_encode( $data );

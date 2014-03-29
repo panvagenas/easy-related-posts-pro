@@ -464,7 +464,7 @@ abstract class erpPROTemplates {
 	 * @since 1.0.0
 	 */
 	public function setOptions($options){
-		$this->options = array_merge((array)$this->options, $options);
+		$this->options = array_merge((array)$this->options, (array)$options);
 		return $this;
 	}
 	/**
