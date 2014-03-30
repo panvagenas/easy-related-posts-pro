@@ -18,14 +18,14 @@ if ( ! defined( 'WPINC' ) ) {
 		<?php
 		if ( isset( $posts ) ) {
 			foreach ( $posts as $k => $v ) {
-				// TODO If not bootstrap remove those if's
-				if ($k % $options['numOfPostsPerRow'] === 0){
+// FIXME Not displaying properly
+				if ($k % (int)$options['numOfPostsPerRow'] === 0){
 					?>
 					<div class="erpRow">
 					<?php
 				}
 				?>
-				<div class="erpProRelContainer erpCol-sm-<?php echo 12 / $options['numOfPostsPerRow']; ?>" style="">
+				<div class="erpProRelContainer erpCol-sm-<?php echo 12 / (int)$options['numOfPostsPerRow']; ?>">
 					<a href="<?php echo $v->getPermalink() ?>" class="erpProPostLink">
 						<?php
 						foreach ($options['content'] as $key => $value) {
@@ -34,12 +34,14 @@ if ( ! defined( 'WPINC' ) ) {
 						?>
 					</a>
 				</div>
-			<?php
-				if ($k % $options['numOfPostsPerRow'] + 1 === $options['numOfPostsPerRow'] || count($posts) === $k+1){
+				<?php
+				if ($k % (int)$options['numOfPostsPerRow'] + 1 === (int)$options['numOfPostsPerRow'] || count($posts) === $k+1){
 					?>
 					</div>
 					<?php
 				}
+				?>
+			<?php
 			} // foreach ($posts as $k => $v)
 		} // if (isset($posts))
 		?>

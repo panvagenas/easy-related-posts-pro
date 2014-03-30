@@ -42,6 +42,10 @@ class erpPROShortCodeOpts extends erpPROOptions {
 		return $this;
 	}
 
+	public function isProfileLoaded() {
+		return isset($this->profileName) && !empty($this->options);
+	}
+
 	public function saveOptions( $newOptions ) {
 		if ( isset( $newOptions [ 'title' ] ) ) {
 			$this->options [ 'title' ] = strip_tags( $newOptions [ 'title' ] );

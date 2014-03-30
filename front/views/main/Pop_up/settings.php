@@ -23,6 +23,10 @@
 </select>
 </p>
 <p>
+<label for="numOfPostsPerRow">Number of posts per row: </label>
+<input class="erp-opttxt" id="numOfPostsPerRow" name="numOfPostsPerRow" type="number"value="<?php echo $numOfPostsPerRow; ?>"/>
+</p>
+<p>
 <label for="backgroundColor">Background color: </label>
 <input class="erp-opttxt" id="carouselMinVisible" name="carouselMinVisible" type="number"value="<?php echo $backgroundColor; ?>"/>
 </p>

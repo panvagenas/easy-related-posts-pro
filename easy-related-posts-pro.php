@@ -118,7 +118,7 @@ function erpPROShortcode( $attrs ) {
 	global $post;
 	erpPROPaths::requireOnce(erpPROPaths::$erpPROShortcode);
 
-	$sc = new erpPROShortcode($attrs);
+	$sc = new erpPROShortcode($attrs['profile']);
 	return $sc->display($post->ID);
 }
 add_shortcode( 'erp', 'erpPROShortcode' );

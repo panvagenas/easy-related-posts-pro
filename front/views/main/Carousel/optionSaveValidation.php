@@ -1,6 +1,6 @@
 <?php
 
-function validateOptionSave( $options ) {
+function validateMainCarouselOption( $options ) {
 	$newOptions = array ();
 
 	if (isset($options [ 'carouselAutoTime' ]) &&  $options [ 'carouselAutoTime' ] > -1) {

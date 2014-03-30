@@ -1,6 +1,6 @@
 <?php
 
-function validateOptionSave( $options ) {
+function validateMainPopUpOptions( $options ) {
 	$newOptions = array ();
 
 	if (isset($options [ 'position' ])) {
@@ -14,6 +14,9 @@ function validateOptionSave( $options ) {
 	}
 	if (isset( $options [ 'triggerAfter' ] ) && $options [ 'triggerAfter' ] > 0 &&  $options [ 'triggerAfter' ] <= 1) {
 		$newOptions['triggerAfter'] = (float)$options['triggerAfter'];
+	}
+	if (isset( $options [ 'numOfPostsPerRow' ] ) && $options [ 'numOfPostsPerRow' ] > 0) {
+		$newOptions['numOfPostsPerRow'] = (int)$options['numOfPostsPerRow'];
 	}
 	return $newOptions;
 }

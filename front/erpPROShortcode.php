@@ -79,6 +79,7 @@
 
 		$template = new erpPROShortcodeTemplates();
 		$template->load($this->optObj->getValue('dsplLayout'));
+		$template->setOptions($this->optObj->getValue('templateOptions'));
 
 		if (!$template->isLoaded()) {
 			// TODO Remove debug
@@ -117,8 +118,9 @@
 		$erpOptions = erpPRODefaults::$comOpts+erpPRODefaults::$shortCodeOpts;
 
 		$this->optObj = new erpPROShortCodeOpts();
-		$this->optObj->setOptions(array_merge($erpOptions, $profiles[$this->profile]));
-		return true;
+		$this->optObj->loadOptions($this->profile);
+
+		return $this->optObj->isProfileLoaded();
 	}
 
 	/**

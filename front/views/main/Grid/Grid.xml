@@ -9,7 +9,7 @@
 	</options>
 	<optionSaveValidation>
 		<file>optionSaveValidation.php</file>
-		<function>validateOptionSave</function>
+		<function>validateMainGridOptions</function>
 	</optionSaveValidation>
 	<settingsPageFilePath>settings.php</settingsPageFilePath>
 	<viewFilePath>grid.php</viewFilePath>

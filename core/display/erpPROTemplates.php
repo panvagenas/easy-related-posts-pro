@@ -260,14 +260,12 @@ abstract class erpPROTemplates {
 			$this->enqueJS();
 		}
 		// hook validation function
-		if (isset($xml->optionSaveValidation) && !empty($this->options) && !empty($this->optionsArrayName)) {
+		if (isset($xml->optionSaveValidation) && !empty($this->options) && !empty($this->optionsArrayName) && is_admin()) {
 			$this->optionSaveValidation = $this->xmlToArray($xml->optionSaveValidation);
 			if (isset($this->optionSaveValidation['file']) && isset($this->optionSaveValidation['function'])) {
 				require_once dirname($templateXMLPath).DIRECTORY_SEPARATOR.$this->optionSaveValidation['file'];
 				add_filter('erpPROTemplateOptionsSaveValidation', $this->optionSaveValidation['function']);
 			}
-		} else {
-			return ;
 		}
 		// Generate a unique id
 		$this->uniqueInstanceID = uniqid($this->name);
