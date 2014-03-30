@@ -106,7 +106,7 @@ class erpPROShortCodeOpts extends erpPROOptions {
 		if ( isset( $newOptions [ 'dsplLayout' ] ) ) {
 			$this->options [ 'dsplLayout' ] = strip_tags( $newOptions [ 'dsplLayout' ] );
 			$templateOptions = (array)$this->getTemplateOptions($this->options [ 'dsplLayout' ], $newOptions);
-			$this->options['templateOptions'] = array_intersect_assoc($newOptions, $templateOptions);
+			$this->options['templateOptions'] = $templateOptions;
 
 		}
 		if ( isset( $newOptions [ 'categories' ] ) ) {

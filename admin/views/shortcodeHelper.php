@@ -11,7 +11,7 @@
 erpPROPaths::requireOnce(erpPROPaths::$erpPROHTMLHelper);
 ?>
 <div id="content" class="erpModal-content">
-	<form id="scForm" method="post" action="#">
+<!-- 	<form id="scForm" method="post" action="#"> -->
 		<div id="tabs-holder">
 			<ul>
 				<li><a href="#tabs-0">Shortcode Profiles</a></li>
@@ -25,30 +25,30 @@ erpPROPaths::requireOnce(erpPROPaths::$erpPROHTMLHelper);
 			<div id="tabs-0">
 				<?php
 				$profile = get_option( $shortCodeProfilesArrayName );
+				?>
+				<p>
+					Profile: <select id="profile" class="erp-optsel" name="profile" style="min-width: 100px;">
+						<?php
+						foreach ((array)$profile as $key => $value) {
+							echo '<option value="' . $key . '">' . $key . '</option>';
+						}
+						?>
+					</select>
+				</p>
+				<?php
 				if (!empty($profile)) {
-					?>
-					<p>
-						Profile: <select id="profile" class="erp-optsel" name="profile">
-							<?php
-							foreach ((array)$profile as $key => $value) {
-								echo '<option value="' . $key . '">' . $key . '</option>';
-							}
-							?>
-						</select>
-					</p>
-					<?php
 					// TODO Set this dynamicaly based on the selection of profile field
 					$temp = $profile;
 					$erpPROOptions = array_merge($erpPROOptions, array_shift($temp));
 				}
 				?>
 				<p>
-					New profile name: <input id="profileName" class="erp-opttxt"
-						type="text" name="profileName">
-					<button type="submit" style="margin-left: 20px;"id"storeNewProfile">Save new
-						profile</button>
+<!-- 					New profile name: <input id="profileName" class="erp-opttxt" type="text" name="profileName"> -->
+					<button type="submit" style=""id="saveProfile">Create new profile</button>
+					<button type="submit" style="margin-left: 20px;"id="delProfile">Delete profile</button>
 				</p>
 			</div>
+			<form id="scForm" method="post" action="#">
 			<div id="tabs-1">
 				<table class="gen-opt-table">
 					<tr>
@@ -272,21 +272,80 @@ erpPROPaths::requireOnce(erpPROPaths::$erpPROHTMLHelper);
 					?>
 				</table>
 			</div>
+			</form>
 		</div>
-	</form>
+<!-- 	</form> -->
 	<script type="text/javascript">
 		(function($) {
+			/***********************************************************************
+			 * tabs
+			 **********************************************************************/
 			$('#tabs-holder').tabs();
+
+			/***********************************************************************
+			 * init form
+			 **********************************************************************/
 			// Store new profile functionality
 			var formOptions = {
 				url: ajaxurl,
 				data: {action: 'erpsaveShortcodeProfile'},
-			    success:    function() {
-			        alert('Thanks for your comment!');
-			    }
-			}
+			    dataType: 'json'
+			};
 			$('#scForm').ajaxForm(formOptions);
 
+			/***********************************************************************
+			 * Profile management
+			 **********************************************************************/
+			$('#saveProfile').click(function(){
+				var profileName = prompt("Please enter profile name");
+				if(profileName != null){
+					var formOptionsNewProfile = formOptions;
+
+					formOptionsNewProfile.data.profileName = profileName;
+					formOptionsNewProfile.success = function(response) {
+				        if(response.error !== undefined){
+				        	alert(response.error);
+				        	return false;
+				        }
+				        $('#profile').append('<option value="'+ response.profileName +'" selected>' + response.profileName + '</option>');
+				        return true;
+				    }
+					$('#scForm').ajaxSubmit(formOptionsNewProfile);
+				} else {
+					alert('You must specify a profile name');
+				}
+			});
+
+			$('#delProfile').click(function(){
+				var data = {
+					action : 'erpdeleteShortCodeProfile',
+					profileName : $('#profile').val()
+				};
+				$.post(
+						ajaxurl,
+						data,
+						function(response) {
+							if (response.error !== undefined) {
+								alert(response.error);
+								return false;
+							} else {
+								var dil = $('#erpDialogContent');
+								getData = {
+										action: 'erpgetShortCodeHelperContent',
+										profileName : 'grid' // TODO Set this to a default value
+								};
+								$.get(ajaxurl, getData, function(data){
+									if(data.error !== undefined){
+										alert('There was an error loading shortcode helper.');
+										dialogContainer.remove();
+										return;
+									}
+									dil.html(data);
+								});
+							}
+						},
+				'json');
+			});
 			/***********************************************************************
 			 * Load templates options
 			 **********************************************************************/

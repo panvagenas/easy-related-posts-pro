@@ -487,7 +487,7 @@ class easyRelatedPostsPROAdmin {
 			echo json_encode( array('error' => 'Action not allowed') );
 			die();
 		}
-		if ( !isset( $_POST [ 'profileName' ] ) ) {
+		if ( !isset( $_POST [ 'profileName' ] )  || empty($_POST [ 'profileName' ])) {
 			echo json_encode( array('error' => 'You must set a profile name and define all options') );
 			die();
 		}
@@ -504,15 +504,11 @@ class easyRelatedPostsPROAdmin {
 		$template = new erpPROShortcodeTemplates();
 		$scOpts = new erpPROShortCodeOpts();
 
-		if (is_array($profile)) {
-			$profile[$profileName] =  $scOpts->saveOptions($profileOptions);
-			$res = update_option(erpPROShortCodeOpts::$shortCodeProfilesArrayName, $profile);
-		} else {
-			$profile = array($profileName => $scOpts->saveOptions($profileOptions));
-			$res = add_option(erpPROShortCodeOpts::$shortCodeProfilesArrayName, $profile);
-		}
+		$scOpts->loadOptions($profileName);
 
-		echo json_encode( $res );
+		$res = $scOpts->saveOptions($profileOptions);
+
+		echo json_encode(array('result'=> $res, 'profileName' => $profileName) );
 		die();
 	}
 
@@ -527,7 +523,7 @@ class easyRelatedPostsPROAdmin {
 			echo json_encode( array('error' => 'Action not allowed') );
 			die();
 		}
-		if ( !isset( $_POST [ 'profileName' ] ) ) {
+		if ( !isset( $_POST [ 'profileName' ] ) || empty($_POST [ 'profileName' ])) {
 			echo json_encode( array('error' => 'You must select a profile') );
 			die();
 		}

@@ -6,13 +6,6 @@
 				title : 'Easy Related Posts PRO Shortcode Helper',
 				image : url+'/erp.png',
 				onclick : function() {
-					/*idPattern = /(?:(?:[^v]+)+v.)?([^&=]{11})(?=&|$)/;
-					var vidId = prompt("YouTube Video", "Enter the id or url for your video");
-					var m = idPattern.exec(vidId);
-					if (m != null && m != 'undefined')
-						ed.execCommand('mceInsertContent', false, '[youtube id="'+m[1]+'"]');*/
-					// create a modal dialog with the data
-					//$(document.body).append('<div id="erpDialog"></div>');
 					$('body').append('<div id="erpDialog"></div>');
 					var dialogContainer = $('#erpDialog');
 					dialogContainer.html('<div id="erpDialogContent"></div>');
@@ -27,8 +20,30 @@
 						height: Math.floor($('body').height()*0.8),
 						buttons: {
 							"Insert": function() {
-								$(this).dialog("destroy");
-								dialogContainer.remove();
+								var profile = $('#profile').val();
+
+								if(profile != null){
+									var formOptions = {
+										url: ajaxurl,
+										data: {action: 'erpsaveShortcodeProfile', profileName : profile},
+									    dataType: 'json',
+									    success : 	function(response) {
+												        if(response.error !== undefined){
+												        	alert(response.error);
+												        	return false;
+												        }
+													    return true;
+													}
+									};
+
+									if($('#scForm').ajaxSubmit(formOptions)){
+										$(this).dialog("destroy");
+										dialogContainer.remove();
+										ed.execCommand('mceInsertContent', false, '[erp profile="'+profile+'"]');
+									}
+								} else {
+									alert('You must create a new profile first');
+								}
 							},
 							"Cancel": function() {
 								$(this).dialog("destroy");
@@ -44,7 +59,7 @@
 
 					getData = {
 							action: 'erpgetShortCodeHelperContent',
-							profileName : 'grid'
+							profileName : 'grid' // TODO Set this to a default value
 					};
 
 					dil.html('<img src="'+loadingGif+'" style="display: block; position:relative; top:50%; margin:auto;">');
