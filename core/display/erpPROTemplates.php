@@ -17,13 +17,22 @@
  * @author Your Name <email@example.com>
  */
 abstract class erpPROTemplates {
-
+	/**
+	 * 
+	 * @var bool 
+	 */
 	private static $supressOthers = false;
-
+	/**
+	 * Set suppressOthers field
+	 * @param bool $value Default is true
+	 */
 	public static function suppressOthers($value = true) {
 		self::$supressOthers = $value;
 	}
-
+	/**
+	 * Returns class field $supressOthers
+	 * @return bool
+	 */
 	public static function areOthersSuppressed() {
 		return self::$supressOthers;
 	}
@@ -196,7 +205,7 @@ abstract class erpPROTemplates {
 	 */
 	public function load($templateName){
 		// define template base path
-		$this->basePath = self::getTemplatePath($templateName, $this->templatesBasePath);
+		$this->basePath = $this->getTemplatePath($templateName, $this->templatesBasePath);
 		// Get xml path
 		$templateXMLPath = $this->getTemplateXMLPath($templateName);
 		if (empty($templateXMLPath)) {
@@ -204,7 +213,7 @@ abstract class erpPROTemplates {
 		}
 		// initialize template components
 		// TODO Remove debug
-		do_action('debug',__FUNCTION__.__CLASS__);
+		do_action('debug',__FUNCTION__.' '.__CLASS__);
 		// Read xml file
 		try {
 			$contents = file_get_contents($templateXMLPath);
