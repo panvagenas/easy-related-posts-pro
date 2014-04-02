@@ -24,7 +24,7 @@ class erpPROWidOpts extends erpPROOptions {
 		if ( $instance !== NULL && !empty( $instance ) ) {
 			$this->options = $instance;
 		}
-// 		$this->ratingSytem = $this->checkRatingSystem();
+		$this->defaults = &erpPRODefaults::$widOpts;
 	}
 
 	/**
@@ -123,5 +123,37 @@ class erpPROWidOpts extends erpPROOptions {
 			$instance [ 'sortRelatedBy' ] = strip_tags( $new_instance [ 'sortRelatedBy' ] );
 		}
 		return $instance;
+	}
+
+	/************************************************************************
+	 * Geters for options
+	************************************************************************/
+
+	public function getPostTitleColor() {
+		return $this->getValue('postTitleColor');
+	}
+
+	public function getExcColor() {
+		return $this->getValue('excColor');
+	}
+
+	public function getPostTitleColorUse() {
+		return $this->getValue('postTitleColorUse');
+	}
+
+	public function getExcColorUse() {
+		return $this->getValue('excColorUse');
+	}
+
+	public function getHideIfNoPosts() {
+		return $this->getValue('hideIfNoPosts');
+	}
+
+	public function getTaxExclude() {
+		return $this->getValue('taxExclude');
+	}
+
+	public function getPtypeExclude() {
+		return $this->getValue('ptypeExclude');
 	}
 }

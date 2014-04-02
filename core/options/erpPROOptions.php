@@ -20,12 +20,21 @@ abstract class erpPROOptions {
 
 	protected $options = NULL;
 
+	protected $defaults;
+
+	/**
+	 * @deprecated
+	 *
+	 * @since 1.0.0
+	 * @var bool
+	 */
 	protected $ratingSytem = NULL;
 
 	protected $optionsArrayName = NULL;
 
 	public function __construct( ) {
 		$this->ratingSytem = isset( $this->options [ 'sortRelatedBy' ] ) ? ( bool ) strpos( $this->options [ 'sortRelatedBy' ], 'rating' ) : false;
+		$this->defaults = &erpPRODefaults::$comOpts;
 	}
 
 	/**
@@ -74,12 +83,18 @@ abstract class erpPROOptions {
 	 * Get the value of given option.
 	 *
 	 * @param string $optionName
-	 * @return null string NULL if option not found, option value otherwise
+	 * @return null string NULL if option not found, option value otherwise (uses default value if avail)
 	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function getValue( $optionName ) {
-		return isset( $this->options [ $optionName ] ) ? $this->options [ $optionName ] : NULL;
+		if ($this->isOptionSet($optionName)) {
+			return $this->options[$optionName];
+		} elseif (isset($this->defaults[$optionName])) {
+			return $this->defaults[$optionName];
+		} else {
+			return null;
+		}
 	}
 
 	/**
@@ -119,14 +134,94 @@ abstract class erpPROOptions {
 	 * @since 1.0.0
 	 */
 	public function isOptionSet( $optName ) {
-		return isset( $this->options [ $optName ] ) ? TRUE : FALSE;
+		return isset( $this->options [ $optName ] );
 	}
 
+	/************************************************************************
+	 * Geters for options
+	************************************************************************/
+
+	/**
+	 * If we have to display the post thumb
+	 * @return boolean
+	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @since 1.0.0
+	 */
 	public function haveToShowThumbnail() {
 		return isset($this->options['content']) && in_array('thumbnail', $this->options['content']);
 	}
 
+	/**
+	 * If we have to display the post excerpt
+	 * @return boolean
+	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @since 1.0.0
+	 */
 	public function haveToShowExcerpt() {
-		return isset($this->options['content']) && in_array('excerpt', $this->options['content']);
+		return $this->isOptionSet('content') && in_array('excerpt', $this->options['content']);
+	}
+
+	public function getTitle() {
+		return $this->getValue('title');
+	}
+
+	public function getNumberOfPostsToDiplay() {
+		return $this->getValue('numberOfPostsToDisplay');
+	}
+
+	public function getFetchBy() {
+		return $this->getValue('fetchBy');
+	}
+
+	public function getOffset() {
+		return $this->getValue('offset');
+	}
+
+	public function getContentPositioning() {
+		return $this->getValue('content');
+	}
+
+	public function getSortRelatedBy() {
+		return $this->getValue('sortRelatedBy');
+	}
+
+	public function getDefaultThumbnail() {
+		return $this->getValue('defaultThumbnail');
+	}
+
+	public function getPostTitleFontSize() {
+		return $this->getValue('postTitleFontSize');
+	}
+
+	public function getExcFontSize() {
+		return $this->getValue('excFontSize');
+	}
+
+	public function getExcLength() {
+		return $this->getValue('excLength');
+	}
+
+	public function getMoreTxt() {
+		return $this->getValue('moreTxt');
+	}
+
+	public function getThumbnailHeight() {
+		return $this->getValue('thumbnailHeight');
+	}
+
+	public function getThumbnailWidth() {
+		return $this->getValue('thumbnailWidth');
+	}
+
+	public function getDsplThumbnail() {
+		return $this->getValue('dsplThumbnail');
+	}
+
+	public function getCropThumbnail() {
+		return $this->getValue('cropThumbnail');
+	}
+
+	public function getDsplLayout() {
+		return $this->getValue('dsplLayout');
 	}
 }

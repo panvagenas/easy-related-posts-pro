@@ -34,6 +34,7 @@ class erpPROShortCodeOpts extends erpPROOptions {
 		$this->optionsArrayName = erpPROShortCodeOpts::$shortCodeProfilesArrayName;
 		$profiles = get_option(erpPROShortCodeOpts::$shortCodeProfilesArrayName);
 		$this->profiles = is_array($profiles) ? $profiles : array();
+		$this->defaults = &erpPRODefaults::$shortCodeOpts;
 	}
 
 	public function loadOptions( $profileName ) {
@@ -147,5 +148,41 @@ class erpPROShortCodeOpts extends erpPROOptions {
 		} else {
 			return array();
 		}
+	}
+
+	/************************************************************************
+	 * Geters for options
+	 ************************************************************************/
+
+	public function getSuppressOthers() {
+		return isset($this->options['suppressOthers']) ? $this->options['suppressOthers'] : erpPRODefaults::$shortCodeOpts['suppressOthers'];
+	}
+
+	public function getPostTitleColor() {
+		return $this->getValue('postTitleColor');
+	}
+
+	public function getExcColor() {
+		return $this->getValue('excColor');
+	}
+
+	public function getPostTitleColorUse() {
+		return $this->getValue('postTitleColorUse');
+	}
+
+	public function getExcColorUse() {
+		return $this->getValue('excColorUse');
+	}
+
+	public function getHideIfNoPosts() {
+		return $this->getValue('hideIfNoPosts');
+	}
+
+	public function getTaxExclude() {
+		return $this->getValue('taxExclude');
+	}
+
+	public function getPtypeExclude() {
+		return $this->getValue('ptypeExclude');
 	}
 }

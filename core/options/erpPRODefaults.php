@@ -268,8 +268,8 @@ class erpPRODefaults {
 			'moreTxt' => ' ...read more',
 			'thumbnailHeight' => 150,
 			'thumbnailWidth' => 300,
-			'dsplThumbnail' => 1,
-			'cropThumbnail' => 1
+			'dsplThumbnail' => true,
+			'cropThumbnail' => true
 	);
 
 	/**
@@ -279,7 +279,7 @@ class erpPRODefaults {
 	 * @var array
 	 */
 	public static $mainOpts = array (
-			'activate' => 1,
+			'activate' => true,
 			'dsplLayout' => 'grid',
 			'categories' => array (),
 			'tags' => array (),
@@ -301,11 +301,11 @@ class erpPRODefaults {
 			'dsplLayout' => 'basic',
 			'postTitleColor' => '#ffffff',
 			'excColor' => '#ffffff',
-			'postTitleColorUse' => 0,
-			'excColorUse' => 0,
-			'hideIfNoPosts' => 0,
-			'taxExclude' => 0,
-			'ptypeExclude' => 0
+			'postTitleColorUse' => false,
+			'excColorUse' => false,
+			'hideIfNoPosts' => false,
+			'taxExclude' => false,
+			'ptypeExclude' => false
 	);
 
 	/**
@@ -319,11 +319,11 @@ class erpPRODefaults {
 			'dsplLayout' => 'grid',
 			'postTitleColor' => '#ffffff',
 			'excColor' => '#ffffff',
-			'postTitleColorUse' => 0,
-			'excColorUse' => 0,
-			'hideIfNoPosts' => 0,
-			'taxExclude' => 0,
-			'ptypeExclude' => 0
+			'postTitleColorUse' => false,
+			'excColorUse' => false,
+			'hideIfNoPosts' => false,
+			'taxExclude' => false,
+			'ptypeExclude' => false
 	);
 
 	/**

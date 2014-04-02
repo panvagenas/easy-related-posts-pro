@@ -20,9 +20,10 @@ erpPROPaths::requireOnce(erpPROPaths::$erpPROOptions);
 class erpPROMainOpts extends erpPROOptions {
 
 	public function __construct( ) {
+		parent::__construct();
 		$this->optionsArrayName = EPR_PRO_MAIN_OPTIONS_ARRAY_NAME;
 		$this->loadOptions();
-		parent::__construct();
+		$this->defaults = &erpPRODefaults::$mainOpts;
 	}
 
 	public function loadOptions( ) {
@@ -152,5 +153,25 @@ class erpPROMainOpts extends erpPROOptions {
 			$this->options [ 'postTypes' ] = array();
 		}
 		update_option( $this->optionsArrayName, $this->options );
+	}
+
+	/************************************************************************
+	 * Geters for options
+	************************************************************************/
+
+	public function getActivate() {
+		return $this->getValue('activate');
+	}
+
+	public function getCategories() {
+		return $this->getValue('categories');
+	}
+
+	public function getTags() {
+		return $this->getValue('tags');
+	}
+
+	public function getPostTypes() {
+		return $this->getValue('postTypes');
 	}
 }

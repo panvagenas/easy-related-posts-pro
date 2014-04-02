@@ -18,8 +18,8 @@
  */
 abstract class erpPROTemplates {
 	/**
-	 * 
-	 * @var bool 
+	 *
+	 * @var bool
 	 */
 	private static $supressOthers = false;
 	/**
@@ -221,12 +221,19 @@ abstract class erpPROTemplates {
 		} catch (Exception $e) {
 			$er = new WP_Error();
 			$er->add($e->getCode(), $e->getMessage());
+			return ;
 		}
 		// TODO Remove debug
 		do_action('debug',__FUNCTION__.' reading options');
 		// read name
 		if (isset($xml->name)) {
 			$this->name = (string)$xml->name;
+		} else {
+			return ;
+		}
+		// read view file path
+		if (isset($xml->viewFilePath)) {
+			$this->viewFilePath = dirname($templateXMLPath).DIRECTORY_SEPARATOR.(string)$xml->viewFilePath;
 		} else {
 			return ;
 		}
@@ -247,12 +254,6 @@ abstract class erpPROTemplates {
 			$this->optionsArrayName = $this->name . 'TemplateOptions';
 			$optionsInDB = get_option($this->optionsArrayName);
 			$this->setOptions($optionsInDB ? $optionsInDB : array());
-		}
-		// read view file path
-		if (isset($xml->viewFilePath)) {
-			$this->viewFilePath = dirname($templateXMLPath).DIRECTORY_SEPARATOR.(string)$xml->viewFilePath;
-		} else {
-			return ;
 		}
 		// read settings view file path
 		if (isset($xml->settingsPageFilePath)) {
@@ -400,41 +401,53 @@ abstract class erpPROTemplates {
 	 * @since 1.0.0
 	 */
 	public function display(WP_Query $wpq, erpPROOptions $optionsObj, $ratings = array()){
+		if (!$this->isLoaded()) {
+			return '';
+		}
 		// TODO Remove debug
 		do_action('debug',__FUNCTION__.' starting display');
 
 		erpPROPaths::requireOnce(erpPROPaths::$erpPROPostData);
 		erpPROPaths::requireOnce(erpPROPaths::$erpPRODBHelper);
+
 		// TODO Remove debug
 		do_action('debug',__FUNCTION__.' adding displayed');
+
 		$from = get_the_ID();
+
 		erpPRODBHelper::addDisplayed($from, array_keys($ratings));
+
 		// TODO Remove debug
 		do_action('debug',__FUNCTION__.' setting additional options');
+
 		$this->setOptions($optionsObj->getOptions());
 
-		$data = array();
-		$data['title'] = $this->options['title'];
-		$data['options'] = $this->options;
-		$data['posts'] = array();
-		$data['uniqueID'] = $this->uniqueInstanceID;
-		$data['optionsObj'] = $optionsObj;
-
-		$dsplThumb = $optionsObj->haveToShowThumbnail();
-		$dsplExc = $optionsObj->haveToShowExcerpt();
+		$data = array(
+			'title' => $optionsObj->getValue('title'),
+			'options' => $this->options,
+			'uniqueID' => $this->uniqueInstanceID,
+			'optionsObj' => $optionsObj,
+			'posts' => array()
+		);
 
 		// TODO Remove debug
 		do_action('debug',__FUNCTION__.' forming postdata');
+
 		while ($wpq->have_posts()) {
 			$wpq->the_post();
+
 			$rating = isset($ratings[get_the_ID()]) ? $ratings[get_the_ID()] : null;
+
 			$postData = new erpPROPostData($wpq->post, $this->options, $rating, $from);
-			if ($dsplExc) {
+
+			if ($optionsObj->haveToShowExcerpt()) {
 				$postData->setExcerpt($optionsObj->getValue('excLength'), $optionsObj->getValue('moreTxt'));
 			}
-			if ($dsplThumb) {
+
+			if ($optionsObj->haveToShowThumbnail()) {
 				$postData->setThumbnail($optionsObj->getValue('defaultThumbnail'));
 			}
+
 			array_push($data['posts'], $postData);
 		}
 
