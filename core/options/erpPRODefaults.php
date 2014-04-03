@@ -18,6 +18,12 @@
  */
 class erpPRODefaults {
 
+	const intFormal = 'int';
+	const floatFormal = 'float';
+	const stringFormal = 'string';
+	const arrayFormal = 'array';
+	const boolFormal = 'bool';
+
 	/**
 	 * Plugin version.
 	 *
@@ -273,6 +279,30 @@ class erpPRODefaults {
 	);
 
 	/**
+	 * Used for options validation. Does not contain values for options but types
+	 *
+	 * @since 1.0.0
+	 * @var array
+	 */
+	public static $comOptsValidations = array(
+			'title' => array( 'type' => self::stringFormal ),
+			'numberOfPostsToDisplay' => array( 'type' => self::intFormal, 'min' => 1 ),
+			'fetchBy' => array( 'type' => self::stringFormal ),
+			'offset' => array( 'type' => self::intFormal, 'min' => 0 ),
+			'content' => array( 'type' => self::arrayFormal),
+			'sortRelatedBy' => array( 'type' => self::stringFormal ),
+			'defaultThumbnail' => array( 'type' => self::stringFormal ),  // TODO Set a default thumbnail
+			'postTitleFontSize' => array( 'type' => self::intFormal, 'min' => 0 ),
+			'excFontSize' => array( 'type' => self::intFormal, 'min' => 0 ),
+			'excLength' => array( 'type' => self::intFormal, 'min' => 1 ),
+			'moreTxt' => array( 'type' => self::stringFormal ),
+			'thumbnailHeight' => array( 'type' => self::intFormal, 'min' => 0 ),
+			'thumbnailWidth' => array( 'type' => self::intFormal, 'min' => 0 ),
+			'dsplThumbnail' => array( 'type' => self::boolFormal),
+			'cropThumbnail' => array( 'type' => self::boolFormal)
+	);
+
+	/**
 	 * Main plugin options
 	 *
 	 * @since 1.0.0
@@ -289,6 +319,20 @@ class erpPRODefaults {
 					'nav_menu_item',
 					'revision'
 			)
+	);
+
+	/**
+	 * Used for options validation. Does not contain values for options but types
+	 *
+	 * @since 1.0.0
+	 * @var array
+	 */
+	public static $mainOptsValidations = array (
+			'activate' => array( 'type' => self::boolFormal),
+			'dsplLayout' => array( 'type' => self::stringFormal ),
+			'categories' => array( 'type' => self::arrayFormal),
+			'tags' => array( 'type' => self::arrayFormal),
+			'postTypes' => array( 'type' => self::arrayFormal)
 	);
 
 	/**
@@ -309,6 +353,23 @@ class erpPRODefaults {
 	);
 
 	/**
+	 * Used for options validation. Does not contain values for options but types
+	 *
+	 * @since 1.0.0
+	 * @var array
+	 */
+	public static $widOptsValidations = array (
+			'dsplLayout' => array( 'type' => self::stringFormal ),
+			'postTitleColor' => array( 'type' => self::stringFormal ),
+			'excColor' => array( 'type' => self::stringFormal ),
+			'postTitleColorUse' => array( 'type' => self::boolFormal),
+			'excColorUse' => array( 'type' => self::boolFormal),
+			'hideIfNoPosts' => array( 'type' => self::boolFormal),
+			'taxExclude' => array( 'type' => self::boolFormal),
+			'ptypeExclude' => array( 'type' => self::boolFormal)
+	);
+
+	/**
 	 * Shortcode options
 	 *
 	 * @since 1.0.0
@@ -324,6 +385,24 @@ class erpPRODefaults {
 			'hideIfNoPosts' => false,
 			'taxExclude' => false,
 			'ptypeExclude' => false
+	);
+
+	/**
+	 * Used for options validation. Does not contain values for options but types
+	 *
+	 * @since 1.0.0
+	 * @var array
+	 */
+	public static $shortcodeOptsValidations = array (
+			'suppressOthers' => array( 'type' => self::boolFormal),
+			'dsplLayout' => array( 'type' => self::stringFormal ),
+			'postTitleColor' => array( 'type' => self::stringFormal ),
+			'excColor' => array( 'type' => self::stringFormal ),
+			'postTitleColorUse' => array( 'type' => array( 'type' => self::boolFormal)),
+			'excColorUse' => array( 'type' => self::boolFormal),
+			'hideIfNoPosts' => array( 'type' => self::boolFormal),
+			'taxExclude' => array( 'type' => self::boolFormal),
+			'ptypeExclude' => array( 'type' => self::boolFormal)
 	);
 
 	/**

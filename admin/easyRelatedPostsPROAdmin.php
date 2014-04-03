@@ -221,7 +221,7 @@ class easyRelatedPostsPROAdmin {
 			$opts->setOptions( array (
 					'queryLimit' => 300
 			) );
-			$rel = erpProRelated::get_instance( $opts->getOptions() );
+			$rel = erpProRelated::get_instance( $opts );
 
 			$rel->doRating( $pid );
 		}

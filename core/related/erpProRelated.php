@@ -39,7 +39,7 @@ class erpProRelated {
 	 * All critical must be set
 	 *
 	 * @since 1.0.0
-	 * @var array
+	 * @var erpPROOptions
 	 */
 	private $options = array ();
 
@@ -73,7 +73,7 @@ class erpProRelated {
 	 * @since 1.0.0
 	 * @return erpProRelated A single instance of this class.
 	 */
-	public static function get_instance( $options ) {
+	public static function get_instance( &$options ) {
 		// If the single instance hasn't been set, set it now.
 		if ( null == self::$instance ) {
 			self::$instance = new self( $options );
@@ -113,7 +113,7 @@ class erpProRelated {
 		 * Check if we have a reldata obj with same query and if yes return it
 		 */
 		foreach ( $this->relDataPool as $key => $value ) {
-			$missMatch = $value->criticalOptionsMismatch( $this->options );
+			$missMatch = $value->criticalOptionsMismatch( $this->options->getOptions() );
 			if ( empty( $missMatch ) ) {
 				$this->relData = $value;
 				// TODO Remove debug
@@ -137,12 +137,12 @@ class erpProRelated {
 
 		// TODO Remove debug
 		do_action( 'debug', __FUNCTION__ . ' creating rel data obj' );
-		$criticalOptions = array_intersect_key( $this->options, array_flip( erpPRODefaults::$criticalOpts ) );
+		$criticalOptions = array_intersect_key( $this->options->getOptions(), array_flip( erpPRODefaults::$criticalOpts ) );
 		$this->relData = new erpPRORelData( $pid, $criticalOptions, $relTable );
 		/**
 		 * If no cached ratings or not the required number of posts
 		 */
-		if ( empty( $relTable ) || count( $relTable ) < $this->options [ 'numberOfPostsToDisplay' ] || !$this->isPostProcesed( $pid, $relTable ) ) {
+		if ( empty( $relTable ) || count( $relTable ) < $this->options->getNumberOfPostsToDiplay() || !$this->isPostProcesed( $pid, $relTable ) ) {
 			// TODO Remove debug
 			do_action( 'debug', __FUNCTION__ . ' doing rating' );
 			$relTable = $this->doRating( $pid );
@@ -152,6 +152,7 @@ class erpProRelated {
 			// TODO Remove debug
 			do_action( 'debug', __FUNCTION__ . ' found rel in cache, posts related: ' . count( $relTable ) );
 		}
+
 		/**
 		 * If reltable is still empty return an empty wp_query obj
 		 */
@@ -160,12 +161,6 @@ class erpProRelated {
 			do_action( 'debug', 'getRelated no rel in pool, no rel in cache and empty reltable. returning empty object' );
 			// Normally this should return an empty wp_query
 			return $this->relData->getResult();
-		}
-
-		if ( isset( $this->options [ 'sortRelatedBy' ] ) ) {
-			$sortOrder = erpPRODefaults::$sortRelatedByOption [ erpPRODefaults::$sortKeys [ $this->options [ 'sortRelatedBy' ] ] ];
-		} else {
-			$sortOrder = erpPRODefaults::$sortRelatedByOption [ 0 ];
 		}
 
 		// TODO Remove debug
@@ -183,15 +178,15 @@ class erpProRelated {
 		$ratingSystem->formRatingsArrays();
 		// TODO Remove debug
 		do_action( 'debug', __FUNCTION__ . ' sorting rating arrays' );
-		$ratingSystem->sortRatingsArrays( $sortOrder );
+		$ratingSystem->sortRatingsArrays( $this->options->getSortRelatedBy(true) );
 		// TODO Remove debug
 		do_action( 'debug', __FUNCTION__ . ' forming wp query args' );
 		$postsToExclude = isset( $this->wpSession [ 'visited' ] ) ? unserialize( $this->wpSession [ 'visited' ] ) : array ();
-		$slicedArray = $ratingSystem->getSlicedRatingsArrayFlat( $this->options [ 'offset' ], $this->options [ 'numberOfPostsToDisplay' ], $postsToExclude );
+		$slicedArray = $ratingSystem->getSlicedRatingsArrayFlat( $this->options->getOffset(), $this->options->getNumberOfPostsToDiplay(), $postsToExclude );
 		$qForm = new erpPROQueryFormater();
 		$qForm->setMainArgs( $pid );
 		$qForm->setPostInArg( array_keys( $slicedArray ) );
-		$this->relData->setWP_Query( $qForm->getArgsArray(), $this->options [ 'numberOfPostsToDisplay' ], $this->options [ 'offset' ] );
+		$this->relData->setWP_Query( $qForm->getArgsArray(), $this->options->getNumberOfPostsToDiplay(), $this->options->getOffset() );
 		// TODO Remove debug
 		do_action( 'debug', __FUNCTION__ . ' getting result' );
 		$this->relData->getResult();
@@ -222,8 +217,11 @@ class erpProRelated {
 		$ratingSystem = erpPRORatingSystem::get_instance( $this->relData );
 // 		$ratingSystemIsOn = easyRelatedPostsPRO::get_instance()->isRatingSystemOn();
 		// TODO Maybe query limit should follow a dif approach
-		if ( isset( $this->options [ 'queryLimit' ] ) ) {
-			$qForm->setMainArgs( $pid, $this->options [ 'queryLimit' ] );
+
+		$queryLimit = $this->options->getValue( 'queryLimit' );
+
+		if ( isset( $queryLimit ) ) {
+			$qForm->setMainArgs( $pid, $queryLimit );
 		} else {
 			$qForm->setMainArgs( $pid, 100 );
 		}
@@ -235,7 +233,10 @@ class erpProRelated {
 		if ( !empty( $postCats ) ) {
 			$qForm->setCategories( $postCats );
 
-			$qForm->exPostTypes( $this->options [ 'postTypes' ] )->exCategories($this->options['categories'])->exTags($this->options['tags']);
+			$qForm->exPostTypes( $this->options->getValue( 'postTypes' ) )
+				->exCategories($this->options->getValue('categories'))
+				->exTags($this->options->getValue('tags'));
+
 			$wpq = new WP_Query( $qForm->getArgsArray() );
 			$postsArray = $wpq->posts;
 			if ( !empty( $postsArray ) ) {
@@ -256,7 +257,10 @@ class erpProRelated {
 		}
 		if ( !empty( $postTags ) ) {
 			$qForm->setTags( $postTags );
-			$qForm->exPostTypes( $this->options [ 'postTypes' ] )->exCategories($this->options['categories'])->exTags($this->options['tags']);
+			$qForm->exPostTypes( $this->options->getValue( 'postTypes' ) )
+				->exCategories($this->options->getValue('categories'))
+				->exTags($this->options->getValue('tags'));
+
 			$wpq = new WP_Query( $qForm->getArgsArray() );
 			$postsArray = $wpq->posts;
 			if ( !empty( $postsArray ) ) {
@@ -360,13 +364,13 @@ class erpProRelated {
 		 */
 // 		if ( easyRelatedPostsPRO::get_instance()->isRatingSystemOn() == TRUE ) {
 			$weights [ 'clicks' ] = 0.15;
-			if ( $this->options [ 'fetchBy' ] == 'tags_first_then_categories' ) {
+			if ( $this->options->getFetchBy() == 'tags_first_then_categories' ) {
 				$weights [ 'categories' ] = 0.25;
 				$weights [ 'tags' ] = 0.60;
-			} elseif ( $this->options [ 'fetchBy' ] == 'tags' ) {
+			} elseif ( $this->options->getFetchBy() == 'tags' ) {
 				$weights [ 'categories' ] = 0;
 				$weights [ 'tags' ] = 0.85;
-			} elseif ( $this->options [ 'fetchBy' ] == 'categories_first_then_tags' ) {
+			} elseif ( $this->options->getFetchBy() == 'categories_first_then_tags' ) {
 				$weights [ 'categories' ] = 0.60;
 				$weights [ 'tags' ] = 0.25;
 			} else {

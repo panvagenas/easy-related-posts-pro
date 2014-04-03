@@ -64,7 +64,7 @@
 		erpPROPaths::requireOnce(erpPROPaths::$erpPROShortcodeTemplates);
 		erpPROPaths::requireOnce(erpPROPaths::$erpProRelated);
 
-		$relatedObj = erpProRelated::get_instance( $this->optObj->getOptions() );
+		$relatedObj = erpProRelated::get_instance( $this->optObj );
 
 		// TODO Remove debug
 		do_action( 'debug', 'ShortCode geting related posts' );

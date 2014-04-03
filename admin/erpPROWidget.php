@@ -81,7 +81,7 @@ class erpPROWidget extends WP_Widget {
 				$instance [ 'postTypes' ] = array ();
 			}
 			// Get related
-			$relatedObj = erpProRelated::get_instance( $instance );
+			$relatedObj = erpProRelated::get_instance( $widOpts );
 			$wpQ = $relatedObj->getRelated( $post->ID );
 			// If we have some posts to show
 			if ( $wpQ->have_posts() ) {

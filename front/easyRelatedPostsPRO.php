@@ -64,7 +64,7 @@ class easyRelatedPostsPRO {
 
 	/**
 	 * Default options class.
-	 *
+	 * @deprecated
 	 * @since 1.0.0
 	 * @var erpPRODefaults
 	 */
@@ -176,7 +176,7 @@ class easyRelatedPostsPRO {
 			erpPROPaths::requireOnce(erpPROPaths::$erpPROMainTemplates);
 			erpPROPaths::requireOnce(erpPROPaths::$erpProRelated);
 
-			$relatedObj = erpProRelated::get_instance( $this->mainOpts->getOptions() );
+			$relatedObj = erpProRelated::get_instance( $this->mainOpts );
 			$result = $relatedObj->getRelated( $post->ID );
 			$ratings = $relatedObj->getRatingsFromRelDataObj();
 			if ( empty( $result ) || empty( $result->posts ) ) {
