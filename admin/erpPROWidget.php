@@ -7,7 +7,7 @@
  * @author    Your Name <email@example.com>
  * @license   GPL-2.0+
  * @link      http://example.com
- * @copyright 2014 Your Name or Company Name
+ * @copyright 2014 Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 
 /**
@@ -69,14 +69,14 @@ class erpPROWidget extends WP_Widget {
 
 			// Check if we have to exclude taxos or post types
 			if ( isset( $new_instance [ "taxExclude" ] ) && $new_instance [ "taxExclude" ] ) {
-				$instance [ 'tags' ] = $mainOpts->getValue( 'tags' );
-				$instance [ 'categories' ] = $mainOpts->getValue( 'categories' );
+				$instance [ 'tags' ] = $mainOpts->getTags();
+				$instance [ 'categories' ] = $mainOpts->getCategories();
 			} else {
 				$instance [ 'tags' ] = array ();
 				$instance [ 'categories' ] = array ();
 			}
 			if ( isset( $new_instance [ "ptypeExclude" ] ) && $new_instance [ "ptypeExclude" ] ) {
-				$instance [ 'postTypes' ] = $mainOpts->getValue( 'postTypes' );
+				$instance [ 'postTypes' ] = $mainOpts->getPostTypes();
 			} else {
 				$instance [ 'postTypes' ] = array ();
 			}

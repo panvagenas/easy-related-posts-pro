@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * Easy Related Posts PRO.
  *
@@ -8,7 +7,7 @@
  * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
  * @license GPL-2.0+
  * @link http://example.com
- * @copyright 2014 Panagiotis Vagenas
+ * @copyright 2014 Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 
 /**
@@ -64,7 +63,9 @@ class easyRelatedPostsPRO {
 
 	/**
 	 * Default options class.
+	 *
 	 * @deprecated
+	 *
 	 * @since 1.0.0
 	 * @var erpPRODefaults
 	 */
@@ -92,7 +93,7 @@ class easyRelatedPostsPRO {
 	 * @since 1.0.0
 	 * @var boolean
 	 */
-// 	protected $ratingSystem;
+	// protected $ratingSystem;
 
 	/**
 	 * Initialize the plugin by setting localization and loading public scripts
@@ -102,10 +103,10 @@ class easyRelatedPostsPRO {
 	 */
 	private function __construct( ) {
 		// Dependencies
-		erpPROPaths::requireOnce(erpPROPaths::$erpPRODBActions);
-		erpPROPaths::requireOnce(erpPROPaths::$erpPROMainOpts);
-		erpPROPaths::requireOnce(erpPROPaths::$erpPROWidOpts);
-		erpPROPaths::requireOnce(erpPROPaths::$erpPROTracker);
+		erpPROPaths::requireOnce( erpPROPaths::$erpPRODBActions );
+		erpPROPaths::requireOnce( erpPROPaths::$erpPROMainOpts );
+		erpPROPaths::requireOnce( erpPROPaths::$erpPROWidOpts );
+		erpPROPaths::requireOnce( erpPROPaths::$erpPROTracker );
 
 		$this->wpSession = WP_Session::get_instance();
 		$this->DB = erpPRODBActions::getInstance();
@@ -116,13 +117,13 @@ class easyRelatedPostsPRO {
 		/**
 		 * Check if rating system is on in order to call tracker
 		 */
-// 		if ( $this->isRatingSystemOn() ) {
-			$tracker = new erpPROTracker( $this->DB, $this->wpSession );
-			add_action( 'init', array (
-					$tracker,
-					'tracker'
-			) );
-// 		}
+		// if ( $this->isRatingSystemOn() ) {
+		$tracker = new erpPROTracker( $this->DB, $this->wpSession );
+		add_action( 'init', array (
+				$tracker,
+				'tracker'
+		) );
+		// }
 		/**
 		 * Call content modifier
 		 */
@@ -164,7 +165,7 @@ class easyRelatedPostsPRO {
 	 */
 	public function contentFilter( $content ) {
 		// TODO Remove debug
-		do_action('debug',__FUNCTION__.' started');
+		do_action( 'debug', __FUNCTION__ . ' started' );
 		global $post;
 		/**
 		 * Check if is time to take action
@@ -173,8 +174,8 @@ class easyRelatedPostsPRO {
 			// TODO Remove debug
 			do_action( 'debug', __FUNCTION__ . ' showtime' );
 
-			erpPROPaths::requireOnce(erpPROPaths::$erpPROMainTemplates);
-			erpPROPaths::requireOnce(erpPROPaths::$erpProRelated);
+			erpPROPaths::requireOnce( erpPROPaths::$erpPROMainTemplates );
+			erpPROPaths::requireOnce( erpPROPaths::$erpProRelated );
 
 			$relatedObj = erpProRelated::get_instance( $this->mainOpts );
 			$result = $relatedObj->getRelated( $post->ID );
@@ -184,8 +185,8 @@ class easyRelatedPostsPRO {
 			}
 
 			$template = new erpPROMainTemplates();
-			$template->load($this->mainOpts->getValue('dsplLayout'));
-			if (!$template->isLoaded()) {
+			$template->load( $this->mainOpts->getDsplLayout() );
+			if ( !$template->isLoaded() ) {
 				return $content;
 			}
 			$relContent = $template->display( $result, $this->mainOpts, $ratings, false );
@@ -195,7 +196,7 @@ class easyRelatedPostsPRO {
 			return $relContent . $content;
 		}
 		// TODO Remove debug
-		do_action('debug',__FUNCTION__.' returning def content');
+		do_action( 'debug', __FUNCTION__ . ' returning def content' );
 		return $content;
 	}
 
@@ -206,12 +207,12 @@ class easyRelatedPostsPRO {
 	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
-// 	public function isRatingSystemOn( $overide = FALSE ) {
-// 		if ( !isset( $this->ratingSystem ) ) {
-// 			$this->ratingSystem = $overide || $this->mainOpts->checkRatingSystem() || $this->widOpts->checkRatingSystem();
-// 		}
-// 		return $this->ratingSystem;
-// 	}
+	// public function isRatingSystemOn( $overide = FALSE ) {
+	// if ( !isset( $this->ratingSystem ) ) {
+	// $this->ratingSystem = $overide || $this->mainOpts->checkRatingSystem() || $this->widOpts->checkRatingSystem();
+	// }
+	// return $this->ratingSystem;
+	// }
 
 	/**
 	 * Checks if current post belongs in an excluded post type
@@ -222,7 +223,7 @@ class easyRelatedPostsPRO {
 	 */
 	public function isInExcludedPostTypes( $post ) {
 		$postType = get_post_type( $post );
-		if ( !empty( $postType ) && is_array( $this->mainOpts->getValue( 'postTypes' ) ) && in_array( $postType, $this->mainOpts->getValue( 'postTypes' ) ) ) {
+		if ( !empty( $postType ) && is_array( $this->mainOpts->getPostTypes() ) && in_array( $postType, $this->mainOpts->getPostTypes() ) ) {
 			return TRUE;
 		}
 		return FALSE;
@@ -236,7 +237,7 @@ class easyRelatedPostsPRO {
 	 * @since 1.0.0
 	 */
 	public function isInExcludedTaxonomies( $post ) {
-		$exCats = $this->mainOpts->getValue( 'categories' );
+		$exCats = $this->mainOpts->getCategories();
 
 		if ( !empty( $exCats ) ) {
 			$postCategories = get_the_category( $post->ID );
@@ -246,22 +247,22 @@ class easyRelatedPostsPRO {
 					array_push( $catIds, $cat->term_id );
 				}
 				$intersect = array_intersect( $catIds, $exCats );
-				if ( !empty( $intersect) && count($intersect) == count($postCategories))  {
+				if ( !empty( $intersect ) && count( $intersect ) == count( $postCategories ) ) {
 					return TRUE;
 				}
 			}
 		}
 
-		$exTags = $this->mainOpts->getValue( 'tags' );
+		$exTags = $this->mainOpts->getTags();
 		if ( !empty( $exTags ) ) {
 			$postTags = get_the_tags( $post->ID );
 			if ( is_array( $postTags ) && !empty( $postTags ) ) {
 				$tagsIds = array ();
 				foreach ( $postTags as $tag ) {
-					array_push( $tagsIds, (string) $tag->term_id );
+					array_push( $tagsIds, ( string ) $tag->term_id );
 				}
 				$intersect = array_intersect( $tagsIds, $exTags );
-				if ( !empty( $intersect )  && count($intersect) == count($postTags)) {
+				if ( !empty( $intersect ) && count( $intersect ) == count( $postTags ) ) {
 					return TRUE;
 				}
 			}
@@ -417,7 +418,7 @@ class easyRelatedPostsPRO {
 	 * @since 1.0.0
 	 */
 	private static function single_activate( ) {
-		erpPROPaths::requireOnce(erpPROPaths::$erpPROActivator);
+		erpPROPaths::requireOnce( erpPROPaths::$erpPROActivator );
 
 		$compareVersions = erpPRODefaults::compareVersion( get_option( ERP_PRO_SLUG . '_version' ) );
 		if ( $compareVersions < 0 ) {
@@ -466,6 +467,8 @@ class easyRelatedPostsPRO {
 	 */
 	public function enqueue_styles( ) {
 		wp_enqueue_style( $this->plugin_slug . '-plugin-styles', plugins_url( 'assets/css/public.css', __FILE__ ), array (), self::VERSION );
+		wp_register_style( $this->plugin_slug . '-bootstrap', plugins_url( 'assets/css/bootstrap.css', __FILE__ ), array (), self::VERSION );
+		wp_register_style( $this->plugin_slug . '-erpPROCaptionCSS', plugins_url( 'assets/css/captionjs.css', __FILE__ ), array (), self::VERSION );
 	}
 
 	/**
@@ -474,9 +477,8 @@ class easyRelatedPostsPRO {
 	 * @since 1.0.0
 	 */
 	public function enqueue_scripts( ) {
-		wp_enqueue_script( $this->plugin_slug . '-plugin-script', plugins_url( 'assets/js/public.js', __FILE__ ), array (
-				'jquery'
-		), self::VERSION );
+		wp_enqueue_script( $this->plugin_slug . '-plugin-script', plugins_url( 'assets/js/public.js', __FILE__ ), array ( 'jquery' ), self::VERSION );
+		wp_enqueue_script( $this->plugin_slug . '-erpPROCaptionJS', plugins_url( 'assets/js/jquery.caption.js', __FILE__ ), array ( 'jquery' ), self::VERSION );
 	}
 
 	/**

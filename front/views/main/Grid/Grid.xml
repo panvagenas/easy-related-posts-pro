@@ -14,5 +14,14 @@
 	<settingsPageFilePath>settings.php</settingsPageFilePath>
 	<viewFilePath>grid.php</viewFilePath>
 	<jsFilePath>assets/grid.js</jsFilePath>
-	<cssFilePath>assets/grid.css</cssFilePath>
-	</template>
+	<cssFilePath></cssFilePath>
+	<preregisteredScripts>
+		<css>
+			<bootstrap>erp_pro-bootstrap</bootstrap>
+			<erpPROCaptionCSS>erp_pro-erpPROCaptionCSS</erpPROCaptionCSS>
+		</css>
+		<js>
+			<erpPROCaptionJS>erp_pro-erpPROCaptionJS</erpPROCaptionJS>
+		</js>
+	</preregisteredScripts>
+</template>

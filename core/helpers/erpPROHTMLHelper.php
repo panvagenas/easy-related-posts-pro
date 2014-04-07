@@ -7,7 +7,7 @@
  * @author    Panagiotis Vagenas <pan.vagenas@gmail.com>
  * @license   GPL-2.0+
  * @link      http://example.com
- * @copyright 2014 Panagiotis Vagenas
+ * @copyright 2014 Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 
 /**
@@ -62,7 +62,7 @@ class erpPROHTMLHelper {
 				$atrs = '';
 			}
 			$output = '<tr><td><label for="' . $optID . '">' . $optName . ' :' . '</label></td>';
-			$output .= '<td><input class="erp-optchbx" id="' . $optID . '" name="' . $optID . '" type="' . $optType . '"' . 'value="' . $erpPROOptions [ $optID ] . '" ' . $atrs . checked( $erpPROOptions [ $optID ], '1', FALSE ) . '/></td></tr>';
+			$output .= '<td><input class="erp-optchbx" id="' . $optID . '" name="' . $optID . '" type="' . $optType . '"' . 'value="' . (isset($erpPROOptions [ $optID ]) && !empty($erpPROOptions [ $optID ]) ? $erpPROOptions [ $optID ] : "true") . '" ' . $atrs . checked( $erpPROOptions [ $optID ], '1', FALSE ) . '/></td></tr>';
 		} elseif ( $optType == 'text' || $optType == 'number' ) {
 			if ( is_array( $optMultiple ) ) {
 				$atrs = '';

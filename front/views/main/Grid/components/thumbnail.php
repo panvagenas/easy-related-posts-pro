@@ -1,7 +1,7 @@
 <?php
 ?>
-	<figure data-label="" class="">
-		<img
-			src="<?php echo $v->getThumbnail($options['thumbnailHeight'],$options['thumbnailWidth'],$options['cropThumbnail']); ?>"
-			class="erpProThumb">
-	</figure>
+<img
+	src="<?php echo $v->getThumbnail($options['thumbnailHeight'],$options['thumbnailWidth'],$options['cropThumbnail']); ?>"
+	class="erpProThumb <?php echo $thumbClass; ?>"
+	data-caption="<?php echo $v->getTitle();?>">
+

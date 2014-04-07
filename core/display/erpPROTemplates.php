@@ -7,7 +7,7 @@
  * @author    Your Name <email@example.com>
  * @license   GPL-2.0+
  * @link      http://example.com
- * @copyright 2014 Your Name or Company Name
+ * @copyright 2014 Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 
 /**
@@ -200,6 +200,7 @@ abstract class erpPROTemplates {
 	/**
 	 * Loads the template with the given name. This populates all insance required fields in order to function prooperly
 	 * @param string $templateName
+	 * @return erpPROTemplates|null
 	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
@@ -209,19 +210,16 @@ abstract class erpPROTemplates {
 		// Get xml path
 		$templateXMLPath = $this->getTemplateXMLPath($templateName);
 		if (empty($templateXMLPath)) {
-			return;
+			return null;
 		}
 		// initialize template components
 		// TODO Remove debug
 		do_action('debug',__FUNCTION__.' '.__CLASS__);
-		// Read xml file
-		try {
-			$contents = file_get_contents($templateXMLPath);
-			$xml = new SimpleXMLElement($contents);
-		} catch (Exception $e) {
-			$er = new WP_Error();
-			$er->add($e->getCode(), $e->getMessage());
-			return ;
+
+		$xml = $this->getSimpleXMLInstc($templateXMLPath);
+
+		if ($xml === null) {
+			return null;
 		}
 		// TODO Remove debug
 		do_action('debug',__FUNCTION__.' reading options');
@@ -229,13 +227,7 @@ abstract class erpPROTemplates {
 		if (isset($xml->name)) {
 			$this->name = (string)$xml->name;
 		} else {
-			return ;
-		}
-		// read view file path
-		if (isset($xml->viewFilePath)) {
-			$this->viewFilePath = dirname($templateXMLPath).DIRECTORY_SEPARATOR.(string)$xml->viewFilePath;
-		} else {
-			return ;
+			return null;
 		}
 		// read description
 		if (isset($xml->description)) {
@@ -255,6 +247,50 @@ abstract class erpPROTemplates {
 			$optionsInDB = get_option($this->optionsArrayName);
 			$this->setOptions($optionsInDB ? $optionsInDB : array());
 		}
+
+		if (isset($xml->preregisteredScripts)) {
+			$this->enqueRegisteredScripts($xml->preregisteredScripts);
+		}
+
+		if ($this->setFilesPaths($xml, $templateXMLPath) === null) {
+			return null;
+		}
+
+		// hook validation function
+		if (isset($xml->optionSaveValidation) && !empty($this->options) && !empty($this->optionsArrayName) && is_admin()) {
+			$this->optionSaveValidation = $this->xmlToArray($xml->optionSaveValidation);
+			if (isset($this->optionSaveValidation['file']) && isset($this->optionSaveValidation['function'])) {
+				require_once dirname($templateXMLPath).DIRECTORY_SEPARATOR.$this->optionSaveValidation['file'];
+				add_filter('erpPROTemplateOptionsSaveValidation', $this->optionSaveValidation['function']);
+			}
+		}
+		// Generate a unique id
+		$this->uniqueInstanceID = uniqid($this->name);
+		return $this;
+	}
+
+	protected function enqueRegisteredScripts(SimpleXMLElement $xml){
+		if (isset($xml->css)) {
+			$styles = $this->xmlToArray($xml->css);
+			foreach ($styles as $key => $value) {
+				wp_enqueue_style($value);
+			}
+		}
+		if (isset($xml->js)) {
+			$js = $this->xmlToArray($xml->js);
+			foreach ($js as $key => $value) {
+				wp_enqueue_script($value);
+			}
+		}
+	}
+
+	protected function setFilesPaths(SimpleXMLElement $xml, $templateXMLPath){
+		// read view file path
+		if (isset($xml->viewFilePath)) {
+			$this->viewFilePath = dirname($templateXMLPath).DIRECTORY_SEPARATOR.(string)$xml->viewFilePath;
+		} else {
+			return null;
+		}
 		// read settings view file path
 		if (isset($xml->settingsPageFilePath)) {
 			$this->settingsFilePath = dirname($templateXMLPath).DIRECTORY_SEPARATOR.(string)$xml->settingsPageFilePath;
@@ -269,16 +305,28 @@ abstract class erpPROTemplates {
 			$this->jsFilePath = $this->xmlToArray($xml->jsFilePath);
 			$this->enqueJS();
 		}
-		// hook validation function
-		if (isset($xml->optionSaveValidation) && !empty($this->options) && !empty($this->optionsArrayName) && is_admin()) {
-			$this->optionSaveValidation = $this->xmlToArray($xml->optionSaveValidation);
-			if (isset($this->optionSaveValidation['file']) && isset($this->optionSaveValidation['function'])) {
-				require_once dirname($templateXMLPath).DIRECTORY_SEPARATOR.$this->optionSaveValidation['file'];
-				add_filter('erpPROTemplateOptionsSaveValidation', $this->optionSaveValidation['function']);
-			}
+		return $this;
+	}
+
+	/**
+	 * Creates a simplexml instance from the given file
+	 *
+	 * @param string $templateXMLPath
+	 * @return SimpleXMLElement|NULL
+	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @since 1.0.0
+	 */
+	protected function getSimpleXMLInstc($templateXMLPath) {
+		// Read xml file
+		try {
+			$contents = file_get_contents($templateXMLPath);
+			$xml = new SimpleXMLElement($contents);
+			return $xml;
+		} catch (Exception $e) {
+			$er = new WP_Error();
+			$er->add($e->getCode(), $e->getMessage());
+			return null;
 		}
-		// Generate a unique id
-		$this->uniqueInstanceID = uniqid($this->name);
 	}
 	/**
 	 * Converts an xml ellement to an assoc array
@@ -289,7 +337,7 @@ abstract class erpPROTemplates {
 	 */
 	protected function xmlToArray($xml){
 		$json = json_encode($xml);
-		return json_decode($json,TRUE);
+		return (array)json_decode($json,TRUE);
 	}
 	/**
 	 * Enques all css files as specified in xml file
@@ -354,7 +402,6 @@ abstract class erpPROTemplates {
 					array ( ),
 					easyRelatedPostsPRO::VERSION );
 				}
-
 			}
 		}
 		return $this;

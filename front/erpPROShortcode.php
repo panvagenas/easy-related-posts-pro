@@ -7,7 +7,7 @@
  * @author    Your Name <email@example.com>
  * @license   GPL-2.0+
  * @link      http://example.com
- * @copyright 2014 Your Name or Company Name
+ * @copyright 2014 Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 
 /**
@@ -78,7 +78,7 @@
 		}
 
 		$template = new erpPROShortcodeTemplates();
-		$template->load($this->optObj->getValue('dsplLayout'));
+		$template->load($this->optObj->getDsplLayout());
 		$template->setOptions($this->optObj->getValue('templateOptions'));
 
 		if (!$template->isLoaded()) {
@@ -175,9 +175,9 @@
 		do_action( 'debug', 'ShortCode chck if have to suppress others' );
 		// Setting supress others option
 		erpPROPaths::requireOnce(erpPROPaths::$erpPROTemplates);
-		if ( $this->optObj->getValue('suppress_other') === true ) {
+		if ( $this->optObj->getSuppressOthers() === true ) {
 			erpPROTemplates::suppressOthers(true);
-		} elseif ( $this->optObj->getValue('suppress_other') === false) {
+		} elseif ( $this->optObj->getSuppressOthers() === false) {
 			erpPROTemplates::suppressOthers(false);
 		}
 	}

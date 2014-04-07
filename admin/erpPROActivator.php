@@ -6,7 +6,7 @@
  * @author    Your Name <email@example.com>
  * @license   GPL-2.0+
  * @link      http://example.com
- * @copyright 2014 Your Name or Company Name
+ * @copyright 2014 Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 
 /**
@@ -35,13 +35,13 @@
 
  		$sql = "CREATE TABLE IF NOT EXISTS " . $tablePrefix . ERP_PRO_RELATIVE_TABLE . " (
 			pid1 bigint(20) NOT NULL,
- 			post_date1 NOT NULL,
+ 			post_date1 DATE NOT NULL,
 			score1_cats float NOT NULL,
 			score1_tags float NOT NULL,
 			displayed1 int(11) DEFAULT 0 NOT NULL,
 			clicks1 int(11) DEFAULT 0 NOT NULL,
 			pid2 bigint(20) NOT NULL,
- 			post_date2 NOT NULL,
+ 			post_date2 DATE NOT NULL,
 			score2_cats float NOT NULL,
 			score2_tags float NOT NULL,
 			clicks2 int(11) DEFAULT 0 NOT NULL,
