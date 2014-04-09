@@ -394,13 +394,13 @@ abstract class erpPROTemplates {
 					$key,
 					$this->getUrl($value['path']),
 					$value['deps'],
-					easyRelatedPostsPRO::VERSION );
+					easyRelatedPostsPRO::VERSION, false );
 				} else {
 					wp_enqueue_script(
 					$key,
 					$this->getUrl($value),
 					array ( ),
-					easyRelatedPostsPRO::VERSION );
+					easyRelatedPostsPRO::VERSION, false );
 				}
 			}
 		}
