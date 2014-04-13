@@ -23,7 +23,7 @@ class erpPROPaths {
 	// Cache
 	public static $erpPRODBActions = 'core/cache/erpPRODBActions.php';
 	// Includes
-	public static $resize = 'includes/resize.php';
+	public static $bfiResizer = 'includes/bfi_thumb.php';
 	// Options
 	public static $erpPROWidOpts = 'core/options/erpPROWidOpts.php';
 	public static $erpPROShortCodeOpts = 'core/options/erpPROShortCodeOpts.php';

@@ -18,6 +18,7 @@
 	<preregisteredScripts>
 		<css>
 			<bootstrap>erp_pro-bootstrap</bootstrap>
+			<bootstrapText>erp_pro-bootstrap-text</bootstrapText>
 			<erpPROCaptionCSS>erp_pro-erpPROCaptionCSS</erpPROCaptionCSS>
 		</css>
 		<js>

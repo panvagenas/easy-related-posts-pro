@@ -1,9 +1,9 @@
 <?php
 
-function validateSCGridOptions( $options ) {
+function validateMainGridOptions( $options ) {
 	$newOptions = array (
 			'numOfPostsPerRow' => isset( $options [ 'numOfPostsPerRow' ] ) ? ( int ) $options [ 'numOfPostsPerRow' ] : 3,
-			'thumbCaption' => isset( $options [ 'thumbCaption' ] )
+			'thumbCaption' => isset( $options [ 'thumbCaption' ] ) ? true : false
 	);
 	return $newOptions;
 }

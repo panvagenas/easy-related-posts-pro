@@ -57,7 +57,6 @@ if ($options['thumbCaption']) {
 	<script type="text/javascript">
 	(function ( $ ) {
 		$(function () {
-			$('.<?php echo $titleClass; ?>').html("");
 			$(window).load(function() {
 				$('.<?php echo $thumbClass; ?>').captionjs({
 			        'class_name'      : 'erpProcaptionjs', // Class name assigned to each <figure>

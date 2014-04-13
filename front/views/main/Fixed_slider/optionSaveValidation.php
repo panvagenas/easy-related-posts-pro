@@ -18,5 +18,6 @@ function validateMainFixedSliderOptions( $options ) {
 	if (isset( $options [ 'numOfPostsPerRow' ] ) && $options [ 'numOfPostsPerRow' ] > 0) {
 		$newOptions['numOfPostsPerRow'] = (int)$options['numOfPostsPerRow'];
 	}
+	$newOptions['thumbCaption'] = isset( $options [ 'thumbCaption' ] ) ? true : false;
 	return $newOptions;
 }

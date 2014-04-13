@@ -19,6 +19,30 @@
 						width: '80%',
 						height: Math.floor($('body').height()*0.8),
 						buttons: {
+							"Update profile": function() {
+								var profile = $('#profile').val();
+
+								if(profile != null){
+									var formOptions = {
+										url: ajaxurl,
+										data: {action: 'erpsaveShortcodeProfile', profileName : profile},
+									    dataType: 'json',
+									    success : 	function(response) {
+												        if(response.error !== undefined){
+												        	alert(response.error);
+												        	return false;
+												        }
+													    return true;
+													}
+									};
+
+									if($('#scForm').ajaxSubmit(formOptions)){
+										alert('Shortcode options updated!\nShortcode string is [erp profile="'+profile+'"]');
+									}
+								} else {
+									alert('You must create a new profile first');
+								}
+							},// Update profile
 							"Insert": function() {
 								var profile = $('#profile').val();
 

@@ -2,16 +2,27 @@
 <template>
 	<name>Grid</name>
 	<description>A simple grid template fully responsive</description>
+	<optionsArrayName>erpPROGridOptions</optionsArrayName>
 	<options>
 		<numOfPostsPerRow>3</numOfPostsPerRow>
 		<thumbCaption>false</thumbCaption>
 	</options>
 	<optionSaveValidation>
 		<file>optionSaveValidation.php</file>
-		<function>validateSCGridOptions</function>
+		<function>validateMainGridOptions</function>
 	</optionSaveValidation>
 	<settingsPageFilePath>settings.php</settingsPageFilePath>
 	<viewFilePath>grid.php</viewFilePath>
 	<jsFilePath>assets/grid.js</jsFilePath>
-	<cssFilePath>assets/grid.css</cssFilePath>
-	</template>
+	<cssFilePath></cssFilePath>
+	<preregisteredScripts>
+		<css>
+			<bootstrap>erp_pro-bootstrap</bootstrap>
+			<bootstrapText>erp_pro-bootstrap-text</bootstrapText>
+			<erpPROCaptionCSS>erp_pro-erpPROCaptionCSS</erpPROCaptionCSS>
+		</css>
+		<js>
+			<erpPROCaptionJS>erp_pro-erpPROCaptionJS</erpPROCaptionJS>
+		</js>
+	</preregisteredScripts>
+</template>

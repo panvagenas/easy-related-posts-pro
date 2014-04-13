@@ -265,7 +265,7 @@ abstract class erpPROTemplates {
 			}
 		}
 		// Generate a unique id
-		$this->uniqueInstanceID = uniqid($this->name);
+		$this->uniqueInstanceID = uniqid(str_replace(' ', '_', $this->name));
 		return $this;
 	}
 

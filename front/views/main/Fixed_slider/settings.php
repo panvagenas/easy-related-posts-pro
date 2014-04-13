@@ -28,7 +28,7 @@
 </p>
 <p>
 <label for="backgroundColor">Background color: </label>
-<input class="erp-opttxt" id="carouselMinVisible" name="carouselMinVisible" type="number"value="<?php echo $backgroundColor; ?>"/>
+<input class="erp-opttxt" id="backgroundColor" name="backgroundColor" type="number"value="<?php echo $backgroundColor; ?>"/>
 </p>
 <p>
 <label for="backgroundTransparency">Background transparency: </label>
@@ -37,4 +37,8 @@
 <p>
 <label for="triggerAfter">Trigger after: </label>
 <input class="erp-opttxt" id="triggerAfter" name="triggerAfter" type="number"value="<?php echo $triggerAfter; ?>"/>
+</p>
+<p>
+<label for="thumbCaption">Use thumbnail captions: </label>
+<input class="erp-optchbx" id="thumbCaption" name="thumbCaption" type="checkbox" <?php checked( (bool)$thumbCaption ); ?> />
 </p>

@@ -1,55 +1,84 @@
 <?php
 /**
- *
+ * @title Fixed slider
+ * @description This is the template description
  */
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
+$containerClass = $uniqueID.'Container';
+$thumbClass = $uniqueID.'Thumbnail';
+$titleClass = $uniqueID.'PostTitle';
+$excClass = $uniqueID.'Exc';
 ?>
-<?php
-/**
- * Giati to metro diabazetai mono otan den einai hidden?
- */
-?>
-<div id="metroW" style="width: 100%; "></div>
-<div id="erpProWraper">
-	<h2 class="erp_h2" style="margin: 0px 0px 7px 1%;"><?php echo $title; ?></h2>
-	<?php
-	if ( isset( $posts ) ) {
-		$rowCounter = 0;
-		foreach ( $posts as $k => $v ) {
-			if ($k % $options['numOfPostsPerRow'] === 0){
-				?>
-				<div class="erpRow">
-				<?php
-			}
-			?>
-			<div class="erpProRelContainer erpCol-sm-<?php echo 12 / (int)$options['numOfPostsPerRow']; ?>">
-				<a href="<?php echo $v->getPermalink() ?>" class="erpProPostLink">
-					<?php
-					foreach ($options['content'] as $key => $value) {
-						include plugin_dir_path(__FILE__).'components/'.$value.'.php';
-					}
+<div class="metroW" style="width: 100%; z-index:100; "></div>
+<div class="erpProContainer <?php echo $containerClass; ?>">
+	<noscript><h2 class="erpProTitle" style="line-height: 1.4;"><?php if(isset($title)) echo $title; ?></h2></noscript>
+	<div class="container-fluid">
+		<?php
+		if ( isset( $posts ) ) {
+			foreach ( $posts as $k => $v ) {
+				if ($k % $options['numOfPostsPerRow'] === 0){
 					?>
-				</a>
-			</div>
-			<?php
-			if ($k % $options['numOfPostsPerRow'] + 1 === $options['numOfPostsPerRow'] || count($posts) === $k+1){
+					<div class="row">
+					<?php
+				}
 				?>
+				<div class="col-md-<?php echo 12 / $options['numOfPostsPerRow']; ?>">
+					<a href="<?php echo $v->getPermalink() ?>" class="erpProPostLink">
+						<?php
+						foreach ($options['content'] as $key => $value) {
+							include plugin_dir_path(__FILE__).'components/'.$value.'.php';
+						}
+						?>
+					</a>
 				</div>
 				<?php
-			}
-			?>
-		<?php
-		$rowCounter++;
-		} // foreach ($posts as $k => $v)
-	} // if (isset($posts))
-	?>
+				if ($k % $options['numOfPostsPerRow'] + 1 === $options['numOfPostsPerRow'] || count($posts) === $k+1){
+					?>
+					</div>
+					<div class="cf"></div>
+					<?php
+				}
+				?>
+			<?php
+			} // foreach ($posts as $k => $v)
+		} // if (isset($posts))
+		?>
+	</div>
 </div>
-<script type="text/javascript" >
-	var position = "<?php echo $position; ?>";
-	var backgroundColor = "<?php echo $backgroundColor; ?>";
-	var triggerAfter = <?php echo $triggerAfter; ?>;
-	var backgroundTransparency = <?php echo $backgroundTransparency; ?>;
+<script type="text/javascript">
+	(function ( $ ) {
+		$(function () {
+			$(window).load(function() {
+				<?php
+				if ($options['thumbCaption']) {
+					?>
+				$('.<?php echo $thumbClass; ?>').captionjs({
+			        'class_name'      : 'erpProcaptionjs', // Class name assigned to each <figure>
+			        'schema'          : false,        // Use schema.org markup (i.e., itemtype, itemprop)
+			        'mode'            : 'animated',   // default | static | animated | hide
+			        'debug_mode'      : false,       // Output debug info to the JS console
+			        'force_dimensions': false        // Force the dimensions in case they can't be detected (e.g., image is not yet painted to viewport)
+			    });
+				<?php
+				}
+				?>
+
+				slider = new ERPSlider(
+						"<?php echo $position; ?>",
+						"<?php echo $backgroundColor; ?>",
+						<?php echo $triggerAfter; ?>,
+						<?php echo $backgroundTransparency; ?>,
+						$('.<?php echo $containerClass; ?>'),
+						'<?php echo $title; ?>');
+
+				slider.sliderInitializer();
+				slider.buttons();
+				slider.erpToggler();
+
+			});
+		});
+	}(jQuery));
 </script>

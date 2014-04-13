@@ -468,6 +468,7 @@ class easyRelatedPostsPRO {
 	public function enqueue_styles( ) {
 		wp_enqueue_style( $this->plugin_slug . '-plugin-styles', plugins_url( 'assets/css/public.css', __FILE__ ), array (), self::VERSION );
 		wp_register_style( $this->plugin_slug . '-bootstrap', plugins_url( 'assets/css/bootstrap.css', __FILE__ ), array (), self::VERSION );
+		wp_register_style( $this->plugin_slug . '-bootstrap-text', plugins_url( 'assets/css/bootstrap-text.css', __FILE__ ), array (), self::VERSION );
 		wp_register_style( $this->plugin_slug . '-erpPROCaptionCSS', plugins_url( 'assets/css/captionjs.css', __FILE__ ), array (), self::VERSION );
 	}
 

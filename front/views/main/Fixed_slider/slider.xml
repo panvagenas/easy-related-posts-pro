@@ -9,6 +9,7 @@
 		<backgroundColor>#fefefe</backgroundColor>
 		<backgroundTransparency>0.8</backgroundTransparency>
 		<triggerAfter>0.8</triggerAfter></options>
+		<thumbCaption>false</thumbCaption>
 	<optionSaveValidation>
 		<file>optionSaveValidation.php</file>
 		<function>validateMainFixedSliderOptions</function>
@@ -27,4 +28,14 @@
 		<slider>assets/css/slider.css</slider>
 		<grid>assets/css/grid.css</grid>
 	</cssFilePath>
+	<preregisteredScripts>
+		<css>
+			<bootstrap>erp_pro-bootstrap</bootstrap>
+			<bootstrapText>erp_pro-bootstrap-text</bootstrapText>
+			<erpPROCaptionCSS>erp_pro-erpPROCaptionCSS</erpPROCaptionCSS>
+		</css>
+		<js>
+			<erpPROCaptionJS>erp_pro-erpPROCaptionJS</erpPROCaptionJS>
+		</js>
+	</preregisteredScripts>
 </template>
