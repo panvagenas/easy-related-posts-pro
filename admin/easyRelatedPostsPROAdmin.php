@@ -274,6 +274,7 @@ class easyRelatedPostsPROAdmin {
 			wp_enqueue_script( 'jquery-effects-fade' );
 			wp_enqueue_script( 'jquery-ui-tabs' );
 			wp_enqueue_script( 'jquery-ui-tooltip' );
+			wp_enqueue_script( 'jquery-ui-accordion' );
 
 			// TODO Remove tiper, JQ will be used
 // 			wp_enqueue_script( $this->plugin_slug . '-qtip', plugins_url( 'assets/js/jquery.qtip.min.js', __FILE__ ), array (

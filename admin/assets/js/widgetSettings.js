@@ -17,17 +17,10 @@
 		/**
 		 * Show templates options
 		 */
-		/*$('.dsplLayout')
-				.change(
-						function() {
-							$(this).parent().children(".templateSettings[data-template!='"+$(this).val()+"']").hide();
-							$(this).parent().children(".templateSettings[data-template='"+$(this).val()+"']").show();
-						});
-		$('.dsplLayout').trigger('change');*/
 		displayLayoutLoader();
-	$( document ).ajaxStop(function() {
-		displayLayoutLoader();
-	});
+		$( document ).ajaxStop(function() {
+			displayLayoutLoader();
+		});
 	});
 }(jQuery));
 

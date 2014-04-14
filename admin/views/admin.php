@@ -10,6 +10,28 @@
  * @copyright 2014 Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 erpPROPaths::requireOnce(erpPROPaths::$erpPROHTMLHelper);
+
+function erpPROTaxGrouping(Array $input) {
+	$out =  array();
+	foreach ($input as $key => $value) {
+		$start = mb_substr($value->name, 0, 1);
+		if (is_numeric($start)) {
+			if (isset($out['0-9'])) {
+				array_push($out['0-9'], $value);
+			}else{
+				$out['0-9'] = array($value);
+			}
+		} else {
+			$start = strtoupper($start);
+			if (isset($out[$start])) {
+				array_push($out[$start], $value);
+			}else{
+				$out[$start] = array($value);
+			}
+		}
+	}
+	return $out;
+}
 ?>
 
 <div id="erp-opt-general" class="wrap">
@@ -165,31 +187,48 @@ erpPROPaths::requireOnce(erpPROPaths::$erpPROHTMLHelper);
 				</p>
 				<table class="cat-opt-table">
 					<tr>
-						<td></td>
+						<td><label for="select-all-cat">Check all :</label></td>
 						<td><input type="checkbox" id="select-all-cat" class="select-all" title="Select-deselect all"></td>
 					</tr>
+				</table>
 					<?php
 					$opts = array (
 							'hide_empty' => 0
 					);
 					$cats = get_categories( $opts );
-					$tags = get_tags( $opts );
 
-					foreach ( $cats as $key => $value ) {
+					$tags = get_tags( $opts );
+					?>
+					<div class="<?php if (count($cats) > 30) echo 'erpAccordion'; ?>">
+					<?php
+					foreach (erpPROTaxGrouping($cats) as $key => $v) {
 						?>
-					<tr>
-						<td><label for="categories-<?php echo $value->term_id; ?>"><?php echo $value->name; ?>
-								:</label></td>
-						<td><input class="erp-optchbx cat" id="categories-<?php echo $value->term_id; ?>"
-							name="categories[]" type="checkbox"
-							value="<?php echo $value->term_id; ?>"
-							<?php if (in_array($value->term_id, $erpPROOptions['categories'])) echo 'checked="checked"'; ?> />
-						</td>
-					</tr>
+						<?php if (count($cats) > 30) echo '<h3>'.$key.'</h3>'; ?>
+						<div>
+						<table class="cat-opt-table">
+						<?php
+						foreach ( $v as $k => $value ) {
+							?>
+
+						<tr>
+							<td><label for="categories-<?php echo $value->term_id; ?>"><?php echo $value->name; ?>
+									:</label></td>
+							<td><input class="erp-optchbx cat" id="categories-<?php echo $value->term_id; ?>"
+								name="categories[]" type="checkbox"
+								value="<?php echo $value->term_id; ?>"
+								<?php if (in_array($value->term_id, $erpPROOptions['categories'])) echo 'checked="checked"'; ?> />
+							</td>
+						</tr>
+						<?php
+						}
+						?>
+						</table>
+						</div>
 					<?php
 					}
 					?>
-				</table>
+					</div>
+
 			</div>
 			<div id="tabs-5">
 				<!--<h3>Tags</h3>-->
@@ -201,23 +240,47 @@ erpPROPaths::requireOnce(erpPROPaths::$erpPROHTMLHelper);
 				</p>
 				<table class="tag-opt-table">
 					<tr>
-						<td></td>
-						<td><input type="checkbox" id="select-all-tag" class="select-all"></td>
+						<td><label for="select-all-cat">Check all :</label></td>
+						<td><input type="checkbox" id="select-all-tag" class="select-all" title="Select-deselect all"></td>
 					</tr>
+				</table>
 					<?php
-					foreach ( $tags as $key => $value ) {
+					$opts = array (
+							'hide_empty' => 0
+					);
+					$cats = get_categories( $opts );
+
+					$tags = get_tags( $opts );
+					?>
+					<div class="<?php if (count($cats) > 30) echo 'erpAccordion'; ?>">
+					<?php
+					foreach (erpPROTaxGrouping($tags) as $key => $v) {
 						?>
-					<tr>
-						<td><label for="tags-<?php echo $value->term_id; ?>"><?php echo $value->name; ?> :</label></td>
-						<td><input class="erp-optchbx tag" id="tags-<?php echo $value->term_id; ?>" name="tags[]"
-							type="checkbox" value="<?php echo $value->term_id; ?>"
-							<?php if (in_array($value->term_id, $erpPROOptions['tags'])) echo 'checked="checked"'; ?> />
-						</td>
-					</tr>
+						<?php if (count($cats) > 30) echo '<h3>'.$key.'</h3>'; ?>
+						<div>
+						<table class="tag-opt-table">
+						<?php
+						foreach ( $v as $k => $value ) {
+							?>
+
+						<tr>
+							<td><label for="tags-<?php echo $value->term_id; ?>"><?php echo $value->name; ?> :</label></td>
+							<td><input class="erp-optchbx tag" id="tags-<?php echo $value->term_id; ?>" name="tags[]"
+								type="checkbox" value="<?php echo $value->term_id; ?>"
+								<?php if (in_array($value->term_id, $erpPROOptions['tags'])) echo 'checked="checked"'; ?> />
+							</td>
+						</tr>
+						<?php
+						}
+						?>
+						</table>
+						</div>
 					<?php
 					}
 					?>
-				</table>
+					</div>
+
+
 			</div>
 			<div id="tabs-6">
 				<!--<h3>Tags</h3>-->

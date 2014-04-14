@@ -58,28 +58,29 @@ ChkObj.prototype.selectionChecker = function(maper) {
  *
  * @since 1.3
  */
-function tiper(parent, content) {
-	jQuery(parent).qtip({
-		content : {
-			text : content
-		},
-		position : {
-			at : 'right',
-			adjust : {
-				x : 10
-			}
-		},
-		style : {
-			classes : 'qtip-blue qtip-shadow',
-			tip : {
-				corner : 'left top',
-				mimic : 'left center'
-			}
-		},
-		show : 'mouseover',
-		hide : 'mouseleave'
-	});
-}
+// TODO CC
+//function tiper(parent, content) {
+//	jQuery(parent).qtip({
+//		content : {
+//			text : content
+//		},
+//		position : {
+//			at : 'right',
+//			adjust : {
+//				x : 10
+//			}
+//		},
+//		style : {
+//			classes : 'qtip-blue qtip-shadow',
+//			tip : {
+//				corner : 'left top',
+//				mimic : 'left center'
+//			}
+//		},
+//		show : 'mouseover',
+//		hide : 'mouseleave'
+//	});
+//}
 
 (function($) {
 

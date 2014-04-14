@@ -168,7 +168,7 @@
 		/**
 		 * -----------------------------------------
 		 */
-
+		$( ".erpAccordion" ).accordion({ heightStyle: "content", collapsible: true });
 	});
 
 }(jQuery));

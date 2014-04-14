@@ -291,8 +291,8 @@
                 checkThumbOptions.checkBoxChecker();
                 checkCrop.checkBoxChecker();
 
-                tiper('.zero-for-theme', 'Enter 0 if you want to use themes default size')
-                tiper('.use-tax-filter', 'If this option is enabled widget won\'t span when viewing any post in any categories or tags you have chosen in Settings->Easy Related Posts.')
+//                 tiper('.zero-for-theme', 'Enter 0 if you want to use themes default size')
+//                 tiper('.use-tax-filter', 'If this option is enabled widget won\'t span when viewing any post in any categories or tags you have chosen in Settings->Easy Related Posts.')
                 jQuery('#<?php echo $widgetInstance->get_field_id("postTitleColor"); ?>').wpColorPicker();
                 jQuery('#<?php echo $widgetInstance->get_field_id("excColor"); ?>').wpColorPicker();
 
