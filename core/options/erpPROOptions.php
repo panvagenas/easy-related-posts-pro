@@ -146,6 +146,11 @@ abstract class erpPROOptions {
 		if (is_array((string)unserialize($value))) {
 			return (string)$value;
 		}
+		if (filter_var($value, FILTER_VALIDATE_URL)) {
+			if (strpos($value, get_site_url()) === false) {
+				return null;
+			}
+		}
 		return wp_strip_all_tags((string)$value);
 	}
 	protected function validFloat($value) {

@@ -134,12 +134,46 @@
 		</select>
 	</label>
 </p>
+<hr>
 <?php // TODO Thumbnail, title and exc and text mods should be configured per template basis ?>
 <p style="text-align: center">
-	Title
+	<strong>Title</strong>
 </p>
+	<table style="vertical-align: middle; width: auto;">
+	<tr>
+		<td>Post title size:</td>
+		<td><label
+			for="<?php echo $widgetInstance->get_field_id('postTitleFontSize'); ?>">
+				<input size="1pt" class=""
+				id="<?php echo $widgetInstance->get_field_id('postTitleFontSize'); ?>"
+				name="<?php echo $widgetInstance->get_field_name('postTitleFontSize'); ?>"
+				type="number"
+				value="<?php echo esc_attr($options['postTitleFontSize']); ?>" />px
+		</label></td>
+	</tr>
+	<tr>
+		<td>Post title color:</td>
+		<td><label
+			for="<?php echo $widgetInstance->get_field_id('postTitleColor'); ?>">
+				<input class="wp-color-picker-field" data-default-color="#ffffff"
+				size="3pt"
+				id="<?php echo $widgetInstance->get_field_id('postTitleColor'); ?>"
+				name="<?php echo $widgetInstance->get_field_name('postTitleColor'); ?>"
+				type="text"
+				value="<?php echo esc_attr($options['postTitleColor']); ?>" />
+		</label></td>
+		<td><label
+			for="<?php echo $widgetInstance->get_field_id('postTitleColorUse'); ?>"><?php _e('Use:'); ?>
+				<input class="erp_wid_opt5"
+				id="<?php echo $widgetInstance->get_field_id('postTitleColorUse'); ?>"
+				name="<?php echo $widgetInstance->get_field_name('postTitleColorUse'); ?>"
+				type="checkbox"
+				<?php echo checked($options['postTitleColorUse']); ?> /> </label></td>
+	</tr>
+</table>
+<hr>
 <p style="text-align: center">
-	Thumbnail
+	<strong>Thumbnail</strong>
 </p>
 <p>
 	<label
@@ -171,9 +205,41 @@
 		value="<?php echo esc_attr($options['defaultThumbnail']); ?>" />
 	</label>
 </p>
+<hr>
 <p style="text-align: center">
-	Excerpt
+	<strong>Excerpt</strong>
 </p>
+	<table style="vertical-align: middle; width: auto;">
+	<tr>
+		<td>Excerpt text size:</td>
+		<td><label
+			for="<?php echo $widgetInstance->get_field_id('excFontSize'); ?>">
+				<input size="1pt" class="zero-for-theme"
+				id="<?php echo $widgetInstance->get_field_id('excFontSize'); ?>"
+				name="<?php echo $widgetInstance->get_field_name('excFontSize'); ?>"
+				type="number"
+				value="<?php echo esc_attr($options['excFontSize']); ?>" />px
+		</label></td>
+	</tr>
+	<tr>
+		<td>Excerpt text color:</td>
+		<td><label
+			for="<?php echo $widgetInstance->get_field_id('excColor'); ?>">
+				<input class="wp-color-picker-field" data-default-color="#ffffff"
+				size="3pt"
+				id="<?php echo $widgetInstance->get_field_id('excColor'); ?>"
+				name="<?php echo $widgetInstance->get_field_name('excColor'); ?>"
+				type="text" value="<?php echo esc_attr($options['excColor']); ?>" />
+		</label></td>
+		<td><label
+			for="<?php echo $widgetInstance->get_field_id('excColorUse'); ?>"><?php _e('Use:'); ?>
+				<input class=""
+				id="<?php echo $widgetInstance->get_field_id('excColorUse'); ?>"
+				name="<?php echo $widgetInstance->get_field_name('excColorUse'); ?>"
+				type="checkbox" <?php echo checked($options['excColorUse']); ?> />
+		</label></td>
+	</tr>
+</table>
 <hr>
 <p style="text-align: center">
 	<strong>Templates</strong>
@@ -215,68 +281,6 @@
 <p style="text-align: center">
 	<strong>Text properties</strong>
 </p>
-<table style="vertical-align: middle; width: auto;">
-	<tr>
-		<td>Post title size:</td>
-		<td><label
-			for="<?php echo $widgetInstance->get_field_id('postTitleFontSize'); ?>">
-				<input size="1pt" class=""
-				id="<?php echo $widgetInstance->get_field_id('postTitleFontSize'); ?>"
-				name="<?php echo $widgetInstance->get_field_name('postTitleFontSize'); ?>"
-				type="number"
-				value="<?php echo esc_attr($options['postTitleFontSize']); ?>" />px
-		</label></td>
-	</tr>
-	<tr>
-		<td>Post title color:</td>
-		<td><label
-			for="<?php echo $widgetInstance->get_field_id('postTitleColor'); ?>">
-				<input class="wp-color-picker-field" data-default-color="#ffffff"
-				size="3pt"
-				id="<?php echo $widgetInstance->get_field_id('postTitleColor'); ?>"
-				name="<?php echo $widgetInstance->get_field_name('postTitleColor'); ?>"
-				type="text"
-				value="<?php echo esc_attr($options['postTitleColor']); ?>" />
-		</label></td>
-		<td><label
-			for="<?php echo $widgetInstance->get_field_id('postTitleColorUse'); ?>"><?php _e('Use:'); ?>
-				<input class="erp_wid_opt5"
-				id="<?php echo $widgetInstance->get_field_id('postTitleColorUse'); ?>"
-				name="<?php echo $widgetInstance->get_field_name('postTitleColorUse'); ?>"
-				type="checkbox"
-				<?php echo checked($options['postTitleColorUse']); ?> /> </label></td>
-	</tr>
-
-	<tr>
-		<td>Excerpt text size:</td>
-		<td><label
-			for="<?php echo $widgetInstance->get_field_id('excFontSize'); ?>">
-				<input size="1pt" class="zero-for-theme"
-				id="<?php echo $widgetInstance->get_field_id('excFontSize'); ?>"
-				name="<?php echo $widgetInstance->get_field_name('excFontSize'); ?>"
-				type="number"
-				value="<?php echo esc_attr($options['excFontSize']); ?>" />px
-		</label></td>
-	</tr>
-	<tr>
-		<td>Excerpt text color:</td>
-		<td><label
-			for="<?php echo $widgetInstance->get_field_id('excColor'); ?>">
-				<input class="wp-color-picker-field" data-default-color="#ffffff"
-				size="3pt"
-				id="<?php echo $widgetInstance->get_field_id('excColor'); ?>"
-				name="<?php echo $widgetInstance->get_field_name('excColor'); ?>"
-				type="text" value="<?php echo esc_attr($options['excColor']); ?>" />
-		</label></td>
-		<td><label
-			for="<?php echo $widgetInstance->get_field_id('excColorUse'); ?>"><?php _e('Use:'); ?>
-				<input class=""
-				id="<?php echo $widgetInstance->get_field_id('excColorUse'); ?>"
-				name="<?php echo $widgetInstance->get_field_name('excColorUse'); ?>"
-				type="checkbox" <?php echo checked($options['excColorUse']); ?> />
-		</label></td>
-	</tr>
-</table>
 <script type="text/javascript">
 	var templateRoot = "<?php echo $temp->getTemplatesBasePath(); ?>";
             jQuery(document).ready(function($) {

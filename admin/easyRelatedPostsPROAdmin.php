@@ -244,7 +244,8 @@ class easyRelatedPostsPROAdmin {
 		if ( $this->plugin_screen_hook_suffix == $screen->id || 'widgets' == $screen->id ) {
 			wp_enqueue_style( 'wp-color-picker' );
 			wp_enqueue_style( $this->plugin_slug . '-admin-styles', plugins_url( 'assets/css/admin.css', __FILE__ ), array (), easyRelatedPostsPRO::VERSION );
-			wp_enqueue_style( $this->plugin_slug . '-qtip', plugins_url( 'assets/css/jquery.qtip-min.css', __FILE__ ), array (), easyRelatedPostsPRO::VERSION );
+			// TODO Remove tiper, JQ will be used
+			//wp_enqueue_style( $this->plugin_slug . '-qtip', plugins_url( 'assets/css/jquery.qtip-min.css', __FILE__ ), array (), easyRelatedPostsPRO::VERSION );
 		}
 		if ($screen->id === 'post') {
 			wp_enqueue_style( $this->plugin_slug . '-admin-styles', plugins_url( 'assets/css/SCHelper.css', __FILE__ ), array (), easyRelatedPostsPRO::VERSION );
@@ -272,15 +273,16 @@ class easyRelatedPostsPROAdmin {
 			wp_enqueue_script( 'wp-color-picker' );
 			wp_enqueue_script( 'jquery-effects-fade' );
 			wp_enqueue_script( 'jquery-ui-tabs' );
-			wp_enqueue_script( 'jquery-ui-progressbar' ); // TODO Not needed
+			wp_enqueue_script( 'jquery-ui-tooltip' );
 
-			wp_enqueue_script( $this->plugin_slug . '-qtip', plugins_url( 'assets/js/jquery.qtip.min.js', __FILE__ ), array (
-					'jquery'
-			), easyRelatedPostsPRO::VERSION );
+			// TODO Remove tiper, JQ will be used
+// 			wp_enqueue_script( $this->plugin_slug . '-qtip', plugins_url( 'assets/js/jquery.qtip.min.js', __FILE__ ), array (
+// 					'jquery'
+// 			), easyRelatedPostsPRO::VERSION );
 			wp_enqueue_script( $this->plugin_slug . '-admin-script', plugins_url( 'assets/js/admin.js', __FILE__ ), array (
 					'jquery',
 					'jquery-ui-tabs',
-					$this->plugin_slug . '-qtip'
+					//$this->plugin_slug . '-qtip'
 			), easyRelatedPostsPRO::VERSION );
 		}
 		if ( $this->plugin_screen_hook_suffix == $screen->id ) {
@@ -298,6 +300,7 @@ class easyRelatedPostsPROAdmin {
 			wp_enqueue_script( 'jquery-ui-core' );
 			wp_enqueue_script( 'jquery-ui-tabs' );
 			wp_enqueue_script( 'jquery-ui-dialog' );
+			wp_enqueue_script( 'jquery-ui-tooltip' );
 			wp_enqueue_script( $this->plugin_slug . '-jq-form', plugins_url( 'assets/js/jq.form.min.js', __FILE__ ), array ( 'jquery' ), easyRelatedPostsPRO::VERSION );
 		}
 	}

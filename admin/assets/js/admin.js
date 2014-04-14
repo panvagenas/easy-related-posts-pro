@@ -85,6 +85,7 @@ function tiper(parent, content) {
 
 	$(function() {
 		// jQuery loaded scripts
+		$( document ).tooltip();
 	});
 
 }(jQuery));

@@ -32,8 +32,8 @@ erpPROPaths::requireOnce(erpPROPaths::$erpPROHTMLHelper);
 						<th colspan="2">General Options</th>
 					</tr>
 					<?php
-					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'checkbox', 'Activate plugin', 'activate' );
-					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'text', 'Title to display', 'title' );
+					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'checkbox', 'Activate plugin', 'activate', array('title'=>'If you want to use only the widget of this plugin, uncheck this') );
+					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'text', 'Title to display', 'title', array('title'=>'The text that will appear above the posts') );
 					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'select', 'Rate posts by', 'fetchBy', erpPRODefaults::$fetchByOptions );
 					?>
 				</table>
@@ -46,10 +46,12 @@ erpPROPaths::requireOnce(erpPROPaths::$erpPROHTMLHelper);
 					</tr>
 					<?php
 					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'number', 'Number of posts to display', 'numberOfPostsToDisplay', array (
-							'size' => '2pt'
+							'size' => '2pt',
+							'title' => 'How many posts you\'d like to display'
 					) );
 					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'number', 'Offset', 'offset', array (
-							'size' => '2pt'
+							'size' => '2pt',
+							'title' => 'If you set this as an integer x > 0, then the first x related posts will not be displayed'
 					) );
 					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'select', 'Sort related by', 'sortRelatedBy', array (
 							'Date descending',
@@ -95,23 +97,44 @@ erpPROPaths::requireOnce(erpPROPaths::$erpPROHTMLHelper);
 						</td>
 					</tr>
 					<?php
-					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'checkbox', 'Crop thumbnail', 'cropThumbnail' );
+					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'checkbox', 'Crop thumbnail', 'cropThumbnail', array(
+						'title' => 'Use this if you want the thumbnail to be croped.
+                    				Setting the height to some value above zero and the width to zero will result in hard croped thumbnail.
+                    				Setting both values above zero will result in soft croped, more artistic, thumbnail.') );
 					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'number', 'Thumbnail height', 'thumbnailHeight', array (
 							'size' => '2pt'
 					) );
 					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'number', 'Thumbnail width (optional)', 'thumbnailWidth', array (
 							'size' => '2pt'
 					) );
+					?>
+					<tr>
+						<td>
+							<label for="defaultThumbnail"> <?php _e('Default thumbnail URL:'); ?></label>
+						</td>
+						<td>
+							<input class=""
+									title="Enter the url to an image you want to use as a default thumbnail"
+									id="defaultThumbnail"
+									name="defaultThumbnail"
+									size="30" type="text"
+									value="<?php echo $erpPROOptions['defaultThumbnail']; ?>" />
+						</td>
+					</tr>
+					<?php
 					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'number', 'Post title size (px)', 'postTitleFontSize', array (
-							'size' => '2pt'
+							'size' => '2pt',
+							'title' => 'Here you can specify the text size of post title.If left zero you themes default h3 will be used.'
 					) );
 					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'number', 'Post excerpt size (px)', 'excFontSize', array (
-							'size' => '2pt'
+							'size' => '2pt',
+							'title' => 'Here you can specify the text size of post excerpt.If left zero you themes default paragraph will be used'
 					) );
 					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'number', 'Excerpt length (words)', 'excLength', array (
-							'size' => '2pt'
+							'size' => '2pt',
+							'title' => 'How many words post excerpt will span before the read more text. Extremely usefull if you want to cut off large excerpts'
 					) );
-					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'text', 'Read more text', 'moreTxt' );
+					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'text', 'Read more text', 'moreTxt', array('tile' => 'The text that will apear after each post excerpt, if you choose to display it') );
 				?>
 				</table>
 				<?php
@@ -143,7 +166,7 @@ erpPROPaths::requireOnce(erpPROPaths::$erpPROHTMLHelper);
 				<table class="cat-opt-table">
 					<tr>
 						<td></td>
-						<td><input type="checkbox" id="select-all-cat" class="select-all"></td>
+						<td><input type="checkbox" id="select-all-cat" class="select-all" title="Select-deselect all"></td>
 					</tr>
 					<?php
 					$opts = array (
