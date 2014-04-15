@@ -317,8 +317,8 @@ class erpPROQueryFormater {
 	 * @since 1.0.0
 	 */
 	public function exPostTypes( $post_types ) {
+		$post_typ = get_post_types();
 		if ( isset( $post_types ) && !empty( $post_types ) ) {
-			$post_typ = get_post_types();
 			foreach ( $post_types as $key => $value ) {
 				unset( $post_typ [ $value ] );
 			}

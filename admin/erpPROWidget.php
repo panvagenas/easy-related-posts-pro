@@ -66,21 +66,23 @@ class erpPROWidget extends WP_Widget {
 			erpPROPaths::requireOnce(erpPROPaths::$erpPROWidOpts);
 
 			$mainOpts = new erpPROMainOpts();
-			$widOpts = new erpPROWidOpts($instance);
 
 			// Check if we have to exclude taxos or post types
-			if ( isset( $new_instance [ "taxExclude" ] ) && $new_instance [ "taxExclude" ] ) {
+			if ( isset( $instance [ "taxExclude" ] ) && $instance [ "taxExclude" ] ) {
 				$instance [ 'tags' ] = $mainOpts->getTags();
 				$instance [ 'categories' ] = $mainOpts->getCategories();
 			} else {
 				$instance [ 'tags' ] = array ();
 				$instance [ 'categories' ] = array ();
 			}
-			if ( isset( $new_instance [ "ptypeExclude" ] ) && $new_instance [ "ptypeExclude" ] ) {
+			if ( isset( $instance [ "ptypeExclude" ] ) && $instance [ "ptypeExclude" ] ) {
 				$instance [ 'postTypes' ] = $mainOpts->getPostTypes();
 			} else {
 				$instance [ 'postTypes' ] = array ();
 			}
+
+			$widOpts = new erpPROWidOpts($instance);
+
 			// Get related
 			$relatedObj = erpProRelated::get_instance( $widOpts );
 			$wpQ = $relatedObj->getRelated( $post->ID );

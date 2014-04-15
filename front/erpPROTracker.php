@@ -54,7 +54,7 @@ class erpPROTracker {
 			$this->setAsVisited($id);
 		}
 
-		if (/*easyRelatedPostsPRO::get_instance()->isRatingSystemOn() &&*/ $refererName === 'local'){
+		if ( $refererName === 'local'){
 			$parsedReq = $this->parseSearchQuery( $request );
 			if ( isset($parsedReq['erp_from']) && $id > 0) {
 				$this->db->addClick($parsedReq['erp_from'], $id);

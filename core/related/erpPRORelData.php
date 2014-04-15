@@ -70,7 +70,7 @@ class erpPRORelData {
 	 * Array containig query arguments
 	 *
 	 * @since 1.0.0
-	 * @var erpPROQueryFormater
+	 * @var array
 	 */
 	private $qArgs = array();
 
@@ -145,7 +145,7 @@ class erpPRORelData {
 	 * Sets $this->queryLimit and $this->queryOffset
 	 * @param int $limit
 	 * @param int $offset
-	 * @return erpPROQueryFormater
+	 * @return erpPRORelData
 	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */

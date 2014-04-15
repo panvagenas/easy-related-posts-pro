@@ -183,9 +183,14 @@ class erpProRelated {
 		do_action( 'debug', __FUNCTION__ . ' forming wp query args' );
 		$postsToExclude = isset( $this->wpSession [ 'visited' ] ) ? unserialize( $this->wpSession [ 'visited' ] ) : array ();
 		$slicedArray = $ratingSystem->getSlicedRatingsArrayFlat( $this->options->getOffset(), $this->options->getNumberOfPostsToDiplay(), $postsToExclude );
+
 		$qForm = new erpPROQueryFormater();
 		$qForm->setMainArgs( $pid );
+		$qForm->exPostTypes($this->options->getValue('postTypes'));
+		$qForm->exCategories($this->options->getValue('categories'));
+		$qForm->exTags($this->options->getValue('tags'));
 		$qForm->setPostInArg( array_keys( $slicedArray ) );
+
 		$this->relData->setWP_Query( $qForm->getArgsArray(), $this->options->getNumberOfPostsToDiplay(), $this->options->getOffset() );
 		// TODO Remove debug
 		do_action( 'debug', __FUNCTION__ . ' getting result' );
@@ -197,6 +202,11 @@ class erpProRelated {
 		// TODO Remove debug
 		do_action( 'debug', __FUNCTION__ . ' storing reldata to pool' );
 		array_push( $this->relDataPool, $this->relData );
+
+// 		var_dump($this->relData->getResult()->request);
+// 		var_dump($this->relData->getResult()->post_count);
+// 		var_dump($this->options->getNumberOfPostsToDiplay());
+
 		return $this->relData->getResult();
 	}
 

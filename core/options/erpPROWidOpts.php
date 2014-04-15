@@ -24,6 +24,7 @@ class erpPROWidOpts extends erpPROOptions {
 		if ( $instance !== NULL && !empty( $instance ) ) {
 			$this->options = $instance;
 		}
+
 		$this->defaults = erpPRODefaults::$widOpts+erpPRODefaults::$comOpts;
 	}
 

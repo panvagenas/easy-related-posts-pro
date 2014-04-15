@@ -314,8 +314,7 @@ function erpPROTaxGrouping(Array $input) {
 					?>
 					<tr>
 						<td><h4>
-								Built in post types<span id="builtinwarn"
-									style="color: #FF00FF; font-size: 140%;"> *</span>
+								Built in post types
 							</h4></td>
 						<td><input type="checkbox" id="select-all-built-in"
 							class="select-all"></td>

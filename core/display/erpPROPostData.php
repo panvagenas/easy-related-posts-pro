@@ -245,28 +245,30 @@ class erpPROPostData {
 	 * @since 1.0.0
 	 */
 	public function getThumbnail( $height, $width, $crop ) {
-		// TODO Set an option to diplay a default thumbnail
-
 		if ( !isset( $this->thumbnail ) ) {
 			$this->setThumbnail( erpPRODefaults::$comOpts [ 'defaultThumbnail' ] );
 		}
 
 		if ( $height && $crop ) {
-			// TODO Find a way to set retina
-			$retina = false;
-			// FIXME Matthew Ruddys resize not working properly on all sites
-			$image = $this->resize( $this->thumbnail, ( int ) $width, ( int ) $height, ( bool ) $crop, $retina );
-
+			$image = $this->resize( $this->thumbnail, ( int ) $width, ( int ) $height, ( bool ) $crop );
 			if ( !is_wp_error( $image ) && !empty( $image ) ) {
 				return $image;
 			}
 		}
 		return $this->thumbnail;
 	}
-
-	private function resize( $url, $width = NULL, $height = NULL, $crop = true, $retina = false ) {
+	/**
+	 * Uses bfi resizer to resize image and returns url to new image
+	 * @param string $url
+	 * @param int $width
+	 * @param int $height
+	 * @param bool $crop
+	 * @return string
+	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @since 1.0.0
+	 */
+	private function resize( $url, $width = NULL, $height = NULL, $crop = true ) {
 		erpPROPaths::requireOnce(erpPROPaths::$bfiResizer);
-
 		return bfi_thumb($url, array('width' => $width, 'height' => $height, 'crop' => $crop));
 	}
 
@@ -321,9 +323,6 @@ class erpPROPostData {
 	 */
 	private function setPermalink( $from ) {
 		$link = get_permalink( $this->ID );
-		// if ( !easyRelatedPostsPRO::get_instance()->isRatingSystemOn() ) {
-		// $this->permalink = $link;
-		// } else
 		if ( strpos( $link, '?' ) !== FALSE ) {
 			$this->permalink = $link . '&erp_from=' . $from;
 		} else {

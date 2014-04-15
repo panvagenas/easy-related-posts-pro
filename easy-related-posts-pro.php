@@ -10,16 +10,16 @@
  *
  * @wordpress-plugin
  * Plugin Name:       Easy Related Posts PRO
- * Plugin URI:        @TODO
+ * Plugin URI:        http://erp.xdark.eu
  * Description:       @TODO
  * Version:           1.0.0
  * Author:            Panagiotis Vagenas
- * Author URI:        @TODO
+ * Author URI:        http://xdark.eu
  * Text Domain:       easy-related-posts-eng
- * License:           GPL-2.0+
+ * License:           @TODO
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Domain Path:       /languages
- * GitHub Plugin URI:
+ * Codecanyon URI:
  */
 
 // If this file is called directly, abort.
@@ -126,7 +126,6 @@ add_shortcode( 'erp', 'erpPROShortcode' );
 /*----------------------------------------------------------------------------*
  * Dashboard and Administrative Functionality
  *----------------------------------------------------------------------------*/
-
 /**
  */
 if ( is_admin() ) {
