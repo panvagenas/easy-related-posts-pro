@@ -343,6 +343,7 @@ function erpPROTaxGrouping(Array $input) {
 		<?php echo get_submit_button( 'Update options', 'primary large', 'Save' ); ?>
 	<?php //echo get_submit_button('Rebuild cache', 'button', 'rebuidCacheButton', true, 'readonly'); ?>
 <input id="clearCacheButton" class="button" type="button" value="Clear cache" name="clearCacheButton">
+<input id="rebuildCacheButton" class="button" type="button" value="Rebuild cache" name="rebuildCacheButton">
 		<input id="tab-spec" type="hidden" name="tab-spec">
 		<script type="text/javascript">
 			var templateRoot = "<?php echo $temp->getTemplatesBasePath(); ?>";
