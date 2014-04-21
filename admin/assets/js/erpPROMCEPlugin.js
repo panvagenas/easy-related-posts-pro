@@ -83,7 +83,7 @@
 
 					getData = {
 							action: 'erpgetShortCodeHelperContent',
-							profileName : 'grid' // TODO Set this to a default value
+							profileName : 'Basic' // TODO Set this dynamicaly
 					};
 
 					dil.html('<img src="'+loadingGif+'" style="display: block; position:relative; top:50%; margin:auto;">');
