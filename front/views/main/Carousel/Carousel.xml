@@ -7,6 +7,7 @@
 	<options>
 		<carouselAutoTime>2</carouselAutoTime>
 		<carouselMaxVisible>6</carouselMaxVisible>
+		<carouselMinVisible>2</carouselMinVisible>
 		<carouselPauseHover>true</carouselPauseHover>
 		<thumbCaption>false</thumbCaption>
 	</options>

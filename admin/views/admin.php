@@ -159,24 +159,30 @@ function erpPROTaxGrouping(Array $input) {
 					echo erpPROHTMLHelper::optArrayRenderer($erpPROOptions,  'text', 'Read more text', 'moreTxt', array('tile' => 'The text that will apear after each post excerpt, if you choose to display it') );
 				?>
 				</table>
-				<?php
-// 					erpPROHTMLHelper::requireFileHelper();
-// 					$templates = erpPROFileHelper::dirToArray(erpPRODefaults::getPath('mainTemplates'));
-
-					erpPROPaths::requireOnce(erpPROPaths::$erpPROMainTemplates);
-					$temp = new erpPROMainTemplates();
-					$templates = $temp->getTemplateNames();
-
-					echo '<label for="dsplLayout">Display layout :</label>';
-					echo '<select class="dsplLayout"  name="dsplLayout">';
-					foreach ( $templates as $key => $val ) {
-						$valLow = strtolower( str_replace( ' ', '_', $val ) );
-						echo '<option value="' . $valLow . '"' . selected( $erpPROOptions['dsplLayout'], $valLow, FALSE ) . '>' . $val . '</option>';
-					}
-					echo '</select>';
-
-					?>
-					<div class="templateSettings"></div>
+				<table class="lay-opt-table">
+					<tr>
+						<th colspan="2">Theme options</th>
+					</tr>
+					<tr>
+					    <td>
+						<label for="dsplLayout">Theme :</label>
+					    </td>
+					    <td>
+						<select class="dsplLayout"  name="dsplLayout">
+						    <?php 
+						    erpPROPaths::requireOnce(erpPROPaths::$erpPROMainTemplates);
+						    $temp = new erpPROMainTemplates();
+						    $templates = $temp->getTemplateNames();
+						    foreach ( $templates as $key => $val ) {
+							$valLow = strtolower( str_replace( ' ', '_', $val ) );
+							echo '<option value="' . $valLow . '"' . selected( $erpPROOptions['dsplLayout'], $valLow, FALSE ) . '>' . $val . '</option>';
+						    }
+						    ?>
+						</select>
+					    </td>
+					</tr>
+				</table>
+				<div class="templateSettings"></div>
 			</div>
 			<div id="tabs-4">
 				<!--<h3>Categories</h3>-->
@@ -344,15 +350,17 @@ function erpPROTaxGrouping(Array $input) {
 	<?php //echo get_submit_button('Rebuild cache', 'button', 'rebuidCacheButton', true, 'readonly'); ?>
 <input id="clearCacheButton" class="button" type="button" value="Clear cache" name="clearCacheButton">
 <input id="rebuildCacheButton" class="button" type="button" value="Rebuild cache" name="rebuildCacheButton">
-		<input id="tab-spec" type="hidden" name="tab-spec">
+<input id="tab-spec" type="hidden" name="tab-spec" value="0">
 		<script type="text/javascript">
 			var templateRoot = "<?php echo $temp->getTemplatesBasePath(); ?>";
 			var options = {};
 			<?php
-			if ( isset( $_GET [ 'tab-spec' ] ) && !empty( $_GET [ 'tab-spec' ] ) ) {
-				echo 'options.active= ' . $_GET [ 'tab-spec' ] . ';';
+                        $tabSpec = filter_input(INPUT_GET, 'tab-spec');
+			if ( $tabSpec !== null && $tabSpec !== false ) {
+				echo 'options.active= ' . (int)$tabSpec . ';';
 			}
 			?>
+                            console.log(options.active);
         </script>
 	</form>
 </div>

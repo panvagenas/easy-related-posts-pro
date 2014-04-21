@@ -16,9 +16,10 @@
     background-image: -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.05), rgba(0,0,0,0));
 }
 
-#erp-opt-general .cat-opt-table td,
-#erp-opt-general .tag-opt-table td,
-#erp-opt-general .type-opt-table td {
+#erp-opt-general .cat-opt-table tr td,
+#erp-opt-general .tag-opt-table tr td,
+#erp-opt-general .type-opt-table tr td,
+#erp-opt-general .lay-opt-table tr td{
 	width: 50%;
 }
 

@@ -46,6 +46,11 @@ class easyRelatedPostsPROAdmin {
 	 * @var string
 	 */
 	private $shortCodeProfilesArrayName = 'erpPROShortCodeProfiles';
+	/**
+	 *
+	 * @var string 
+	 */
+	private $plugin_slug;
 
 	/**
 	 * Initialize the plugin by loading admin scripts & styles and adding a
@@ -227,7 +232,8 @@ class easyRelatedPostsPROAdmin {
 
 	public function doRating( $newStatus, $oldStatus, $post ) {
 		// If a revision get the pid from parent
-		if ( $revision = wp_is_post_revision( $post->ID ) ) {
+	    $revision = wp_is_post_revision( $post->ID );
+		if ( $revision ) {
 			$pid = $revision;
 		} else {
 			$pid = $post->ID;
