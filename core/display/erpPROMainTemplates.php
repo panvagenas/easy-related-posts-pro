@@ -44,6 +44,13 @@ class erpPROMainTemplates extends erpPROTemplates {
 		// Return content
 		return parent::display($wpq, $optObj, $ratings);
 	}
+	
+	public function deleteTemplateOptions() {
+	    if(!$this->isLoaded() || !isset($this->optionsArrayName)){
+		return FALSE;
+	    }
+	    return delete_option($this->optionsArrayName);
+	}
 }
 
 ?>

@@ -36,15 +36,10 @@ abstract class erpPROOptions {
 		$this->ratingSytem = isset( $this->options [ 'sortRelatedBy' ] ) ? ( bool ) strpos( $this->options [ 'sortRelatedBy' ], 'rating' ) : false;
 		$this->defaults = &erpPRODefaults::$comOpts;
 	}
-
-	/**
-	 * Loads the options from DB
-	 *
-	 * @return erpPROOptions
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
-	 * @since 1.0.0
-	 */
-	//public function loadOptions(  ) {}
+	
+	public function getOptionsArrayName() {
+	    return $this->optionsArrayName;
+	}
 
 	/**
 	 * Get option array

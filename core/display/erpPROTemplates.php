@@ -523,6 +523,7 @@ abstract class erpPROTemplates {
 		$this->setOptions(apply_filters('erpPROTemplateOptionsSaveValidation', $newOptions));
 		update_option($this->optionsArrayName, $this->options);
 	}
+	
 	/**
 	 * Sets options in instance field
 	 * @param array $options Assoc array of new opotions
