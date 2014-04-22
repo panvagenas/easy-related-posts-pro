@@ -60,14 +60,20 @@ class erpPROShortCodeOpts extends erpPROOptions {
 	}
 
 	public function saveOptions( $newOptions ) {
-		$this->options = $this->validateCommonOptions($newOptions) + $this->validateShortcodeOptions($newOptions);
+	    // Validate template options
+	    erpPROPaths::requireOnce(erpPROPaths::$erpPROShortcodeTemplates);
+	    $template = new erpPROShortcodeTemplates();
+	    $template->load($newOptions['dsplLayout']);
+	    $templateOptions = $template->saveTemplateOptions($newOptions);
+	    
+	    $this->options = $templateOptions + $this->validateCommonOptions($newOptions) + $this->validateShortcodeOptions($newOptions);
 
-		if (isset($this->profileName)) {
-			$this->profiles[$this->profileName] = array_merge(erpPRODefaults::$comOpts+erpPRODefaults::$shortCodeOpts, $this->options);
-			return update_option(self::$shortCodeProfilesArrayName, $this->profiles);
-		} else {
-			return array_merge(erpPRODefaults::$comOpts+erpPRODefaults::$shortCodeOpts, $this->options);
-		}
+	    if (isset($this->profileName)) {
+		    $this->profiles[$this->profileName] = array_merge(erpPRODefaults::$comOpts+erpPRODefaults::$shortCodeOpts, $this->options);
+		    return update_option(self::$shortCodeProfilesArrayName, $this->profiles);
+	    } else {
+		    return array_merge(erpPRODefaults::$comOpts+erpPRODefaults::$shortCodeOpts, $this->options);
+	    }
 	}
 
 	public function getTemplateOptions($templateName, $newOptions) {

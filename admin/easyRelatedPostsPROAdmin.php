@@ -16,9 +16,8 @@
  * administrative side of the WordPress site.
  * If you're interested in introducing public-facing
  * functionality, then refer to `class-plugin-name.php`
- * @TODO: Rename this class to a proper name for your plugin.
  *
- * @package Plugin_Name_Admin
+ * @package Easy_Related_Posts_Admin
  * @author Your Name <email@example.com>
  */
 class easyRelatedPostsPROAdmin {
@@ -554,9 +553,6 @@ class easyRelatedPostsPROAdmin {
 	erpPROPaths::requireOnce(erpPROPaths::$erpPROShortCodeOpts);
 	erpPROPaths::requireOnce(erpPROPaths::$erpPROShortcodeTemplates);
 
-	$profile = get_option(erpPROShortCodeOpts::$shortCodeProfilesArrayName);
-
-	$template = new erpPROShortcodeTemplates();
 	$scOpts = new erpPROShortCodeOpts();
 
 	$scOpts->loadOptions($profileName);
@@ -645,13 +641,20 @@ class easyRelatedPostsPROAdmin {
 	}
 
 	erpPROPaths::requireOnce(erpPROPaths::$erpPROShortcodeTemplates);
+	erpPROPaths::requireOnce(erpPROPaths::$erpPROShortCodeOpts);
+	
+	$profilesOptionsArray = get_option(erpPROShortCodeOpts::$shortCodeProfilesArrayName);
+	// If profile name is set get options
 	if (isset($_GET ['profileName'])) {
 	    $profileName = wp_strip_all_tags($_GET ['profileName']);
-	    erpPROPaths::requireOnce(erpPROPaths::$erpPROShortCodeOpts);
-	    $profilesOptionsArray = get_option(erpPROShortCodeOpts::$shortCodeProfilesArrayName);
 	    $profileOpts = isset($profilesOptionsArray [$profileName]) ? $profilesOptionsArray [$profileName] : null;
+	} 
+	// If no options are set get first profile in the array
+	if (empty($profileOpts)) {
+	    $profileName = array_shift(array_keys($profilesOptionsArray));
+	    $profileOpts = $profileName === null ? null : $profilesOptionsArray[$profileName];
 	}
-
+	// Profile array is empty or profile not found, set to defaults
 	if (empty($profileOpts)) {
 	    $profileOpts = erpPRODefaults::$comOpts + erpPRODefaults::$shortCodeOpts;
 	    $profileName = 'default';
@@ -729,7 +732,7 @@ class easyRelatedPostsPROAdmin {
 
 	$templateObj = new erpPROShortcodeTemplates();
 	$templateObj->load($_POST ['template']);
-	$templateObj->setOptions($profileOpts ['templateOptions']);
+	$templateObj->setOptions($profileOpts);
 
 	$data = array(
 	    'content' => $templateObj->renderSettings(false),
