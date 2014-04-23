@@ -83,7 +83,6 @@
 
 		    getData = {
 			action: 'erpgetShortCodeHelperContent',
-			//profileName: 'Basic' // TODO Set this dynamicaly
 		    };
 		    
 		    var selected = ed.selection.getContent();

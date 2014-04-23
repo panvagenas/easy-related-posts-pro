@@ -47,41 +47,6 @@ ChkObj.prototype.selectionChecker = function(maper) {
 	}
 };
 
-/**
- * A single function to display tips on parent element when mouseover
- *
- * @param {css
- *            selector} parent The element to be aplied on
- * @param {string}
- *            content The text to display
- * @returns {void}
- *
- * @since 1.3
- */
-// TODO CC
-//function tiper(parent, content) {
-//	jQuery(parent).qtip({
-//		content : {
-//			text : content
-//		},
-//		position : {
-//			at : 'right',
-//			adjust : {
-//				x : 10
-//			}
-//		},
-//		style : {
-//			classes : 'qtip-blue qtip-shadow',
-//			tip : {
-//				corner : 'left top',
-//				mimic : 'left center'
-//			}
-//		},
-//		show : 'mouseover',
-//		hide : 'mouseleave'
-//	});
-//}
-
 (function($) {
 
 	$(function() {
