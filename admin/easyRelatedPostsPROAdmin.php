@@ -243,6 +243,10 @@ class easyRelatedPostsPROAdmin {
 	    // Post is now unpublished, we should remove cache entries
 	    $this->deletePostInCache($pid);
 	} elseif ($newStatus == 'publish') {
+            $plugin = easyRelatedPostsPRO::get_instance();
+            if($plugin->isInExcludedPostTypes($pid) || $plugin->isInExcludedTaxonomies($pid)){
+                return;
+            }
 	    erpPROPaths::requireOnce(erpPROPaths::$erpProRelated);
 	    erpPROPaths::requireOnce(erpPROPaths::$erpPROMainOpts);
 
@@ -454,7 +458,7 @@ class easyRelatedPostsPROAdmin {
 
 	$db = erpPRODBActions::getInstance();
 	$mainOpts = new erpPROMainOpts();
-	$rel = erpProRelated::get_instance($mainOpts->getOptions());
+	$rel = erpProRelated::get_instance($mainOpts);
 
 	// TODO Posts types and taxonomies will be set from the values that are set in options so user must save before rebuild
         // 
@@ -464,9 +468,16 @@ class easyRelatedPostsPROAdmin {
 
 	$allCached = $db->getUniqueIds();
 	$db->emptyRelTable();
+        
+        $plugin = easyRelatedPostsPRO::get_instance();
 
 	foreach ($allCached as $key => $value) {
-	    $rel->doRating((int) $value ['pid']);
+            $pid = (int) $value ['pid'];
+            
+            if($plugin->isInExcludedPostTypes($pid) || $plugin->isInExcludedTaxonomies($pid)){
+                continue;
+            }
+            $rel->doRating($pid);
 	}
 
 	echo json_encode(true);

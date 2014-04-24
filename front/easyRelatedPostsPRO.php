@@ -237,10 +237,13 @@ class easyRelatedPostsPRO {
 	 * @since 1.0.0
 	 */
 	public function isInExcludedTaxonomies( $post ) {
+            if(is_a($post, 'WP_Post')){
+                $post = $post->ID;
+            }
+            
 		$exCats = $this->mainOpts->getCategories();
-
 		if ( !empty( $exCats ) ) {
-			$postCategories = get_the_category( $post->ID );
+			$postCategories = get_the_category( $post );
 			if ( is_array( $postCategories ) && !empty( $postCategories ) ) {
 				$catIds = array ();
 				foreach ( $postCategories as $cat ) {
@@ -255,7 +258,7 @@ class easyRelatedPostsPRO {
 
 		$exTags = $this->mainOpts->getTags();
 		if ( !empty( $exTags ) ) {
-			$postTags = get_the_tags( $post->ID );
+			$postTags = get_the_tags( $post );
 			if ( is_array( $postTags ) && !empty( $postTags ) ) {
 				$tagsIds = array ();
 				foreach ( $postTags as $tag ) {
