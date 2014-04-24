@@ -259,8 +259,6 @@ class easyRelatedPostsPROAdmin {
 
     /**
      * Register and enqueue admin-specific style sheet.
-     * @TODO:
-     * - Rename "Plugin_Name" to the name your plugin
      *
      * @since 1.0.0
      * @return null Return early if no settings page is registered.
@@ -274,8 +272,6 @@ class easyRelatedPostsPROAdmin {
 	if ($this->plugin_screen_hook_suffix == $screen->id || 'widgets' == $screen->id) {
 	    wp_enqueue_style('wp-color-picker');
 	    wp_enqueue_style($this->plugin_slug . '-admin-styles', plugins_url('assets/css/admin.css', __FILE__), array(), easyRelatedPostsPRO::VERSION);
-	    // TODO Remove tiper, JQ will be used
-	    // wp_enqueue_style( $this->plugin_slug . '-qtip', plugins_url( 'assets/css/jquery.qtip-min.css', __FILE__ ), array (), easyRelatedPostsPRO::VERSION );
 	}
 	if ($screen->id === 'post') {
 	    wp_enqueue_style($this->plugin_slug . '-admin-styles', plugins_url('assets/css/admin.css', __FILE__), array(), easyRelatedPostsPRO::VERSION);
@@ -285,8 +281,6 @@ class easyRelatedPostsPROAdmin {
 
     /**
      * Register and enqueue admin-specific JavaScript.
-     * @TODO:
-     * - Rename "Plugin_Name" to the name your plugin
      *
      * @since 1.0.0
      * @return null Return early if no settings page is registered.
@@ -307,10 +301,6 @@ class easyRelatedPostsPROAdmin {
 	    wp_enqueue_script('jquery-ui-tooltip');
 	    wp_enqueue_script('jquery-ui-accordion');
 
-	    // TODO Remove tiper, JQ will be used
-	    // wp_enqueue_script( $this->plugin_slug . '-qtip', plugins_url( 'assets/js/jquery.qtip.min.js', __FILE__ ), array (
-	    // 'jquery'
-	    // ), easyRelatedPostsPRO::VERSION );
 	    wp_enqueue_script($this->plugin_slug . '-admin-script', plugins_url('assets/js/admin.js', __FILE__), array(
 		'jquery',
 		'jquery-ui-tabs'
@@ -347,10 +337,6 @@ class easyRelatedPostsPROAdmin {
      * @since 1.0.0
      */
     public function add_plugin_admin_menu() {
-
-	/*
-	 * Add a settings page for this plugin to the Settings menu. NOTE: Alternative menu locations are available via WordPress administration menu functions. Administration Menus: http://codex.wordpress.org/Administration_Menus @TODO: - Change 'Page Title' to the title of your plugin admin page - Change 'Menu Text' to the text for menu item for the plugin settings page - Change 'manage_options' to the capability you see fit For reference: http://codex.wordpress.org/Roles_and_Capabilities
-	 */
 	$this->plugin_screen_hook_suffix = add_options_page(__('Easy Related Posts PRO Settings', $this->plugin_slug), __('Easy Related Posts PRO Settings', $this->plugin_slug), 'manage_options', $this->plugin_slug . '_settings', array(
 	    $this,
 	    'display_plugin_admin_page'
@@ -462,12 +448,6 @@ class easyRelatedPostsPROAdmin {
 	// This may take a while so set time limit to 0
 	set_time_limit(0);
 
-	// TODO Caching all posts will take a really long time so better rebuild based on which are present in cache
-	// $post_ids = get_posts( array (
-	// 'numberposts' => -1, // get all posts.
-	// 'fields' => 'ids' // Only get post IDs
-	// ) );
-
 	erpPROPaths::requireOnce(erpPROPaths::$erpPRODBActions);
 	erpPROPaths::requireOnce(erpPROPaths::$erpPROMainOpts);
 	erpPROPaths::requireOnce(erpPROPaths::$erpProRelated);
@@ -477,6 +457,7 @@ class easyRelatedPostsPROAdmin {
 	$rel = erpProRelated::get_instance($mainOpts->getOptions());
 
 	// TODO Posts types and taxonomies will be set from the values that are set in options so user must save before rebuild
+        // 
 	// $exPostTypes = $mainOpts->getValue('postTypes');
 	// $exCats = $mainOpts->getValue('categories');
 	// $exTags = $mainOpts->getValue('tags');

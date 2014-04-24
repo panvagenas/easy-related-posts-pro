@@ -17,21 +17,14 @@
  * @author Your Name <email@example.com>
  */
 class erpPROHTMLHelper {
-	// TODO - Insert your code here
 
 	/**
 	 */
-	function __construct( ) {
-
-		// TODO - Insert your code here
-	}
+	function __construct( ) { }
 
 	/**
 	 */
-	function __destruct( ) {
-
-		// TODO - Insert your code here
-	}
+	function __destruct( ) { }
 
 	/**
 	 * Renders given options as table elements.

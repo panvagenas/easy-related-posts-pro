@@ -225,12 +225,11 @@ class erpProRelated {
 	public function doRating( $pid ) {
 		$qForm = new erpPROQueryFormater();
 		$ratingSystem = erpPRORatingSystem::get_instance( $this->relData );
-// 		$ratingSystemIsOn = easyRelatedPostsPRO::get_instance()->isRatingSystemOn();
+                
 		// TODO Maybe query limit should follow a dif approach
-
 		$queryLimit = $this->options->getValue( 'queryLimit' );
 
-		if ( isset( $queryLimit ) ) {
+		if ( isset( $queryLimit ) && is_numeric($queryLimit)) {
 			$qForm->setMainArgs( $pid, $queryLimit );
 		} else {
 			$qForm->setMainArgs( $pid, 100 );
@@ -367,43 +366,7 @@ class erpProRelated {
 	 * @since 1.0.0
 	 */
 	private function calcWeights( ) {
-		$weights = array ();
-		/**
-		 * TODO This must be instance specific.
-		 * Check local options for this
-		 */
-// 		if ( easyRelatedPostsPRO::get_instance()->isRatingSystemOn() == TRUE ) {
-			$weights [ 'clicks' ] = 0.15;
-			if ( $this->options->getFetchBy() == 'tags_first_then_categories' ) {
-				$weights [ 'categories' ] = 0.25;
-				$weights [ 'tags' ] = 0.60;
-			} elseif ( $this->options->getFetchBy() == 'tags' ) {
-				$weights [ 'categories' ] = 0;
-				$weights [ 'tags' ] = 0.85;
-			} elseif ( $this->options->getFetchBy() == 'categories_first_then_tags' ) {
-				$weights [ 'categories' ] = 0.60;
-				$weights [ 'tags' ] = 0.25;
-			} else {
-				$weights [ 'categories' ] = 0.85;
-				$weights [ 'tags' ] = 0;
-			}
-// 		} else {
-// 			$weights [ 'clicks' ] = 0;
-// 			if ( $this->options [ 'fetchBy' ] == 'tags_first_then_categories' ) {
-// 				$weights [ 'categories' ] = 0.3;
-// 				$weights [ 'tags' ] = 0.7;
-// 			} elseif ( $this->options [ 'fetchBy' ] == 'tags' ) {
-// 				$weights [ 'categories' ] = 0;
-// 				$weights [ 'tags' ] = 1;
-// 			} elseif ( $this->options [ 'fetchBy' ] == 'categories_first_then_tags' ) {
-// 				$weights [ 'categories' ] = 0.7;
-// 				$weights [ 'tags' ] = 0.3;
-// 			} else {
-// 				$weights [ 'categories' ] = 1;
-// 				$weights [ 'tags' ] = 0;
-// 			}
-// 		}
-		return $weights;
+            return isset(erpPRODefaults::$fetchByOptionsWeights[$this->options->getFetchBy()]) ? erpPRODefaults::$fetchByOptionsWeights[$this->options->getFetchBy()] : erpPRODefaults::$fetchByOptionsWeights['categories'];
 	}
 
 	private function getCachedRatings( $pid ) {

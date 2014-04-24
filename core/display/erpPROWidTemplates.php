@@ -23,10 +23,7 @@ class erpPROWidTemplates extends erpPROTemplates {
 
 	/**
 	 */
-	function __destruct( ) {
-
-		// TODO - Insert your code here
-	}
+	function __destruct( ) { }
 	/**
 	 * Render setting for given instance
 	 * @see erpPROTemplates::renderSettings()

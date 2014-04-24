@@ -217,7 +217,6 @@ class erpPRORatingSystem {
 	 * @since 1.0.0
 	 */
 	public function formRatingsArrays() {
-		// TODO A more convinient way will be to check post id
 		if (!empty($this->relData->relTable)) {
 			$this->ratingsArray = array();
 			$this->ratingsArrayFlat = array();

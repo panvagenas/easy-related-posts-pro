@@ -5,21 +5,14 @@
  * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
  */
 class erpPRODBHelper {
-	// TODO - Insert your code here
 
 	/**
 	 */
-	function __construct( ) {
-
-		// TODO - Insert your code here
-	}
+	function __construct( ) { }
 
 	/**
 	 */
-	function __destruct( ) {
-
-		// TODO - Insert your code here
-	}
+	function __destruct( ) { }
 
 	/**
 	 * Increases displayed values for given pids

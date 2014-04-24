@@ -521,7 +521,7 @@ if (!function_exists('erpPROTaxGrouping')) {
 		var dialogContainer = $('#erpDialog');
 		getData = {
 		    action: 'erpgetShortCodeHelperContent',
-		    profileName: $(this).val() // TODO Set this dynamicaly
+		    profileName: $(this).val()
 		};
 
 		dil.html('');
@@ -577,7 +577,6 @@ if (!function_exists('erpPROTaxGrouping')) {
 				var dil = $('#erpDialogContent');
 				getData = {
 				    action: 'erpgetShortCodeHelperContent',
-				    profileName: 'grid' // TODO Set this to a default value
 				};
 				$.get(ajaxurl, getData, function(data) {
 				    if (data.error !== undefined) {

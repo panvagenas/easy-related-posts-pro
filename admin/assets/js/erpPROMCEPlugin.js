@@ -114,8 +114,8 @@
 	    return {
 		longname: "Easy Related Posts Shortcode Helper",
 		author: 'Vagenas Panagiotis',
-		authorurl: '', // TODO Configure urls
-		infourl: '',
+		authorurl: 'xdark.eu',
+		infourl: 'erp.xdark.eu',
 		version: "1.0.0"
 	    };
 	}

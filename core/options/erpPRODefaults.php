@@ -239,6 +239,22 @@ class erpPRODefaults {
 	'Categories first, then tags',
 	'Tags first, then categories'
     );
+    
+    /**
+     * Fetch by weights
+     * @var type array
+     */
+    public static $fetchByOptionsWeights = array(
+        'categories' => array('clicks' => 0.15, 'categories' => 0.85, 'tags' => 0.0),
+        'tags' => array('clicks' => 0.15, 'categories' => 0.0, 'tags' => 0.85),
+        'categories_first_then_tags' => array('clicks' => 0.15, 'categories' => 0.60, 'tags' => 0.25),
+        'tags_first_then_categories' => array('clicks' => 0.15, 'categories' => 0.25, 'tags' => 0.60)
+    );
+    
+    /**
+     * Content positioning options
+     * @var array  
+     */
     public static $contentPositioningOptions = array(
 	'Title',
 	'Title, excerpt',
@@ -290,7 +306,7 @@ class erpPRODefaults {
 	'offset' => array('type' => self::intFormal, 'min' => 0),
 	'content' => array('type' => self::arrayFormal),
 	'sortRelatedBy' => array('type' => self::stringFormal),
-	'defaultThumbnail' => array('type' => self::stringFormal), // TODO Set a default thumbnail
+	'defaultThumbnail' => array('type' => self::stringFormal),
 	'postTitleFontSize' => array('type' => self::intFormal, 'min' => 0),
 	'excFontSize' => array('type' => self::intFormal, 'min' => 0),
 	'excLength' => array('type' => self::intFormal, 'min' => 1),

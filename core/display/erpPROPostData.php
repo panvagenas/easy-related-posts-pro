@@ -103,11 +103,7 @@ class erpPROPostData {
 		$this->post = $post;
 		$this->ID = $post->ID;
 		$this->setTitle();
-		// TODO This is called from template
-		// $this->setExcerpt( $options [ 'excLength' ], $options [ 'moreTxt' ] );
 		$this->rating = $rating;
-		// TODO This is called from template
-		// $this->setThumbnail( $options [ 'defaultThumbnail' ] );
 		$this->setPermalink( $hostPost );
 		$this->setPostDate( 'Y-m-d H:i:s' );
 		$this->setPositions( $options );

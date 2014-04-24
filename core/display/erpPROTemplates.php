@@ -130,10 +130,7 @@ abstract class erpPROTemplates {
 
 	/**
 	 */
-	function __destruct( ) {
-
-		// TODO - Insert your code here
-	}
+	function __destruct( ) {}
 
 	public function isLoaded() {
 		return !empty($this->uniqueInstanceID);

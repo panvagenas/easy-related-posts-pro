@@ -44,10 +44,7 @@ class erpPROShortcodeTemplates extends erpPROTemplates {
 
 	/**
 	 */
-	function __destruct( ) {
-
-		// TODO - Insert your code here
-	}
+	function __destruct( ) {}
 }
 
 ?>

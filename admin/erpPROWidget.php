@@ -50,8 +50,6 @@ class erpPROWidget extends WP_Widget {
 		// check if it's time to take action
 		if ( is_single( $post->ID ) ) {
 			if (($plugin->isInExcludedPostTypes( $post ) && $instance['ptypeExclude']) || ($plugin->isInExcludedTaxonomies( $post ) && $instance['taxExclude'])) {
-				// TODO Should we display an empty widget?
-				//$this->displayEmptyWidget($args, $instance);
 				return;
 			}
 			// Fill missing options

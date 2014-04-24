@@ -284,24 +284,9 @@
 <script type="text/javascript">
 	var templateRoot = "<?php echo $temp->getTemplatesBasePath(); ?>";
             jQuery(document).ready(function($) {
-                <?php // TODO Τα chk δεν δουλεύουν ?>
-            	checkThumbOptions = new ChkObj('#<?php echo $widgetInstance->get_field_id('display_thumbnail'); ?>', '#<?php echo $widgetInstance->get_field_id('crop_thumbnail'); ?>');
-                checkCrop = new ChkObj('#<?php echo $widgetInstance->get_field_id('crop_thumbnail'); ?>', '#<?php echo $widgetInstance->get_field_id('thumbnail_height'); ?>,#<?php echo $widgetInstance->get_field_id('thumbnail_width'); ?>');
 
-                checkThumbOptions.checkBoxChecker();
-                checkCrop.checkBoxChecker();
-
-//                 tiper('.zero-for-theme', 'Enter 0 if you want to use themes default size')
-//                 tiper('.use-tax-filter', 'If this option is enabled widget won\'t span when viewing any post in any categories or tags you have chosen in Settings->Easy Related Posts.')
                 jQuery('#<?php echo $widgetInstance->get_field_id("postTitleColor"); ?>').wpColorPicker();
                 jQuery('#<?php echo $widgetInstance->get_field_id("excColor"); ?>').wpColorPicker();
 
-                jQuery('#<?php echo $widgetInstance->get_field_id('dsplThumbnail'); ?>').click(function() {
-                    checkThumbOptions.checkBoxChecker();
-                    checkCrop.checkBoxChecker();
-                });
-                jQuery('#<?php echo $widgetInstance->get_field_id('cropThumbnail'); ?>').click(function() {
-                    checkCrop.checkBoxChecker();
-                });
             });
         </script>
