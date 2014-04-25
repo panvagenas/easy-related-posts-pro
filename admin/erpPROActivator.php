@@ -28,9 +28,7 @@
  			global $wpdb;
  			$tablePrefix  = $wpdb->prefix;
  		}
- 		/**
- 		 * TODO Maybe we need a  more elegant way to add the table
- 		 */
+ 		
  		require_once ( ABSPATH . 'wp-admin/includes/upgrade.php' );
 
  		$sql = "CREATE TABLE IF NOT EXISTS " . $tablePrefix . ERP_PRO_RELATIVE_TABLE . " (

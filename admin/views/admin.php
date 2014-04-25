@@ -487,10 +487,9 @@ if (!function_exists('erpPROTaxGrouping')) {
 	    <!--</div>-->
 	</div>
 	<?php echo get_submit_button('Update options', 'primary large', 'Save'); ?>
-	<?php //echo get_submit_button('Rebuild cache', 'button', 'rebuidCacheButton', true, 'readonly'); ?>
-	<input id="clearCacheButton" class="button" type="button" value="Clear cache" name="clearCacheButton">
-	<input id="rebuildCacheButton" class="button" type="button" value="Rebuild cache" name="rebuildCacheButton">
 	<input id="tab-spec" type="hidden" name="tab-spec" value="0">
+	<input id="clearCacheButton" class="button" type="button" value="Clear cache" name="clearCacheButton">
+	<?php //<input id="rebuildCacheButton" class="button" type="button" value="Rebuild cache" name="rebuildCacheButton"> ?>
 	<script type="text/javascript">
 	    var templateRoot = "<?php echo $temp->getTemplatesBasePath(); ?>";
 	    var options = {};
@@ -500,7 +499,6 @@ if ($tabSpec !== null && $tabSpec !== false) {
     echo 'options.active= ' . (int) $tabSpec . ';';
 }
 ?>
-	    console.log(options.active);
         </script>
     </form>
 </div>

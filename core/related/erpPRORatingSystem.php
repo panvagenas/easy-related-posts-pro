@@ -102,6 +102,10 @@ class erpPRORatingSystem {
 		return self::$instance;
 	}
 
+    public static function getNewInstance( erpPRORelData $relData) {
+		return new self($relData);
+	}
+
 	public function setWeights($weights) {
 		$this->catWeight = isset($weights['categories']) ? $weights['categories'] : 0;
 		$this->tagWeight = isset($weights['tags']) ? $weights['tags'] : 0;
@@ -226,7 +230,6 @@ class erpPRORatingSystem {
 				if ($rating == 0) {
 					continue;
 				}
-				// TODO If date is set in cache we have a major time and mem decrease
 				if ($value['pid1']==$this->relData->pid) {
 					$postDate = strtotime($value['post_date2']);//strtotime(get_the_time('Y-m-d H:i:s', $value['pid2']));
 					$this->ratingsArrayFlat[$value['pid2']] = $rating;
@@ -302,7 +305,7 @@ class erpPRORatingSystem {
 	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
-	public function getSlicedRatingsArrayFlat($offset, $length, $postsToExlude = array()){
+	public function getSlicedRatingsArrayFlat($offset, $length, Array $postsToExlude = array()){
 		$ratings = $this->ratingsArrayFlat;
 
 		foreach ($postsToExlude as $k => $v){
@@ -311,4 +314,17 @@ class erpPRORatingSystem {
 
 		return empty($ratings) ? $ratings : array_slice($ratings, $offset, $length, true);
 	}
+        
+        public function getSlicedRatingsArrayFlatLoose($minElements) {
+            $included = $this->getSlicedRatingsArrayFlat(0, $minElements);
+            $excluded = array_diff_assoc($this->ratingsArrayFlat, $included);
+            
+            $min = end($included);
+            foreach ((array)$excluded as $key => $value) {
+                if($min > 0 && $value >= $min){
+                    $included[$key] = $value;
+                }
+            }
+            return $included;
+        }
 }

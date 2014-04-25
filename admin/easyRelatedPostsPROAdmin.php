@@ -244,6 +244,7 @@ class easyRelatedPostsPROAdmin {
 	    $this->deletePostInCache($pid);
 	} elseif ($newStatus == 'publish') {
             $plugin = easyRelatedPostsPRO::get_instance();
+            
             if($plugin->isInExcludedPostTypes($pid) || $plugin->isInExcludedTaxonomies($pid)){
                 return;
             }
@@ -440,6 +441,8 @@ class easyRelatedPostsPROAdmin {
     /**
      * This is for a future release.
      * It should be called through ajax and rebuild cache for all posts in that are cached
+     * 
+     * FIXME This functionality will not be used until we find a way to make sure mem limit not reached
      *
      * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
      * @since 1.0.0
@@ -460,17 +463,11 @@ class easyRelatedPostsPROAdmin {
 	$mainOpts = new erpPROMainOpts();
 	$rel = erpProRelated::get_instance($mainOpts);
 
-	// TODO Posts types and taxonomies will be set from the values that are set in options so user must save before rebuild
-        // 
-	// $exPostTypes = $mainOpts->getValue('postTypes');
-	// $exCats = $mainOpts->getValue('categories');
-	// $exTags = $mainOpts->getValue('tags');
-
 	$allCached = $db->getUniqueIds();
 	$db->emptyRelTable();
         
         $plugin = easyRelatedPostsPRO::get_instance();
-
+        global $wpdb, $wp_actions;
 	foreach ($allCached as $key => $value) {
             $pid = (int) $value ['pid'];
             
