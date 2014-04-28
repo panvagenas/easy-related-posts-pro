@@ -9,6 +9,10 @@
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
+$containerClass = $uniqueID . 'Container';
+$thumbClass = $uniqueID . 'Thumbnail';
+$titleClass = $uniqueID . 'PostTitle';
+$excClass = $uniqueID . 'Exc';
 ?>
 	<ul id="erpProWraper">
 		<?php

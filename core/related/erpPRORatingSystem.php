@@ -231,14 +231,14 @@ class erpPRORatingSystem {
 					continue;
 				}
 				if ($value['pid1']==$this->relData->pid) {
-					$postDate = strtotime($value['post_date2']);//strtotime(get_the_time('Y-m-d H:i:s', $value['pid2']));
+					$postDate = strtotime($value['post_date2']);
 					$this->ratingsArrayFlat[$value['pid2']] = $rating;
 					$this->ratingsArray[$value['pid2']]['ID'] = $value['pid2'];
 					$this->ratingsArray[$value['pid2']]['rating'] = $rating;
 					$this->ratingsArray[$value['pid2']]['post_date'] = $postDate;
 					$this->post_date[$value['pid2']] = $postDate;
 				} else {
-					$postDate = strtotime($value['post_date1']);//strtotime(get_the_time('Y-m-d H:i:s', $value['pid1']));
+					$postDate = strtotime($value['post_date1']);
 					$this->ratingsArrayFlat[$value['pid1']] = $rating;
 					$this->ratingsArray[$value['pid1']]['ID'] = $value['pid1'];
 					$this->ratingsArray[$value['pid1']]['rating'] = $rating;

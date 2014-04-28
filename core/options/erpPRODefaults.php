@@ -57,14 +57,6 @@ class erpPRODefaults {
     const erpPROVersionString = '1.0.0';
 
     /**
-     * If plugin uses the rating system
-     *
-     * @since 1.0.0
-     * @var bool
-     */
-//	const erpPRORatingSystem = FALSE;
-
-    /**
      * This should be upddated if widget class name change
      *
      * @since 1.0.0
