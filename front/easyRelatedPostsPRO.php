@@ -194,7 +194,7 @@ class easyRelatedPostsPRO {
 
             // TODO Remove debug
             do_action('debug', __FUNCTION__ . ' returning rel content');
-            return $relContent . $content;
+            return $this->mainOpts->getPosition() == 'top' ?  $relContent . $content : $content.$relContent;
         }
         // TODO Remove debug
         do_action('debug', __FUNCTION__ . ' returning def content');

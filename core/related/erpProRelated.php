@@ -203,10 +203,6 @@ class erpProRelated {
         do_action('debug', __FUNCTION__ . ' storing reldata to pool');
         array_push($this->relDataPool, $this->relData);
 
-// 		var_dump($this->relData->getResult()->request);
-// 		var_dump($this->relData->getResult()->post_count);
-// 		var_dump($this->options->getNumberOfPostsToDiplay());
-
         return $this->relData->getResult();
     }
 
@@ -337,7 +333,6 @@ class erpProRelated {
                 foreach (array_keys($ratingSystem->getSlicedRatingsArrayFlatLoose($bestCount)) as $k => $v) {
                     if (!in_array($v, $ratingsFlatenedPool)) {
                         array_push($ratingsFlatenedPool, $v);
-                        //var_dump($v);
                     }
                 }
             }

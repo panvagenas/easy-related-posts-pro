@@ -407,7 +407,6 @@ class erpPRODBActions {
 			}
 		}
 		if ( !empty( $query ) && isset( $qLength ) && strlen( $query ) > $qLength ) {
-			// var_dump($query);
 			$query = rtrim( $query, "," );
 			$this->db->query( $query . ';' );
 		}

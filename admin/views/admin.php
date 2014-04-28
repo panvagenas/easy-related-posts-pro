@@ -169,6 +169,25 @@ if (!function_exists('erpPROTaxGrouping')) {
 		    <tr>
 			<th colspan="2">Layout Options</th>
 		    </tr>
+                    <tr>
+                        <td>
+                            Position: 
+                        </td>
+                        <td>
+                            <select class="" id="relPosition" name="relPosition">
+    				<option
+    				    value="top"
+                                    <?php selected($erpPROOptions['relPosition'], 'top'); ?>>
+                                    Top
+    				</option>
+                                <option
+    				    value="bottom"
+                                    <?php selected($erpPROOptions['relPosition'], 'bottom'); ?>>
+                                    Bottom
+    				</option>
+			    </select>
+                        </td>
+                    </tr>
 		    <tr>
 			<td>
 			    <label for="content">Content to display: </label>

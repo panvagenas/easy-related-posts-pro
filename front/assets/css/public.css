@@ -9,7 +9,14 @@
     font-weight: normal;
 }
 
-.erpProContainer img {
+.erpProContainer a,
+.erpProRelContainer a,
+.erpProPostLink{
+    text-decoration: none !important;
+}
+
+.erpProContainer img,
+.erpProThumb {
     width: 100%;
     margin: 0 !important;
 }

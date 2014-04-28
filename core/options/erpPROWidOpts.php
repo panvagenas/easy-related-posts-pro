@@ -56,14 +56,6 @@ class erpPROWidOpts extends erpPROOptions {
 		return $this->getValue('excColor');
 	}
 
-	public function getPostTitleColorUse() {
-		return $this->getValue('postTitleColorUse');
-	}
-
-	public function getExcColorUse() {
-		return $this->getValue('excColorUse');
-	}
-
 	public function getHideIfNoPosts() {
 		return $this->getValue('hideIfNoPosts');
 	}

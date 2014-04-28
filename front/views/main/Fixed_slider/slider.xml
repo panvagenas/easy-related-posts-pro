@@ -26,7 +26,6 @@
 	</jsFilePath>
 	<cssFilePath>
 		<slider>assets/css/slider.css</slider>
-		<grid>assets/css/grid.css</grid>
 	</cssFilePath>
 	<preregisteredScripts>
 		<css>

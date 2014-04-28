@@ -282,7 +282,9 @@ class erpPRODefaults {
 	'thumbnailHeight' => 150,
 	'thumbnailWidth' => 300,
 	'dsplThumbnail' => true,
-	'cropThumbnail' => true
+	'cropThumbnail' => true,
+	'postTitleColor' => '#ffffff',
+	'excColor' => '#ffffff'
     );
 
     /**
@@ -306,7 +308,9 @@ class erpPRODefaults {
 	'thumbnailHeight' => array('type' => self::intFormal, 'min' => 0),
 	'thumbnailWidth' => array('type' => self::intFormal, 'min' => 0),
 	'dsplThumbnail' => array('type' => self::boolFormal),
-	'cropThumbnail' => array('type' => self::boolFormal)
+	'cropThumbnail' => array('type' => self::boolFormal),
+	'postTitleColor' => array('type' => self::stringFormal),
+	'excColor' => array('type' => self::stringFormal)
     );
 
     /**
@@ -325,7 +329,8 @@ class erpPRODefaults {
 	    'attachment',
 	    'nav_menu_item',
 	    'revision'
-	)
+	),
+        'relPosition' => 'bottom'
     );
 
     /**
@@ -339,7 +344,8 @@ class erpPRODefaults {
 	'dsplLayout' => array('type' => self::stringFormal),
 	'categories' => array('type' => self::arrayFormal),
 	'tags' => array('type' => self::arrayFormal),
-	'postTypes' => array('type' => self::arrayFormal)
+	'postTypes' => array('type' => self::arrayFormal),
+        'relPosition' => array('type' => self::stringFormal)
     );
 
     /**
@@ -350,10 +356,6 @@ class erpPRODefaults {
      */
     public static $widOpts = array(
 	'dsplLayout' => 'basic',
-	'postTitleColor' => '#ffffff',
-	'excColor' => '#ffffff',
-	'postTitleColorUse' => false,
-	'excColorUse' => false,
 	'hideIfNoPosts' => false,
 	'taxExclude' => false,
 	'ptypeExclude' => false
@@ -367,10 +369,6 @@ class erpPRODefaults {
      */
     public static $widOptsValidations = array(
 	'dsplLayout' => array('type' => self::stringFormal),
-	'postTitleColor' => array('type' => self::stringFormal),
-	'excColor' => array('type' => self::stringFormal),
-	'postTitleColorUse' => array('type' => self::boolFormal),
-	'excColorUse' => array('type' => self::boolFormal),
 	'hideIfNoPosts' => array('type' => self::boolFormal),
 	'taxExclude' => array('type' => self::boolFormal),
 	'ptypeExclude' => array('type' => self::boolFormal)
@@ -387,8 +385,6 @@ class erpPRODefaults {
 	'dsplLayout' => 'grid',
 	'postTitleColor' => '#ffffff',
 	'excColor' => '#ffffff',
-	'postTitleColorUse' => false,
-	'excColorUse' => false,
 	'hideIfNoPosts' => false,
 	'taxExclude' => false,
 	'ptypeExclude' => false,
@@ -413,8 +409,6 @@ class erpPRODefaults {
 	'dsplLayout' => array('type' => self::stringFormal),
 	'postTitleColor' => array('type' => self::stringFormal),
 	'excColor' => array('type' => self::stringFormal),
-	'postTitleColorUse' => array('type' => array('type' => self::boolFormal)),
-	'excColorUse' => array('type' => self::boolFormal),
 	'hideIfNoPosts' => array('type' => self::boolFormal),
 	'taxExclude' => array('type' => self::boolFormal),
 	'ptypeExclude' => array('type' => self::boolFormal),

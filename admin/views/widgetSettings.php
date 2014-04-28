@@ -167,7 +167,7 @@
                value="<?php echo esc_attr($options['defaultThumbnail']); ?>" />
     </label>
 </p>
-<?php // TODO Thumbnail, title and exc and text mods should be configured per template basis ?>
+<?php // TODO Color picker not working when draging a new widget ?>
 <p style="text-align: center">
     <strong>Title</strong>
 </p>
@@ -195,13 +195,7 @@
                        type="text"
                        value="<?php echo esc_attr($options['postTitleColor']); ?>" />
             </label></td>
-        <td><label
-                for="<?php echo $widgetInstance->get_field_id('postTitleColorUse'); ?>"><?php _e('Use:'); ?>
-                <input class="erp_wid_opt5"
-                       id="<?php echo $widgetInstance->get_field_id('postTitleColorUse'); ?>"
-                       name="<?php echo $widgetInstance->get_field_name('postTitleColorUse'); ?>"
-                       type="checkbox"
-                       <?php echo checked($options['postTitleColorUse']); ?> /> </label></td>
+        <td></td>
     </tr>
 </table>
 <p style="text-align: center">
@@ -230,13 +224,7 @@
                        name="<?php echo $widgetInstance->get_field_name('excColor'); ?>"
                        type="text" value="<?php echo esc_attr($options['excColor']); ?>" />
             </label></td>
-        <td><label
-                for="<?php echo $widgetInstance->get_field_id('excColorUse'); ?>"><?php _e('Use:'); ?>
-                <input class=""
-                       id="<?php echo $widgetInstance->get_field_id('excColorUse'); ?>"
-                       name="<?php echo $widgetInstance->get_field_name('excColorUse'); ?>"
-                       type="checkbox" <?php echo checked($options['excColorUse']); ?> />
-            </label></td>
+        <td></td>
     </tr>
 </table>
 <hr>

@@ -37,11 +37,6 @@
     border-radius: 0;
 }
 
-.erp_container {
-    display:inline-block;
-    margin: 0px 1% 20px 1%;
-    vertical-align:top;
-}
 
 .erp_a_elem {
     text-decoration:none;
@@ -60,15 +55,6 @@
 
 .erp_con_exc {
 
-}
-
-.erpHorRule {
-    border: 0;
-    height: 1px;
-    background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
-    background-image: -moz-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
-    background-image: -ms-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
-    background-image: -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
 }
 
 .erp_cont_close {
