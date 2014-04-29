@@ -220,6 +220,11 @@ class erpProRelated {
 
     public function doRating($pid) {
         $qForm = new erpPROQueryFormater();
+        // Make sure relData is populated, this can happen when do rating
+        // is called outside of $this->getRelated
+        if($this->relData == null){
+            $this->relData = new erpPRORelData($pid, erpPRODefaults::$criticalOpts);
+        }
         $ratingSystem = erpPRORatingSystem::get_instance($this->relData);
 
         // TODO Maybe query limit should follow a dif approach

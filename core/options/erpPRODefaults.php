@@ -63,6 +63,8 @@ class erpPRODefaults {
      * @var string
      */
     const erpPROWidgetOptionsArrayName = 'erpprowidget';
+    
+    const versionNumOptName = 'erpPROVersionNumbers';
 
     /**
      * Sorting options
@@ -281,7 +283,6 @@ class erpPRODefaults {
 	'moreTxt' => ' ...read more',
 	'thumbnailHeight' => 150,
 	'thumbnailWidth' => 300,
-	'dsplThumbnail' => true,
 	'cropThumbnail' => true,
 	'postTitleColor' => '#ffffff',
 	'excColor' => '#ffffff'
@@ -307,7 +308,6 @@ class erpPRODefaults {
 	'moreTxt' => array('type' => self::stringFormal),
 	'thumbnailHeight' => array('type' => self::intFormal, 'min' => 0),
 	'thumbnailWidth' => array('type' => self::intFormal, 'min' => 0),
-	'dsplThumbnail' => array('type' => self::boolFormal),
 	'cropThumbnail' => array('type' => self::boolFormal),
 	'postTitleColor' => array('type' => self::stringFormal),
 	'excColor' => array('type' => self::stringFormal)
@@ -429,6 +429,7 @@ class erpPRODefaults {
 	'offset'
 	    // 'sortRelatedBy'
     );
+    
 
     /**
      * Compares the input string if matches plugin version
@@ -465,7 +466,7 @@ class erpPRODefaults {
      * @since 1.0.0
      */
     public static function updateVersionNumbers() {
-	return update_option('erpPROVersionNumbers', self::erpPROVersion . '.' . self::erpPRORelease . '.' . self::erpPROSubRelease);
+	return update_option(self::versionNumOptName, self::erpPROVersion . '.' . self::erpPRORelease . '.' . self::erpPROSubRelease);
     }
 
 }

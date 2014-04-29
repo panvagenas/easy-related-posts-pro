@@ -414,8 +414,8 @@ class easyRelatedPostsPRO {
         $compareVersions = erpPRODefaults::compareVersion(get_option(ERP_PRO_SLUG . '_version'));
         if ($compareVersions < 0) {
             erpPROActivator::createERPTable();
-            erpPROActivator::addNonExistingMainOptions(erpPRODefaults::$comOpts + erpPRODefaults::$mainOpts);
-            erpPROActivator::addNonExistingWidgetOptions(erpPRODefaults::$comOpts + erpPRODefaults::$widOpts);
+            erpPROActivator::addNonExistingMainOptions(erpPRODefaults::$comOpts + erpPRODefaults::$mainOpts, EPR_PRO_MAIN_OPTIONS_ARRAY_NAME);
+            erpPROActivator::addNonExistingWidgetOptions(erpPRODefaults::$comOpts + erpPRODefaults::$widOpts, 'widget_' . erpPRODefaults::erpPROWidgetOptionsArrayName);
             erpPRODefaults::updateVersionNumbers();
         } elseif ($compareVersions === 0) {
             // Major update

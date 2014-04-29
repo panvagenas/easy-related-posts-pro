@@ -76,7 +76,7 @@
 	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
- 	public static function addNonExistingMainOptions(Array $newOpts, Array $oldOpts = NULL, $optsName = EPR_PRO_MAIN_OPTIONS_ARRAY_NAME) {
+ 	public static function addNonExistingMainOptions(Array $newOpts, $optsName, Array $oldOpts = NULL) {
  		if (!is_string($optsName)) {
  			return FALSE;
  		}
@@ -96,7 +96,7 @@
  	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
  	 * @since 1.0.0
  	 */
- 	public static function addNonExistingWidgetOptions(Array $newOpts, Array $oldOpts = NULL, $optsName = 'widget_erpprowidget' ) {
+ 	public static function addNonExistingWidgetOptions(Array $newOpts, $optsName, Array $oldOpts = NULL ) {
  		if (!is_string($optsName)) {
  			return FALSE;
  		}

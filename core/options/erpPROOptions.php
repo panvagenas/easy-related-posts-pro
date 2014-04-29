@@ -409,16 +409,6 @@ abstract class erpPROOptions {
 	}
 
 	/**
-	 * @deprecated Use haveToShowThumbnail instead
-	 * @return bool|NULL
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
-	 * @since 1.0.0
-	 */
-	public function getDsplThumbnail() {
-		return $this->getValue('dsplThumbnail');
-	}
-
-	/**
 	 * Get crop thumb value
 	 * @return bool|NULL
 	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>

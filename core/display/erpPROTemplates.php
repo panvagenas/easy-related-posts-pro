@@ -238,11 +238,15 @@ abstract class erpPROTemplates {
 		if (isset($xml->optionsArrayName)) {
 			$this->optionsArrayName = (string)$xml->optionsArrayName;
 			$optionsInDB = get_option($this->optionsArrayName);
-			$this->setOptions($optionsInDB ? $optionsInDB : array());
+                        if($optionsInDB && is_array($optionsInDB)){
+                            $this->setOptions($optionsInDB);
+                        }
 		} elseif (isset($xml->options)){
 			$this->optionsArrayName = $this->name . 'TemplateOptions';
 			$optionsInDB = get_option($this->optionsArrayName);
-			$this->setOptions($optionsInDB ? $optionsInDB : array());
+			if($optionsInDB && is_array($optionsInDB)){
+                            $this->setOptions($optionsInDB);
+                        }
 		}
 
 		if (isset($xml->preregisteredScripts)) {
@@ -333,7 +337,13 @@ abstract class erpPROTemplates {
 	 * @since 1.0.0
 	 */
 	protected function xmlToArray($xml){
-		$json = json_encode($xml);
+            // JSON_NUMERIC_CHECK not avail before php V 5.3.3
+            if(version_compare(phpversion(), '5.3.3' ) > -1){
+                $json = json_encode($xml,JSON_NUMERIC_CHECK);
+            } else {
+                $json = json_encode($xml);
+            }
+		
 		return (array)json_decode($json,TRUE);
 	}
 	/**

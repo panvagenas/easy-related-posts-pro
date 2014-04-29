@@ -14,6 +14,8 @@ if (!defined('WP_UNINSTALL_PLUGIN')) {
     exit;
 }
 
+require_once plugin_dir_path( __FILE__ ) . 'easy-related-posts-pro.php';
+
 class erpUninstall {
 
     /**
@@ -88,6 +90,11 @@ class erpUninstall {
 	 * Del shortcode profiles
 	 */
 	self::delShortCodeProfiles();
+        
+        /**
+         * Del version numbers
+         */
+        self::deleteVersionNumbers();
 	
 	/**
 	 * TODO Is it posible to del resized images?
@@ -126,6 +133,10 @@ class erpUninstall {
     private static function delShortCodeProfiles() {
 	erpPROPaths::requireOnce(erpPROPaths::$erpPROShortCodeOpts);
 	delete_option(erpPROShortCodeOpts::$shortCodeProfilesArrayName);
+    }
+    
+    private static function deleteVersionNumbers() {
+        delete_option(erpPRODefaults::versionNumOptName);
     }
 }
 
