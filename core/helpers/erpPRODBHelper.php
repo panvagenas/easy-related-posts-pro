@@ -2,7 +2,7 @@
 
 /**
  *
- * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+ * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 class erpPRODBHelper {
 
@@ -19,7 +19,7 @@ class erpPRODBHelper {
 	 *
 	 * @param int $pid
 	 * @param array $pids
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public static function addDisplayed( $pid, Array $pids ) {

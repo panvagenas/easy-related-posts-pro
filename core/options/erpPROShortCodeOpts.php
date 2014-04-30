@@ -4,9 +4,9 @@
  * Easy related posts PRO.
  *
  * @package   Easy_Related_Posts_Options
- * @author    Your Name <email@example.com>
- * @license   GPL-2.0+
- * @link      http://example.com
+ * @author    Panagiotis Vagenas <pan.vagenas@gmail.com>
+ * @license   // TODO Licence
+ * @link      http://erp.xdark.eu
  * @copyright 2014 Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 erpPROPaths::requireOnce(erpPROPaths::$erpPROOptions);
@@ -14,7 +14,7 @@ erpPROPaths::requireOnce(erpPROPaths::$erpPROOptions);
  * Shortcode options class.
  *
  * @package Easy_Related_Posts_Options
- * @author Your Name <email@example.com>
+ * @author  Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 class erpPROShortCodeOpts extends erpPROOptions {
 	public static $shortCodeProfilesArrayName = 'erpPROShortCodeProfiles';
@@ -52,7 +52,7 @@ class erpPROShortCodeOpts extends erpPROOptions {
 	 *
 	 * @param array $options New options
 	 * @return array Assoc array containg only the validated options
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function validateShortcodeOptions( Array $options ) {

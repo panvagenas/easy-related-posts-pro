@@ -2,7 +2,7 @@
 erpPROPaths::requireOnce(erpPROPaths::$erpPROTemplates);
 /**
  *
- * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+ * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 class erpPROWidTemplates extends erpPROTemplates {
 	/**
@@ -30,8 +30,6 @@ class erpPROWidTemplates extends erpPROTemplates {
 	 * @since 1.0.0
 	 */
 	public function renderSettings($widInstance = false) {
-		// TODO Remove debug
-		do_action('debug',__FUNCTION__.' rendering');
 		$widIns = array('widgetInstance'=>$widInstance);
 		return erpPROView::render($this->settingsFilePath, array_merge($this->getOptions(), $widIns), false);
 	}

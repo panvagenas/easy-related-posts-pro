@@ -113,7 +113,7 @@
 	getInfo: function() {
 	    return {
 		longname: "Easy Related Posts Shortcode Helper",
-		author: 'Vagenas Panagiotis',
+		author: 'Vagenas Panagiotis <pan.vagenas@gmail.com>',
 		authorurl: 'xdark.eu',
 		infourl: 'erp.xdark.eu',
 		version: "1.0.0"

@@ -3,9 +3,9 @@
  * Represents the view for the widget settings.
  *
  * @package   Easy_Related_Posts
- * @author    Your Name <email@example.com>
- * @license   GPL-2.0+
- * @link      http://example.com
+ * @author    Panagiotis Vagenas <pan.vagenas@gmail.com>
+ * @license   // TODO Licence
+ * @link      http://erp.xdark.eu
  * @copyright 2014 Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 ?>
@@ -167,7 +167,7 @@
                value="<?php echo esc_attr($options['defaultThumbnail']); ?>" />
     </label>
 </p>
-<?php // TODO Color picker not working when draging a new widget ?>
+<?php // FIXME Color picker not working when draging a new widget. User must save first ?>
 <p style="text-align: center">
     <strong>Title</strong>
 </p>

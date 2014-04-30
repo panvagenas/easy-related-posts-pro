@@ -4,9 +4,9 @@
  * Easy related posts PRO.
  *
  * @package   Easy_Related_Posts_Core_display
- * @author    Your Name <email@example.com>
- * @license   GPL-2.0+
- * @link      http://example.com
+ * @author    Panagiotis Vagenas <pan.vagenas@gmail.com>
+ * @license   // TODO Licence
+ * @link      http://erp.xdark.eu
  * @copyright 2014 Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 
@@ -14,7 +14,7 @@
  * Post data class of plugin templates
  *
  * @package Easy_Related_Posts_Core_display
- * @author Your Name <email@example.com>
+ * @author    Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 class erpPROPostData {
 
@@ -98,7 +98,7 @@ class erpPROPostData {
      * @param array $options
      * @param float $rating
      * @param int $hostPost
-     * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
      * @since 1.0.0
      */
     public function __construct(WP_Post $post, Array $options, $rating, $hostPost) {
@@ -116,7 +116,7 @@ class erpPROPostData {
      * Get post title
      *
      * @return string
-     * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
      * @since 1.0.0
      */
     public function getTitle() {
@@ -128,7 +128,7 @@ class erpPROPostData {
      *
      * @param string $timeFormat
      * @return string Formated time
-     * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
      * @since 1.0.0
      */
     public function getTheTime($timeFormat = 'Y-m-d H:i:s') {
@@ -140,7 +140,7 @@ class erpPROPostData {
      *
      * @param string $postFormat
      * @return \display\erpPROPostData
-     * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
      * @since 1.0.0
      */
     private function setPostDate($postFormat = 'Y-m-d H:i:s') {
@@ -152,7 +152,7 @@ class erpPROPostData {
      * Set title
      *
      * @return \display\erpPROPostData
-     * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
      * @since 1.0.0
      */
     private function setTitle() {
@@ -172,7 +172,7 @@ class erpPROPostData {
      * Get post except
      *
      * @return string
-     * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
      * @since 1.0.0
      */
     public function getExcerpt() {
@@ -189,7 +189,7 @@ class erpPROPostData {
      *        	Excerpt length in words
      * @param string $moreText
      *        	More text to be displayed after post excerpt
-     * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
      * @since 1.0.0
      */
     public function setExcerpt($excLength, $moreText) {
@@ -227,7 +227,7 @@ class erpPROPostData {
      * Get post rating
      *
      * @return float
-     * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
      * @since 1.0.0
      */
     public function getRating() {
@@ -239,7 +239,7 @@ class erpPROPostData {
      *
      * @param float $rating
      * @return \display\erpPROPostData
-     * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
      * @since 1.0.0
      */
     private function setRating($rating) {
@@ -257,7 +257,7 @@ class erpPROPostData {
      * @param boolean $crop
      *        	Crop thumbnail
      * @return string URL path to generated thumb
-     * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
      * @since 1.0.0
      */
     public function getThumbnail($height, $width, $crop) {
@@ -281,7 +281,7 @@ class erpPROPostData {
      * @param int $height
      * @param bool $crop
      * @return string
-     * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
      * @since 1.0.0
      */
     private function resize($url, $width = NULL, $height = NULL, $crop = true) {
@@ -293,7 +293,7 @@ class erpPROPostData {
      * If the post have thumbnail
      *
      * @return boolean
-     * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
      * @since 1.0.0
      */
     public function hasThumbnail() {
@@ -308,7 +308,7 @@ class erpPROPostData {
      * @param string $size
      *        	Optional, default is 'single-post-thumbnail'
      * @return erpPROPostData
-     * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
      * @since 1.0.0
      */
     public function setThumbnail($defaultThumbnail, $size = 'single-post-thumbnail') {
@@ -321,7 +321,7 @@ class erpPROPostData {
      * Get permalink
      *
      * @return string Permalink URL
-     * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
      * @since 1.0.0
      */
     public function getPermalink() {
@@ -335,7 +335,7 @@ class erpPROPostData {
      * @param int $from
      *        	Host post id
      * @return \display\erpPROPostData
-     * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
      * @since 1.0.0
      */
     private function setPermalink($from) {
@@ -353,7 +353,7 @@ class erpPROPostData {
      *
      * @param array $options
      *        	Assoc array
-     * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
      * @since 1.0.0
      */
     private function setPositions($options) {
@@ -379,7 +379,7 @@ class erpPROPostData {
      *
      * @param int $position
      * @return string
-     * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
      * @since 1.0.0
      */
     public function getContentAtPosition($position) {

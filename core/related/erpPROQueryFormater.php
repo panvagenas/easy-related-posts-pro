@@ -5,7 +5,7 @@
  * Easy related posts PRO.
  *
  * @package Easy_Related_Posts_Related
- * @author Your Name <email@example.com>
+ * @author    Panagiotis Vagenas <pan.vagenas@gmail.com>
  * @license GPL-2.0+
  * @link http://example.com
  * @copyright 2014 Panagiotis Vagenas <pan.vagenas@gmail.com>
@@ -15,7 +15,7 @@
  * Query formater class.
  *
  * @package Easy_Related_Posts_Related
- * @author Your Name <email@example.com>
+ * @author    Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 class erpPROQueryFormater {
 
@@ -95,7 +95,7 @@ class erpPROQueryFormater {
 	 * Return arguments array
 	 *
 	 * @return array;
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function getArgsArray( ) {
@@ -116,7 +116,7 @@ class erpPROQueryFormater {
 	 * @param int $offset
 	 *        	Default 0
 	 * @return erpPROQueryFormater
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since
 	 *
 	 *
@@ -152,7 +152,7 @@ class erpPROQueryFormater {
 	 * Resets class arguments to default values
 	 *
 	 * @return erpPROQueryFormater
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function clearQueryArgs( ) {
@@ -175,7 +175,7 @@ class erpPROQueryFormater {
 	 * @param string $operator
 	 *        	WP_Query tags operator
 	 * @return erpPROQueryFormater
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function setTags( $tags, $operator = 'in' ) {
@@ -197,7 +197,7 @@ class erpPROQueryFormater {
 	 * Excludes tags that are setted in plugin options
 	 *
 	 * @return erpPROQueryFormater
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function exTags( $tags ) {
@@ -211,7 +211,7 @@ class erpPROQueryFormater {
 	 * Clears any tag filters in args array
 	 *
 	 * @return erpPROQueryFormater
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function clearTags( ) {
@@ -239,7 +239,7 @@ class erpPROQueryFormater {
 	 * @param string $operator
 	 *        	WP_Query categories operator
 	 * @return erpPROQueryFormater
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function setCategories( $categories, $operator = 'in' ) {
@@ -263,7 +263,7 @@ class erpPROQueryFormater {
 	 * @param array $categories
 	 *        	Array of categories obj
 	 * @return erpPROQueryFormater
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function exCategories( $categories ) {
@@ -277,7 +277,7 @@ class erpPROQueryFormater {
 	 * Clears any categories filters in args array
 	 *
 	 * @return erpPROQueryFormater
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function clearCategories( ) {
@@ -299,7 +299,7 @@ class erpPROQueryFormater {
 	 * Clears post_type argument in args array
 	 *
 	 * @return erpPROQueryFormater
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function clearPostTypes( ) {
@@ -313,7 +313,7 @@ class erpPROQueryFormater {
 	 *
 	 * @param array $post_types
 	 * @return erpPROQueryFormater
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function exPostTypes( $post_types ) {
@@ -334,7 +334,7 @@ class erpPROQueryFormater {
 	 * @param
 	 *        	<array, string> $visited If is a string tries to unserializeit
 	 * @return erpPROQueryFormater
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function exVisitedPosts( $visited ) {
@@ -358,7 +358,7 @@ class erpPROQueryFormater {
 	 *
 	 * @param int $limit
 	 * @return string
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function limitPosts( $limit ) {
@@ -378,7 +378,7 @@ class erpPROQueryFormater {
 	 *
 	 * @param array $postsIds
 	 * @return erpPROQueryFormater
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function setPostInArg( Array $postsIds ) {
@@ -391,7 +391,7 @@ class erpPROQueryFormater {
 	 * Unsets post__in param
 	 *
 	 * @return erpPROQueryFormater
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function clearPostInParam( ) {
@@ -406,7 +406,7 @@ class erpPROQueryFormater {
 	 * @param int $limit
 	 * @param int $offset
 	 * @return erpPROQueryFormater
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function setQueryLimit( $limit, $offset ) {

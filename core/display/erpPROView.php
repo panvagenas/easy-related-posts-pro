@@ -5,8 +5,8 @@
  *
  * @package   Easy_Related_Posts_Core_display
  * @author    Panagiotis Vagenas <pan.vagenas@gmail.com>
- * @license   GPL-2.0+
- * @link      http://example.com
+ * @license   // TODO Licence
+ * @link      http://erp.xdark.eu
  * @copyright 2014 Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 
@@ -14,7 +14,7 @@
  * Renderer class.
  *
  * @package Easy_Related_Posts_Core_display
- * @author Your Name <email@example.com>
+ * @author    Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 class erpPROView {
 
@@ -27,7 +27,7 @@ class erpPROView {
 	 *        	Any data passed to markup file
 	 * @param bool $echo If set to true echoes the out. Default is to return it
 	 * @return string Rendered content
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public static function render( $filePath, $viewData = null, $echo = FALSE ) {

@@ -4,7 +4,7 @@
  * Easy related posts PRO.
  *
  * @package Easy_Related_Posts_Related
- * @author Your Name <email@example.com>
+ * @author    Panagiotis Vagenas <pan.vagenas@gmail.com>
  * @license GPL-2.0+
  * @link http://example.com
  * @copyright 2014 Panagiotis Vagenas <pan.vagenas@gmail.com>
@@ -14,7 +14,7 @@
  * Related class.
  *
  * @package Easy_Related_Posts_Related
- * @author Your Name <email@example.com>
+ * @author    Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 class erpProRelated {
 
@@ -66,6 +66,12 @@ class erpProRelated {
      * @var erpProRelated
      */
     protected static $instance = null;
+    
+    /**
+     * Deafult query limit when rating posts
+     * @var int Default 100
+     */
+    private $queryLimit = 100;
 
     /**
      * Return an instance of this class.
@@ -85,7 +91,7 @@ class erpProRelated {
     /**
      *
      * @param array $options
-     * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
      * @since 1.0.0
      */
     protected function __construct($options) {
@@ -107,8 +113,6 @@ class erpProRelated {
     }
 
     public function getRelated($pid) {
-        // TODO Remove debug
-        do_action('debug', __FUNCTION__ . ' Started');
         /**
          * Check if we have a reldata obj with same query and if yes return it
          */
@@ -116,8 +120,6 @@ class erpProRelated {
             $missMatch = $value->criticalOptionsMismatch($this->options->getOptions());
             if (empty($missMatch)) {
                 $this->relData = $value;
-                // TODO Remove debug
-                do_action('debug', 'getRelated found rel in pool');
                 return $this->relData->getResult();
             }
         }
@@ -125,8 +127,6 @@ class erpProRelated {
         foreach ($this->relDataPool as $key => $value) {
             if ($value->pid == $pid) {
                 $relTable = $value->relTable;
-                // TODO Remove debug
-                do_action('debug', 'getRelated found relTable in pool');
                 break;
             }
         }
@@ -135,52 +135,29 @@ class erpProRelated {
             $relTable = $this->dbActions->getAllOccurrences($pid);
         }
 
-        // TODO Remove debug
-        do_action('debug', __FUNCTION__ . ' creating rel data obj');
         $criticalOptions = array_intersect_key($this->options->getOptions(), array_flip(erpPRODefaults::$criticalOpts));
         $this->relData = new erpPRORelData($pid, $criticalOptions, $relTable);
         /**
          * If no cached ratings or not the required number of posts
          */
         if (empty($relTable) || count($relTable) < $this->options->getNumberOfPostsToDiplay() || !$this->isPostProcesed($pid, $relTable)) {
-            // TODO Remove debug
-            do_action('debug', __FUNCTION__ . ' doing rating');
             $relTable = $this->doRating($pid);
-            // TODO Remove debug
-            do_action('debug', __FUNCTION__ . ' did new rating, posts related: ' . count($relTable));
-        } else {
-            // TODO Remove debug
-            do_action('debug', __FUNCTION__ . ' found rel in cache, posts related: ' . count($relTable));
         }
 
         /**
          * If reltable is still empty return an empty wp_query obj
          */
         if (empty($relTable)) {
-            // TODO Remove debug
-            do_action('debug', 'getRelated no rel in pool, no rel in cache and empty reltable. returning empty object');
             // Normally this should return an empty wp_query
             return $this->relData->getResult();
         }
 
-        // TODO Remove debug
-        do_action('debug', __FUNCTION__ . ' setting rel table in reldata');
         $this->relData->setRelTable($relTable);
         $ratingSystem = erpPRORatingSystem::get_instance($this->relData);
-        // TODO Remove debug
-        do_action('debug', __FUNCTION__ . ' calculating weights');
         $weights = $this->calcWeights();
-        // TODO Remove debug
-        do_action('debug', __FUNCTION__ . ' setting weights');
         $ratingSystem->setWeights($weights);
-        // TODO Remove debug
-        do_action('debug', __FUNCTION__ . ' forming rating arrays');
         $ratingSystem->formRatingsArrays();
-        // TODO Remove debug
-        do_action('debug', __FUNCTION__ . ' sorting rating arrays');
         $ratingSystem->sortRatingsArrays($this->options->getSortRelatedBy(true));
-        // TODO Remove debug
-        do_action('debug', __FUNCTION__ . ' forming wp query args');
         $postsToExclude = isset($this->wpSession ['visited']) ? unserialize($this->wpSession ['visited']) : array();
         $slicedArray = $ratingSystem->getSlicedRatingsArrayFlat($this->options->getOffset(), $this->options->getNumberOfPostsToDiplay(), $postsToExclude);
 
@@ -192,15 +169,9 @@ class erpProRelated {
         $qForm->setPostInArg(array_keys($slicedArray));
 
         $this->relData->setWP_Query($qForm->getArgsArray(), $this->options->getNumberOfPostsToDiplay(), $this->options->getOffset());
-        // TODO Remove debug
-        do_action('debug', __FUNCTION__ . ' getting result');
         $this->relData->getResult();
-        // TODO Remove debug
-        do_action('debug', __FUNCTION__ . ' sorting result');
         $this->relData->setRatings($slicedArray);
         $this->relData->sortWPQuery(array_keys($slicedArray));
-        // TODO Remove debug
-        do_action('debug', __FUNCTION__ . ' storing reldata to pool');
         array_push($this->relDataPool, $this->relData);
 
         return $this->relData->getResult();
@@ -227,19 +198,17 @@ class erpProRelated {
         }
         $ratingSystem = erpPRORatingSystem::get_instance($this->relData);
 
-        // TODO Maybe query limit should follow a dif approach
+        // Check if a query limit is set.
         $queryLimit = $this->options->getValue('queryLimit');
-
         if (isset($queryLimit) && is_numeric($queryLimit)) {
             $qForm->setMainArgs($pid, $queryLimit);
         } else {
-            $qForm->setMainArgs($pid, 100);
+            $qForm->setMainArgs($pid, $this->queryLimit);
         }
 
         $postCats = get_the_category($pid);
         $postTags = get_the_tags($pid);
         $relTable = array();
-        // TODO Implement function to keep only the n best rated posts
         if (!empty($postCats)) {
             $qForm->setCategories($postCats);
 
@@ -293,6 +262,11 @@ class erpProRelated {
             }
         }
 
+        /**
+         * As things are right now in 90% of cases this
+         * returns all posts, so no actual interest in using
+         * this. Just leaving it here for future reference
+         */
 //        $best = $this->chooseTheBest($pid, $relTable);
 //        
 //        foreach ($relTable as $key => $value) {
@@ -307,17 +281,21 @@ class erpProRelated {
     }
 
     /**
-     * TODO This should check the best for both posts
+     * Returns the best rated posts for all options defined 
+     * in erpPRODefaults::$fetchByOptionsWeights, 
+     * erpPRODefaults::$sortRelatedByOption
      *
-     * @param unknown $pid
-     * @param unknown $relTable
-     * @return multitype:
-     * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+     * @param int $pid
+     * @param int $relTable
+     * @return array Array  with post ids of the best
+     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
      * @since 1.0.0
      */
     private function chooseTheBest($pid, $relTable) {
         /**
-         * TODO How we should set the best count?
+         * CHECK How we should set the best count?
+         * Maybe search for the biggest value in all
+         * options...
          */
         $bestCount = 15;
 
@@ -352,7 +330,7 @@ class erpProRelated {
      * Calculates weights based on options
      *
      * @return array Assoc array (categories,tags,clicks)
-     * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
      * @since 1.0.0
      */
     private function calcWeights() {

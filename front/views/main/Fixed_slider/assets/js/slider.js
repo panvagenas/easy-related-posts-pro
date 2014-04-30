@@ -12,7 +12,6 @@ function ERPSlider(pos, bkgClr, hghttrgr, trnsprnc, container, title) {
 
 ERPSlider.prototype.sliderInitializer = function() {
     this.h = jQuery(".metroW").parent().height();
-    //console.log(this.h); // TODO
     this.container.css({
         "width": this.w + "px",
         "position": "fixed",

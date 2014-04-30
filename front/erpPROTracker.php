@@ -3,9 +3,9 @@
  * Easy related posts PRO.
  *
  * @package   Easy_Related_Posts
- * @author    Your Name <email@example.com>
- * @license   GPL-2.0+
- * @link      http://example.com
+ * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
+ * @license   // TODO Licence
+ * @link      http://erp.xdark.eu
  * @copyright 2014 Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 
@@ -13,7 +13,7 @@
  * Tracker class.
  *
  * @package Easy_Related_Posts
- * @author Your Name <email@example.com>
+ * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 
 class erpPROTracker {
@@ -28,7 +28,7 @@ class erpPROTracker {
 	/**
 	 * Constructor
 	 *
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	function __construct( erpPRODBActions $dbActions, $wpSession ) {
@@ -65,7 +65,7 @@ class erpPROTracker {
 	/**
 	 * Sets curent post as visited
 	 *
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	private function setAsVisited( $pid ) {

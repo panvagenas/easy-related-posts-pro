@@ -4,9 +4,9 @@
  * Easy related posts PRO.
  *
  * @package   Easy_Related_Posts
- * @author    Your Name <email@example.com>
- * @license   GPL-2.0+
- * @link      http://example.com
+ * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
+ * @license   // TODO Licence
+ * @link      http://erp.xdark.eu
  * @copyright 2014 Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 
@@ -14,7 +14,7 @@
  * Shortcode handler class.
  *
  * @package Easy_Related_Posts
- * @author Your Name <email@example.com>
+ * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
  class erpPROShortcode {
  	/**
@@ -45,10 +45,6 @@
 	}
 
 	public function display($pid) {
-		// TODO Remove debug
-		do_action( 'debug', 'ShortCode started' );
-		// TODO Remove debug
-		do_action( 'debug', 'ShortCode translating options' );
 		if (!isset($this->optObj)) {
 			if(!$this->loadProfileOptions()){
 				return '';
@@ -66,11 +62,7 @@
 
 		$relatedObj = erpProRelated::get_instance( $this->optObj );
 
-		// TODO Remove debug
-		do_action( 'debug', 'ShortCode geting related posts' );
 		$result = $relatedObj->getRelated( $pid );
-		// TODO Remove debug
-		do_action( 'debug', 'ShortCode found '.$result->found_posts );
 		$ratings = $relatedObj->getRatingsFromRelDataObj();
 
 		if ( empty( $result ) || empty( $result->posts ) ) {
@@ -82,18 +74,11 @@
 		$template->setOptions($this->optObj->getValue('templateOptions'));
 
 		if (!$template->isLoaded()) {
-			// TODO Remove debug
-			do_action( 'debug', 'ShortCode unsuccessfull related, returning empty string' );
 			return '';
 		}
-		// TODO Remove debug
-		do_action( 'debug', 'ShortCode starting template' );
 		$relContent = $template->display( $result, $this->optObj, $ratings );
 
 		$this->setSuppressOthers();
-
-		// TODO Remove debug
-		do_action( 'debug', 'ShortCode returning rel content' );
 
 		return $relContent;
 	}
@@ -101,7 +86,7 @@
 	/**
 	 * Loads profile options from database and creates options object
 	 * @return boolean true if profile was found, false otherwise
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	private function loadProfileOptions(){
@@ -126,12 +111,10 @@
 	/**
 	 * @deprecated
 	 * @return boolean
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since
 	 */
 	private function translateOptions() {
-		// TODO Remove debug
-		do_action( 'debug', 'ShortCode starting translating loop' );
 		// Translating options
 		if ( !empty($this->scOpts) ) {
 
@@ -161,18 +144,12 @@
 			erpPROPaths::requireOnce(erpPROPaths::$erpPROShortCodeOpts);
 			$this->optObj = new erpPROShortCodeOpts();
 			$this->optObj->setOptions(array_merge($erpOptions, $options));
-			// TODO Remove debug
-			do_action( 'debug', 'ShortCode options translated' );
 			return true;
 		}
-		// TODO Remove debug
-		do_action( 'debug', 'ShortCode empty attrs array, returning false' );
 		return false;
 	}
 
 	private function setSuppressOthers() {
-		// TODO Remove debug
-		do_action( 'debug', 'ShortCode chck if have to suppress others' );
 		// Setting supress others option
 		erpPROPaths::requireOnce(erpPROPaths::$erpPROTemplates);
 		if ( $this->optObj->getSuppressOthers() === true ) {

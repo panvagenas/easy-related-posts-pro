@@ -14,7 +14,7 @@
  * Plugin class.
  *
  * @package Easy_related_posts
- * @author Your Name <email@example.com>
+ * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 class easyRelatedPostsPRO {
 
@@ -161,19 +161,15 @@ class easyRelatedPostsPRO {
      *
      * @param string $content
      * @return string
-     * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
      * @since 1.0.0
      */
     public function contentFilter($content) {
-        // TODO Remove debug
-        do_action('debug', __FUNCTION__ . ' started');
         global $post;
         /**
          * Check if is time to take action
          */
         if ($this->isShowTime($post) && !$this->isInExcludedPostTypes($post) && !$this->isInExcludedTaxonomies($post) && (bool) $this->mainOpts->getValue('activate')) {
-            // TODO Remove debug
-            do_action('debug', __FUNCTION__ . ' showtime');
 
             erpPROPaths::requireOnce(erpPROPaths::$erpPROMainTemplates);
             erpPROPaths::requireOnce(erpPROPaths::$erpProRelated);
@@ -192,12 +188,8 @@ class easyRelatedPostsPRO {
             }
             $relContent = $template->display($result, $this->mainOpts, $ratings, false);
 
-            // TODO Remove debug
-            do_action('debug', __FUNCTION__ . ' returning rel content');
             return $this->mainOpts->getPosition() == 'top' ?  $relContent . $content : $content.$relContent;
         }
-        // TODO Remove debug
-        do_action('debug', __FUNCTION__ . ' returning def content');
         return $content;
     }
 
@@ -205,7 +197,7 @@ class easyRelatedPostsPRO {
      * Checks if current post belongs in an excluded post type
      * Returns true iff post is of excluded types defined in main options
      *
-     * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
      * @since 1.0.0
      */
     public function isInExcludedPostTypes($post) {
@@ -221,7 +213,7 @@ class easyRelatedPostsPRO {
      * Returns true iff all post categories are in excluded ones
      * or all post tags are in excluded ones
      *
-     * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
      * @since 1.0.0
      */
     public function isInExcludedTaxonomies($post) {
@@ -264,7 +256,7 @@ class easyRelatedPostsPRO {
     /**
      * Checks if it's time to display related
      *
-     * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
      * @since 1.0.0
      */
     public function isShowTime($post) {
@@ -478,7 +470,7 @@ class easyRelatedPostsPRO {
      *
      * @param array $schedules
      * @return array
-     * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
      * @since 1.0.0
      */
     public static function addWeeklyCron($schedules) {
@@ -492,7 +484,7 @@ class easyRelatedPostsPRO {
     /**
      * Weekly cron job actions
      *
-     * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
      * @since 1.0.0
      */
     public static function weeklyCronJob() {

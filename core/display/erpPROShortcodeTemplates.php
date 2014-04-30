@@ -2,7 +2,7 @@
 erpPROPaths::requireOnce(erpPROPaths::$erpPROTemplates);
 /**
  *
- * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+ * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 class erpPROShortcodeTemplates extends erpPROTemplates {
 
@@ -34,8 +34,6 @@ class erpPROShortcodeTemplates extends erpPROTemplates {
 	public function display(WP_Query $wpq, erpPROOptions $optObj, $ratings = array()) {
 		// Check if we should return empty content
 		if (parent::areOthersSuppressed() === true) {
-			// TODO Remove debug
-			do_action( 'debug', 'erpPROShortcodeTemplates suppressed' );
 			return '';
 		}
 		// Return content

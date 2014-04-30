@@ -4,7 +4,7 @@
  * Easy related posts PRO.
  *
  * @package Easy_Related_Posts_Related
- * @author Your Name <email@example.com>
+ * @author    Panagiotis Vagenas <pan.vagenas@gmail.com>
  * @license GPL-2.0+
  * @link http://example.com
  * @copyright 2014 Panagiotis Vagenas <pan.vagenas@gmail.com>
@@ -14,7 +14,7 @@
  * Relative data class.
  *
  * @package Easy_Related_Posts_Related
- * @author Your Name <email@example.com>
+ * @author    Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 class erpPRORelData {
 	/**
@@ -89,7 +89,7 @@ class erpPRORelData {
 	 * @param WP_Query $q
 	 * @param array $arguments
 	 * @param int $offset
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function setWP_Query($arguments, $limit, $offset, $q = null) {
@@ -103,7 +103,7 @@ class erpPRORelData {
 	/**
 	 * Return result
 	 * @return WP_Query
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function getResult(){
@@ -124,7 +124,7 @@ class erpPRORelData {
 	 *
 	 * @param int $limit
 	 * @return string
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function limitPosts( $limit ) {
@@ -136,8 +136,6 @@ class erpPRORelData {
 			}
 			return 'LIMIT ' . $offset . ', ' . $this->queryLimit;
 		}
-		// TODO Remove debug
-		do_action('debug',__FUNCTION__.' ' . $limit);
 		return $limit;
 	}
 
@@ -146,7 +144,7 @@ class erpPRORelData {
 	 * @param int $limit
 	 * @param int $offset
 	 * @return erpPRORelData
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function setQueryLimit($limit, $offset ) {
@@ -159,7 +157,7 @@ class erpPRORelData {
 	 * Search if given post id is present in rel table and returns index
 	 * @param int $pid
 	 * @return <boolean : int> False if post not found, index int otherwise
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function getIndexFromRelTable($pid) {
@@ -174,7 +172,7 @@ class erpPRORelData {
 	 * Return a single row from rel table
 	 * @param int $i Index
 	 * @return <boolean, array> False if index is't set, row otherwise
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function getRowFromRelTable($i) {
@@ -185,7 +183,7 @@ class erpPRORelData {
 	 * Sorts WP_Query object based on given array of post ids
 	 * @param array $postIDs
 	 * @return WP_Query
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function sortWPQuery(Array $postIDs) {
@@ -208,7 +206,7 @@ class erpPRORelData {
 	 * @param array $options
 	 *        	Options array, all critical options must be defined
 	 * @return array An array containing the options that don't match, or empty array if all match
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function criticalOptionsMismatch( Array $options ) {

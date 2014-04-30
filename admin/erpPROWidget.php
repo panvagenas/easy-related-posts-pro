@@ -4,9 +4,9 @@
  * Easy related posts PRO.
  *
  * @package   Easy_Related_Posts
- * @author    Your Name <email@example.com>
- * @license   GPL-2.0+
- * @link      http://example.com
+ * @author    Panagiotis Vagenas <pan.vagenas@gmail.com>
+ * @license   // TODO Licence
+ * @link      http://erp.xdark.eu
  * @copyright 2014 Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 
@@ -14,7 +14,7 @@
  * Widget class.
  *
  * @package Easy_Related_Posts
- * @author Your Name <email@example.com>
+ * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 class erpPROWidget extends WP_Widget {
 
@@ -39,11 +39,9 @@ class erpPROWidget extends WP_Widget {
 	 * @param array $instance
 	 *        	Saved values from database.
 	 * @since 1.0.0
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 */
 	public function widget( $args, $instance ) {
-		// TODO Remove debug
-		do_action( 'debug', __FUNCTION__ . ' started' );
 		global $post;
 		// get instance of main plugin
 		$plugin = easyRelatedPostsPRO::get_instance();
@@ -105,8 +103,6 @@ class erpPROWidget extends WP_Widget {
 				$this->displayEmptyWidget( $args, $instance );
 			}
 		}
-		// TODO Remove debug
-		do_action( 'debug', __FUNCTION__ . ' ended' );
 	}
 
 	/**
@@ -118,7 +114,7 @@ class erpPROWidget extends WP_Widget {
 	 * @param array $instance
 	 *        	Previously saved values from database.
 	 * @since 1.0
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 */
 	public function form( $instance ) {
 		// Fill missing options
@@ -149,7 +145,7 @@ class erpPROWidget extends WP_Widget {
 	 *        	Previously saved values from database.
 	 * @return array Updated safe values to be saved.
 	 * @since 1.0.0
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 */
 	public function update( $new_instance, $old_instance ) {
 		/* #? Verify nonce */
@@ -183,7 +179,7 @@ class erpPROWidget extends WP_Widget {
 	 * @param array $instance
 	 *
 	 * @since 1.0.0
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 */
 	private function displayEmptyWidget( $args, $instance ) {
 		if ( !$instance [ 'hideIfNoPosts' ] ) {

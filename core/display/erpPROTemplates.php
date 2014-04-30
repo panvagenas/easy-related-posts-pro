@@ -4,9 +4,9 @@
  * Easy related posts PRO.
  *
  * @package   Easy_Related_Posts_Core_display
- * @author    Your Name <email@example.com>
- * @license   GPL-2.0+
- * @link      http://example.com
+ * @author    Panagiotis Vagenas <pan.vagenas@gmail.com>
+ * @license   // TODO Licence
+ * @link      http://erp.xdark.eu
  * @copyright 2014 Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 
@@ -14,7 +14,7 @@
  * Abstract class of plugin templates
  *
  * @package Easy_Related_Posts_Core_display
- * @author Your Name <email@example.com>
+ * @author    Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 abstract class erpPROTemplates {
 	/**
@@ -140,7 +140,7 @@ abstract class erpPROTemplates {
 	 *
 	 * @param string $templateName
 	 * @return string absolute path to the template folder
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function getTemplatePath($templateName){
@@ -158,7 +158,7 @@ abstract class erpPROTemplates {
 	 * Searches in the template folder to find an xml file
 	 * @param string $templateName
 	 * @return string Empty string if not found, path to the file otherwise. If folder contains more than one xml files, firtst one will be returned.
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since
 	 */
 	public function getTemplateXMLPath($templateName){
@@ -185,7 +185,7 @@ abstract class erpPROTemplates {
 	/**
 	 * Returns an array containg the name of folders in templates base path
 	 * @return array
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function getTemplateNames() {
@@ -198,7 +198,7 @@ abstract class erpPROTemplates {
 	 * Loads the template with the given name. This populates all insance required fields in order to function prooperly
 	 * @param string $templateName
 	 * @return erpPROTemplates|null
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function load($templateName){
@@ -210,16 +210,12 @@ abstract class erpPROTemplates {
 			return null;
 		}
 		// initialize template components
-		// TODO Remove debug
-		do_action('debug',__FUNCTION__.' '.__CLASS__);
 
 		$xml = $this->getSimpleXMLInstc($templateXMLPath);
 
 		if ($xml === null) {
 			return null;
 		}
-		// TODO Remove debug
-		do_action('debug',__FUNCTION__.' reading options');
 		// read name
 		if (isset($xml->name)) {
 			$this->name = (string)$xml->name;
@@ -314,7 +310,7 @@ abstract class erpPROTemplates {
 	 *
 	 * @param string $templateXMLPath
 	 * @return SimpleXMLElement|NULL
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	protected function getSimpleXMLInstc($templateXMLPath) {
@@ -333,7 +329,7 @@ abstract class erpPROTemplates {
 	 * Converts an xml ellement to an assoc array
 	 * @param SimpleXMLElement $xml
 	 * @return array
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	protected function xmlToArray($xml){
@@ -349,7 +345,7 @@ abstract class erpPROTemplates {
 	/**
 	 * Enques all css files as specified in xml file
 	 * @return \display\erpPROTemplates
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	protected function enqueCSS(){
@@ -369,7 +365,7 @@ abstract class erpPROTemplates {
 	 * Get the url for a given file
 	 * @param string $templateFileRelativePath Relative path from the template base path
 	 * @return string Url
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	protected function getUrl($templateFileRelativePath){
@@ -389,7 +385,7 @@ abstract class erpPROTemplates {
 	/**
 	 * Enques all js files as specified in xml file
 	 * @return \display\erpPROTemplates
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	protected function enqueJS(){
@@ -417,12 +413,10 @@ abstract class erpPROTemplates {
 	 * Renders the settings. Return HTML string
 	 * @param bool $echo Whether to echo result or not
 	 * @return string|NULL HTML string or null
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function renderSettings($echo = false) {
-		// TODO Remove debug
-		do_action('debug',__FUNCTION__.' rendering');
 		if (isset($this->settingsFilePath)) {
 			return erpPROView::render($this->settingsFilePath, $this->options, $echo);
 		}
@@ -433,12 +427,10 @@ abstract class erpPROTemplates {
 	 * @param unknown $postData
 	 * @param string $echo
 	 * @return string|NULL
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since
 	 */
 	public function render($postData, $echo = FALSE){
-		// TODO Remove debug
-		do_action('debug',__FUNCTION__.' rendering');
 		if (isset($this->viewFilePath) && !empty($this->options) && !empty($postData)) {
 			return erpPROView::render($this->viewFilePath, $this->options+$postData, $echo);
 		} elseif (!empty($postData)){
@@ -451,28 +443,22 @@ abstract class erpPROTemplates {
 	 * @param WP_Query $wpq
 	 * @param array $additionalOptions
 	 * @param array $ratings
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function display(WP_Query $wpq, erpPROOptions $optionsObj, $ratings = array()){
 		if (!$this->isLoaded()) {
 			return '';
 		}
-		// TODO Remove debug
-		do_action('debug',__FUNCTION__.' starting display');
 
 		erpPROPaths::requireOnce(erpPROPaths::$erpPROPostData);
 		erpPROPaths::requireOnce(erpPROPaths::$erpPRODBHelper);
 
-		// TODO Remove debug
-		do_action('debug',__FUNCTION__.' adding displayed');
 
 		$from = get_the_ID();
 
 		erpPRODBHelper::addDisplayed($from, array_keys($ratings));
 
-		// TODO Remove debug
-		do_action('debug',__FUNCTION__.' setting additional options');
 
 		$this->setOptions($optionsObj->getOptions());
 
@@ -484,8 +470,6 @@ abstract class erpPROTemplates {
 			'posts' => array()
 		);
 
-		// TODO Remove debug
-		do_action('debug',__FUNCTION__.' forming postdata');
 
 		while ($wpq->have_posts()) {
 			$wpq->the_post();
@@ -512,7 +496,7 @@ abstract class erpPROTemplates {
 	 * Validates new options and saves them to DB
 	 * @param array $newOptions Assoc array
 	 * @return boolean
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function saveTemplateOptions($newOptions) {
@@ -535,7 +519,7 @@ abstract class erpPROTemplates {
 	 * Sets options in instance field
 	 * @param array $options Assoc array of new opotions
 	 * @return \display\erpPROTemplates
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function setOptions($options){
@@ -545,7 +529,7 @@ abstract class erpPROTemplates {
 	/**
 	 * Returns template name
 	 * @return string
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function getName() {
@@ -554,7 +538,7 @@ abstract class erpPROTemplates {
 	/**
 	 * Returns template description
 	 * @return string
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function getDescription() {
@@ -563,7 +547,7 @@ abstract class erpPROTemplates {
 	/**
 	 * Returns template settigs file path
 	 * @return string
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function getSettingsFilePath() {
@@ -572,7 +556,7 @@ abstract class erpPROTemplates {
 	/**
 	 * Returns template public view file path
 	 * @return string
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function getViewFilePath() {
@@ -581,7 +565,7 @@ abstract class erpPROTemplates {
 	/**
 	 * Returns template options
 	 * @return array Assoc array
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function getOptions() {

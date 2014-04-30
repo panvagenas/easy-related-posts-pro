@@ -3,9 +3,9 @@
  * Easy related posts PRO.
  *
  * @package   Easy_Related_Posts_Related
- * @author    Your Name <email@example.com>
- * @license   GPL-2.0+
- * @link      http://example.com
+ * @author    Panagiotis Vagenas <pan.vagenas@gmail.com>
+ * @license   // TODO Licence
+ * @link      http://erp.xdark.eu
  * @copyright 2014 Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 
@@ -13,7 +13,7 @@
  * Ratings class.
  *
  * @package Easy_Related_Posts_Related
- * @author Your Name <email@example.com>
+ * @author    Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 class erpPRORatingSystem {
 	/**
@@ -127,7 +127,7 @@ class erpPRORatingSystem {
 	 * @param int $pid1 Host post id
 	 * @param int $pid2 Guest post id
 	 * @return number
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function rateBasedOnCats($pid1, $pid2) {
@@ -159,7 +159,7 @@ class erpPRORatingSystem {
 	 * @param int $pid1 Host post id
 	 * @param int $pid2 Guest post id
 	 * @return number
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function rateBasedOnTags( $pid1, $pid2 ) {
@@ -217,7 +217,7 @@ class erpPRORatingSystem {
 	 * Forms ratingsArrayFlat field based on relatedTable field and weights
 	 *
 	 * @return erpPRORatingSystem
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function formRatingsArrays() {
@@ -247,8 +247,6 @@ class erpPRORatingSystem {
 				}
 			}
 		}
-		// TODO Remove debug
-		do_action('debug',__FUNCTION__.' formed rating arrays. Length is : '.count($this->ratingsArrayFlat));
 		return $this;
 	}
 
@@ -259,7 +257,7 @@ class erpPRORatingSystem {
 	 *        	Possible values (date and/or rating => (order => desc or asc, rank => 1 or 2))
 	 *        Default (ratings => (order => desc, rank => 1), date => (order => desc, rank => 2))
 	 * @return boolean True on success, false otherwise
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 *
 	 */
@@ -302,7 +300,7 @@ class erpPRORatingSystem {
 	 * @param int $length
 	 * @param array $postsToExlude
 	 * @return array Sliced array
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function getSlicedRatingsArrayFlat($offset, $length, Array $postsToExlude = array()){

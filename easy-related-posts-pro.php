@@ -3,23 +3,23 @@
  * Easy Related Posts PRO
  *
  * @package   Easy related posts
- * @author    Your Name <email@example.com>
- * @license   GPL-2.0+
- * @link      http://example.com
+ * @author    Panagiotis Vagenas <pan.vagenas@gmail.com>
+ * @license   // TODO Licence
+ * @link      http://erp.xdark.eu
  * @copyright 2014 Panagiotis Vagenas <pan.vagenas@gmail.com>
  *
  * @wordpress-plugin
  * Plugin Name:       Easy Related Posts PRO
  * Plugin URI:        http://erp.xdark.eu
- * Description:       @TODO
+ * Description:       @TODO Plugin description
  * Version:           1.0.0
- * Author:            Panagiotis Vagenas
+ * Author:            Panagiotis Vagenas <pan.vagenas@gmail.com>
  * Author URI:        http://xdark.eu
  * Text Domain:       easy-related-posts-eng
- * License:           @TODO
+ * License:           @TODO Licence 
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Domain Path:       /languages
- * Codecanyon URI:
+ * Codecanyon URI:    @TODO Codecanyon uri
  */
 
 // If this file is called directly, abort.
@@ -103,12 +103,10 @@ add_action( 'widgets_init', function (){register_widget( "erpPROWidget" );} );
  *
  * @param array $attrs
  * @return string
- * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+ * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
  * @since 1.0.0
  */
 function erpPROShortcode( $attrs ) {
-	// TODO Remove debug
-	do_action( 'debug', 'ShortCode tag found. Starting SC functionality' );
 
 	// If no profile is set return empty string
 	if (!isset($attrs['profile'])) {

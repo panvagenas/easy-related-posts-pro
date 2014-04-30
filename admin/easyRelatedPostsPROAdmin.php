@@ -4,9 +4,9 @@
  * Easy related posts PRO.
  *
  * @package   Easy_Related_Posts_Admin
- * @author    Your Name <email@example.com>
- * @license   GPL-2.0+
- * @link      http://example.com
+ * @author    Panagiotis Vagenas <pan.vagenas@gmail.com>
+ * @license   // TODO Licence
+ * @link      http://erp.xdark.eu
  * @copyright 2014 Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 
@@ -18,7 +18,7 @@
  * functionality, then refer to `class-plugin-name.php`
  *
  * @package Easy_Related_Posts_Admin
- * @author Your Name <email@example.com>
+ * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 class easyRelatedPostsPROAdmin {
 
@@ -384,7 +384,7 @@ class easyRelatedPostsPROAdmin {
      * Saves admin options.
      * This is called through a hook
      *
-     * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
      * @since 1.0.0
      */
     public function saveOptions() {
@@ -419,7 +419,7 @@ class easyRelatedPostsPROAdmin {
      * Clears cache.
      * !IMPORTAND! Not to be called directly. Only through ajax
      *
-     * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
      * @since 1.0.0
      */
     public function clearCache() {
@@ -446,7 +446,7 @@ class easyRelatedPostsPROAdmin {
      * 
      * FIXME This functionality will not be used until we find a way to make sure mem limit not reached
      *
-     * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
      * @since 1.0.0
      */
     public function rebuildCache() {
@@ -487,7 +487,7 @@ class easyRelatedPostsPROAdmin {
      * Echoes json string of the profile define in $_POST [ 'profileName' ].
      * If profile not found in DB then echoes false
      *
-     * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
      * @since 1.0.0
      */
     public function loadShortcodeProfile() {
@@ -520,7 +520,7 @@ class easyRelatedPostsPROAdmin {
     /**
      * Saves shortcode profile in DB
      *
-     * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
      * @since 1.0.0
      */
     public function saveShortcodeProfile() {
@@ -560,7 +560,7 @@ class easyRelatedPostsPROAdmin {
     /**
      * Deletes a SC profile if is present in DB
      *
-     * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
      * @since 1.0.0
      */
     public function deleteShortCodeProfile() {
@@ -596,7 +596,7 @@ class easyRelatedPostsPROAdmin {
     /**
      * Echoes json string with all SC profiles found in DB
      *
-     * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
      * @since 1.0.0
      */
     public function getShortCodeProfiles() {
@@ -620,7 +620,7 @@ class easyRelatedPostsPROAdmin {
     /**
      * Echoes html to be desplayed in shortcode helper
      *
-     * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
      * @since 1.0.0
      */
     public function getShortCodeHelperContent() {
@@ -674,7 +674,7 @@ class easyRelatedPostsPROAdmin {
     /**
      * This is called through ajax hook and returns the plugin options as defined in template settings file
      *
-     * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
      * @since 1.0.0
      */
     public function loadTemplateOptions() {
@@ -699,7 +699,7 @@ class easyRelatedPostsPROAdmin {
     /**
      * This is called through ajax hook and returns the plugin options as defined in template settings file
      *
-     * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
      * @since 1.0.0
      */
     public function loadSCTemplateOptions() {
@@ -737,7 +737,7 @@ class easyRelatedPostsPROAdmin {
     /**
      * Hooks shortcode helper to MCE editor
      *
-     * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
      * @since 1.0.0
      */
     function erpPROButtonHook() {
@@ -758,7 +758,7 @@ class easyRelatedPostsPROAdmin {
      *
      * @param array $buttons
      * @return array
-     * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
      * @since 1.0.0
      */
     function registerMCEButton($buttons) {
@@ -775,7 +775,7 @@ class easyRelatedPostsPROAdmin {
      *
      * @param array $pluginArray
      * @return array
-     * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
      * @since 1.0.0
      */
     function defineMCEHelperJS($pluginArray) {

@@ -3,9 +3,9 @@
  * Easy related posts PRO.
  *
  * @package   Easy_Related_Posts
- * @author    Your Name <email@example.com>
- * @license   GPL-2.0+
- * @link      http://example.com
+ * @author    Panagiotis Vagenas <pan.vagenas@gmail.com>
+ * @license   // TODO Licence
+ * @link      http://erp.xdark.eu
  * @copyright 2014 Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 
@@ -13,14 +13,14 @@
  * Activator class.
  *
  * @package Easy_Related_Posts
- * @author Your Name <email@example.com>
+ * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
  class erpPROActivator {
  	/**
  	 * Creates ERP PRO related table to DB
  	 *
  	 * @param string $tablePrefix The table prefix, default to current blog table prefix.
- 	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+ 	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
  	 * @since 1.0.0
  	 */
  	public static function createERPTable( $tablePrefix = FALSE) {
@@ -57,7 +57,7 @@
 	 * @param array $array1 Associative options array (optionName => optionValue)
 	 * @param array $array2 Associative options array (optionName => optionValue)
 	 * @return array An array containing the options names that are present only in array1
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
  	public static function optionArraysDiff(Array $array1, Array $array2) {
@@ -73,7 +73,7 @@
 	 * @param array $oldOpts Old options array, default to main options present in DB
 	 * @param string $optsName Options name, default to erp pro main options array
 	 * @return boolean True if operation was succefull, false otherwise
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
  	public static function addNonExistingMainOptions(Array $newOpts, $optsName, Array $oldOpts = NULL) {
@@ -93,7 +93,7 @@
  	 * @param array $oldOpts Old options array, default to widget options present in DB
  	 * @param string $optsName Options name, default to erp pro widget options array
  	 * @return boolean False if operation was successfull, false otherwise
- 	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+ 	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
  	 * @since 1.0.0
  	 */
  	public static function addNonExistingWidgetOptions(Array $newOpts, $optsName, Array $oldOpts = NULL ) {

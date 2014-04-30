@@ -4,9 +4,9 @@
  * Easy related posts PRO.
  *
  * @package   Easy_Related_Posts_Core_display
- * @author    Your Name <email@example.com>
- * @license   GPL-2.0+
- * @link      http://example.com
+ * @author    Panagiotis Vagenas <pan.vagenas@gmail.com>
+ * @license   // TODO Licence
+ * @link      http://erp.xdark.eu
  * @copyright 2014 Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 erpPROPaths::requireOnce(erpPROPaths::$erpPROTemplates);
@@ -14,7 +14,7 @@ erpPROPaths::requireOnce(erpPROPaths::$erpPROTemplates);
  * Main plugin templates class
  *
  * @package Easy_Related_Posts_Core_display
- * @author Your Name <email@example.com>
+ * @author    Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 class erpPROMainTemplates extends erpPROTemplates {
 	/**
@@ -37,8 +37,6 @@ class erpPROMainTemplates extends erpPROTemplates {
 	public function display(WP_Query $wpq, erpPROOptions $optObj, $ratings = array()) {
 		// Check if we should return empty content
 		if (parent::areOthersSuppressed() === true) {
-			// TODO Remove debug
-			do_action( 'debug', 'erpPROMainTemplates suppressed' );
 			return '';
 		}
 		// Return content

@@ -4,9 +4,9 @@
  * Easy related posts PRO.
  *
  * @package   Easy_Related_Posts_Options
- * @author    Your Name <email@example.com>
- * @license   GPL-2.0+
- * @link      http://example.com
+ * @author    Panagiotis Vagenas <pan.vagenas@gmail.com>
+ * @license   // TODO Licence
+ * @link      http://erp.xdark.eu
  * @copyright 2014 Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 
@@ -14,7 +14,7 @@
  * Options abstract class.
  *
  * @package Easy_Related_Posts_Options
- * @author Your Name <email@example.com>
+ * @author    Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 abstract class erpPROOptions {
 
@@ -44,7 +44,7 @@ abstract class erpPROOptions {
 	/**
 	 * Get option array
 	 *
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 * @return array Options array
 	 */
@@ -59,7 +59,7 @@ abstract class erpPROOptions {
 	 * @param array $options
 	 *        	New options as associative array
 	 * @return erpPROOptions
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function setOptions( $options ) {
@@ -78,7 +78,7 @@ abstract class erpPROOptions {
 	 *
 	 * @param string $optionName
 	 * @return null string NULL if option not found, option value otherwise (uses default value if avail)
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function getValue( $optionName ) {
@@ -111,7 +111,7 @@ abstract class erpPROOptions {
 	 * Instance scope
 	 * @deprecated since version 1.0.0 This no longer should be considered since all posts are rated
 	 * @return boolean
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
  	public function isRatingSystemOn( ) {
@@ -123,7 +123,7 @@ abstract class erpPROOptions {
 	 *
 	 * @param string $optName
 	 * @return boolean True if option is set, false otherwise
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function isOptionSet( $optName ) {
@@ -169,7 +169,7 @@ abstract class erpPROOptions {
 	 *
 	 * @param array $options New options
 	 * @return array Assoc array containg only the validated options
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function validateCommonOptions( Array $options ) {
@@ -182,7 +182,7 @@ abstract class erpPROOptions {
 	 * @param array $options
 	 * @param array $types
 	 * @return array
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	protected function switchValidationTypes($options, $types){
@@ -263,7 +263,7 @@ abstract class erpPROOptions {
 	/**
 	 * If we have to display the post thumb
 	 * @return boolean
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function haveToShowThumbnail() {
@@ -273,7 +273,7 @@ abstract class erpPROOptions {
 	/**
 	 * If we have to display the post excerpt
 	 * @return boolean
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function haveToShowExcerpt() {
@@ -284,7 +284,7 @@ abstract class erpPROOptions {
 	 * Get title form settings
 	 *
 	 * @return string|null
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function getTitle() {
@@ -295,7 +295,7 @@ abstract class erpPROOptions {
 	 * Get number of posts to display
 	 *
 	 * @return int|null
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function getNumberOfPostsToDiplay() {
@@ -306,7 +306,7 @@ abstract class erpPROOptions {
 	 * Get fetchBy option
 	 *
 	 * @return string|NULL
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function getFetchBy() {
@@ -317,7 +317,7 @@ abstract class erpPROOptions {
 	 * Get offset value
 	 *
 	 * @return int|NULL
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function getOffset() {
@@ -328,7 +328,7 @@ abstract class erpPROOptions {
 	 * Get content array
 	 *
 	 * @return array|NULL
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function getContentPositioning() {
@@ -338,7 +338,7 @@ abstract class erpPROOptions {
 	/**
 	 * Get default thumb url
 	 * @return string|NULL
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function getDefaultThumbnail() {
@@ -348,7 +348,7 @@ abstract class erpPROOptions {
 	/**
 	 * Get rel post title font size
 	 * @return int|NULL
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function getPostTitleFontSize() {
@@ -358,7 +358,7 @@ abstract class erpPROOptions {
 	/**
 	 * Get rel post exc font size
 	 * @return int|NULL
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function getExcFontSize() {
@@ -368,7 +368,7 @@ abstract class erpPROOptions {
 	/**
 	 * Get rel post exc length
 	 * @return int|NULL
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function getExcLength() {
@@ -379,7 +379,7 @@ abstract class erpPROOptions {
 	 * Get more text
 	 *
 	 * @return string|NULL
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function getMoreTxt() {
@@ -390,7 +390,7 @@ abstract class erpPROOptions {
 	 * Get thumbnail height
 	 *
 	 * @return int|NULL
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function getThumbnailHeight() {
@@ -401,7 +401,7 @@ abstract class erpPROOptions {
 	 * Get thumbnail width
 	 *
 	 * @return int|NULL
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function getThumbnailWidth() {
@@ -411,7 +411,7 @@ abstract class erpPROOptions {
 	/**
 	 * Get crop thumb value
 	 * @return bool|NULL
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function getCropThumbnail() {
@@ -421,7 +421,7 @@ abstract class erpPROOptions {
 	/**
 	 * Get display layout value
 	 * @return string|NULL
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function getDsplLayout() {

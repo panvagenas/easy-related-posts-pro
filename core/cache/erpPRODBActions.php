@@ -5,7 +5,7 @@
  * Easy related posts PRO.
  *
  * @package Easy_Related_Posts_DB
- * @author Your Name <email@example.com>
+ * @author    Panagiotis Vagenas <pan.vagenas@gmail.com>
  * @license GPL-2.0+
  * @link http://example.com
  * @copyright 2014 Panagiotis Vagenas <pan.vagenas@gmail.com>
@@ -15,7 +15,7 @@
  * Database actions class.
  *
  * @package Easy_Related_Posts
- * @author Your Name <email@example.com>
+ * @author  Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 class erpPRODBActions {
 
@@ -120,7 +120,7 @@ class erpPRODBActions {
 	 *
 	 * @param int $pid
 	 * @return array Accosiative array containing all occurrenses
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function getAllOccurrences( $pid ) {
@@ -132,7 +132,7 @@ class erpPRODBActions {
 	 * Deletes all occurences of a post in DB
 	 * @param int $pid
 	 * @return int|false Number of rows affected/selected or false on error
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function deleteAllOccurrences( $pid ){
@@ -147,7 +147,7 @@ class erpPRODBActions {
 	 * Returns all records from rel table
 	 *
 	 * @return mixed Database query results
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function getAll(){
@@ -158,7 +158,7 @@ class erpPRODBActions {
 	 * Returns unique ids in pid1 field of rel table
 	 *
 	 * @return array If rel table is empty an amty array will be returned
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function getUniqueIds(){
@@ -169,10 +169,8 @@ class erpPRODBActions {
 	/**
 	 * Flushes all records from rel table in DB.
 	 *
-	 * TODO Maybe we should back up in file firsts to make sure there is a way back in case this happens accidentaly
-	 *
 	 * @return int|false Number of rows affected/selected or false on error
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function emptyRelTable(){
@@ -186,7 +184,7 @@ class erpPRODBActions {
 	 * @param int $pid2
 	 * @return array Result array
 	 * @since 1.0.0
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 */
 	public function getRowFromRel( $pid1, $pid2 ) {
 		$where = ' (pid1="' . $pid1 . '" AND pid2="' . $pid2 . '") OR (pid1="' . $pid2 . '" AND pid2="' . $pid1 . '") ';
@@ -202,7 +200,7 @@ class erpPRODBActions {
 	 *        	Assosiative array with data to be insterted
 	 * @return boolean or NULL
 	 * @since 1.5.0
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 */
 	public function insertRecToRel( $pid1, $pid2, Array $data ) {
 		/**
@@ -241,7 +239,7 @@ class erpPRODBActions {
 	 * @param array $data
 	 *        	Associative array with updated data
 	 * @return boolean True on success false on failure
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function updateRelRec( $pid1, $pid2, Array $data ) {
@@ -279,7 +277,7 @@ class erpPRODBActions {
 	 *
 	 * @param int $pid1
 	 * @param int $pid2
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function deleteRecFromRelTable( $pid1, $pid2 ) {
@@ -296,7 +294,7 @@ class erpPRODBActions {
 	 *        	The host post id
 	 * @param int $pid2
 	 *        	The clicked post id
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function addClick( $pid1, $pid2 ) {
@@ -328,7 +326,7 @@ class erpPRODBActions {
 	 *        	Host post id
 	 * @param int $pid2
 	 *        	Displayed post id
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function addDisplayed( $pid1, $pid2 ) {
@@ -352,7 +350,7 @@ class erpPRODBActions {
 	/**
 	 * Performs cached add displayed queries
 	 *
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	private function performDisplayedQuery( ) {
@@ -376,7 +374,7 @@ class erpPRODBActions {
 	/**
 	 * Inserts records cached in $this->insert array.
 	 *
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	private function performInsertQuery( ) {
@@ -415,7 +413,7 @@ class erpPRODBActions {
 	/**
 	 * Performs cached delete query
 	 *
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	private function performDeleteQuery( ) {
@@ -439,7 +437,7 @@ class erpPRODBActions {
 	 * @param array $data
 	 *        	The array to be reversed
 	 * @return array The reversed array
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	private function reverseDataArray( $data ) {
@@ -480,7 +478,7 @@ class erpPRODBActions {
 	/**
 	 * Performs cached queries if any
 	 *
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	private function performCachedQueries( ) {
@@ -492,7 +490,7 @@ class erpPRODBActions {
 	/**
 	 * Before object destructed must perform chached queries
 	 *
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public function __destruct( ) {
@@ -502,7 +500,7 @@ class erpPRODBActions {
 	/**
 	 * Prevent overiding
 	 *
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	private function __clone( ) {}
@@ -510,7 +508,7 @@ class erpPRODBActions {
 	/**
 	 * Prevent overiding
 	 *
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	private function __wakeup( ) {}

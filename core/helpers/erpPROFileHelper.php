@@ -15,7 +15,7 @@
  * File helper class
  *
  * @package Easy_related_posts_helpers
- * @author Your Name <email@example.com>
+ * @author    Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 class erpPROFileHelper {
 
@@ -24,7 +24,7 @@ class erpPROFileHelper {
 	 *
 	 * @param string $path
 	 * @return array
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public static function dirToArrayRecursive( $path ) {
@@ -54,7 +54,7 @@ class erpPROFileHelper {
 	 *
 	 * @param string $path
 	 * @return array
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public static function dirToArray( $path ) {
@@ -78,7 +78,7 @@ class erpPROFileHelper {
 	 *
 	 * @param string $path
 	 * @return array
-	 * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
 	public static function filesToArray( $path ) {

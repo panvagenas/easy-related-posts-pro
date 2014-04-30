@@ -2,7 +2,7 @@
 
 /**
  *
- * @author Vagenas Panagiotis <pan.vagenas@gmail.com>
+ * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 class erpPROPaths {
 	// Helpers

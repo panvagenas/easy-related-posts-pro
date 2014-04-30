@@ -5,8 +5,8 @@
  *
  * @package   Easy_Related_Posts_Helpers
  * @author    Panagiotis Vagenas <pan.vagenas@gmail.com>
- * @license   GPL-2.0+
- * @link      http://example.com
+ * @license   // TODO Licence
+ * @link      http://erp.xdark.eu
  * @copyright 2014 Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 
@@ -14,7 +14,7 @@
  * HTML helper object
  *
  * @package Easy_related_posts_helpers
- * @author Your Name <email@example.com>
+ * @author    Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 class erpPROHTMLHelper {
 
