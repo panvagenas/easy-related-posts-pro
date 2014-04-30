@@ -31,7 +31,8 @@
 	    <label for="numOfPostsPerRow">Number of posts per row: </label>
 	</td>
 	<td>
-	    <input class="erp-opttxt" id="numOfPostsPerRow" name="numOfPostsPerRow" type="number"value="<?php echo $numOfPostsPerRow; ?>"/>
+            <input class="erp-opttxt" id="numOfPostsPerRow" name="numOfPostsPerRow" type="number"value="<?php echo $numOfPostsPerRow; ?>" readonly="readonly"/>
+            <div id="numOfPostsPerRowSlider"></div>
 	</td>
     </tr>
     <tr>
@@ -47,8 +48,9 @@
 	    <label for="backgroundTransparency">Background transparency: </label>
 	</td>
 	<td>
-	    <input class="erp-opttxt" id="backgroundTransparency" name="backgroundTransparency" type="number"value="<?php echo $backgroundTransparency; ?>"/>
-	</td>
+            <input class="erp-opttxt" id="backgroundTransparency" name="backgroundTransparency" type="number"value="<?php echo $backgroundTransparency; ?>"/>
+            <div id="backgroundTransparencySlider"></div>
+        </td>
     </tr>
     <tr>
 	<td>
@@ -56,6 +58,7 @@
 	</td>
 	<td>
 	    <input class="erp-opttxt" id="triggerAfter" name="triggerAfter" type="number"value="<?php echo $triggerAfter; ?>"/>
+            <div id="triggerAfterSlider"></div>
 	</td>
     </tr>
     <tr>
@@ -67,3 +70,38 @@
 	</td>
     </tr>
 </table>
+<script type="text/javascript">
+    jQuery(document).ready(function($) {
+        var valMap = [1,2,3,4,6,12];
+        $("#numOfPostsPerRowSlider").slider({
+            value: valMap.indexOf(<?php echo $numOfPostsPerRow; ?>),
+            min: 0,
+            max: valMap.length - 1,
+            slide: function(event, ui) {
+                $("#numOfPostsPerRow").val(valMap[ui.value]);
+            }
+        });
+        
+        jQuery('#backgroundColor').wpColorPicker();
+        
+        $("#backgroundTransparencySlider").slider({
+            value: <?php echo $backgroundTransparency; ?>,
+            min: 0,
+            max: 1,
+            step: 0.01,
+            slide: function(event, ui) {
+                $("#backgroundTransparency").val(ui.value);
+            }
+        });
+        
+        $("#triggerAfterSlider").slider({
+            value: <?php echo $triggerAfter; ?>,
+            min: 0.1,
+            max: 0.9,
+            step: 0.01,
+            slide: function(event, ui) {
+                $("#triggerAfter").val(ui.value);
+            }
+        });
+    });
+</script>

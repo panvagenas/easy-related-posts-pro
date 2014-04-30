@@ -20,4 +20,13 @@
 	<cssFilePath>
 		<carousel>assets/carousel.css</carousel>
 	</cssFilePath>
+        <preregisteredScripts>
+		<css>
+			<bootstrapText>erp_pro-bootstrap-text</bootstrapText>
+			<erpPROCaptionCSS>erp_pro-erpPROCaptionCSS</erpPROCaptionCSS>
+		</css>
+		<js>
+			<erpPROCaptionJS>erp_pro-erpPROCaptionJS</erpPROCaptionJS>
+		</js>
+	</preregisteredScripts>
 </template>

@@ -12,6 +12,14 @@
 	</optionSaveValidation>
 	<settingsPageFilePath>settings.php</settingsPageFilePath>
 	<viewFilePath>basic.php</viewFilePath>
-	<jsFilePath>assets/basic.js</jsFilePath>
-	<cssFilePath>assets/basic.css</cssFilePath>
+        <preregisteredScripts>
+		<css>
+			<bootstrap>erp_pro-bootstrap</bootstrap>
+			<bootstrapText>erp_pro-bootstrap-text</bootstrapText>
+			<erpPROCaptionCSS>erp_pro-erpPROCaptionCSS</erpPROCaptionCSS>
+		</css>
+		<js>
+			<erpPROCaptionJS>erp_pro-erpPROCaptionJS</erpPROCaptionJS>
+		</js>
+	</preregisteredScripts>
 	</template>

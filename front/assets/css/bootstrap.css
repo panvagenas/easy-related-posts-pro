@@ -118,9 +118,9 @@
 .erpProContainer svg:not(:root) {
   overflow: hidden;
 }
-.erpProContainer figure {
+/*.erpProContainer figure {
   margin: 1em 40px;
-}
+}*/
 .erpProContainer hr {
   -moz-box-sizing: content-box;
   box-sizing: content-box;
