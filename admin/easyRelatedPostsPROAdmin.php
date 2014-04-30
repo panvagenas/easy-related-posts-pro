@@ -305,6 +305,7 @@ class easyRelatedPostsPROAdmin {
 	    wp_enqueue_script('jquery-ui-tabs');
 	    wp_enqueue_script('jquery-ui-tooltip');
 	    wp_enqueue_script('jquery-ui-accordion');
+            wp_enqueue_script('jquery-ui-slider');
 
 	    wp_enqueue_script($this->plugin_slug . '-admin-script', plugins_url('assets/js/admin.js', __FILE__), array(
 		'jquery',
@@ -329,6 +330,7 @@ class easyRelatedPostsPROAdmin {
 	    wp_enqueue_script('jquery-ui-dialog');
 	    wp_enqueue_script('jquery-ui-tooltip');
 	    wp_enqueue_script('jquery-ui-accordion');
+            wp_enqueue_script('jquery-ui-slider');
 
 	    wp_enqueue_script($this->plugin_slug . '-jq-form', plugins_url('assets/js/jq.form.min.js', __FILE__), array(
 		'jquery'

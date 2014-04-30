@@ -51,7 +51,7 @@ ChkObj.prototype.selectionChecker = function(maper) {
 
 	$(function() {
 		// jQuery loaded scripts
-		$( document ).tooltip();
+		$( document ).tooltip({ items: "[data-tooltip]" });
 	});
 
 }(jQuery));

@@ -236,6 +236,9 @@
          * -----------------------------------------
          */
         $(".erpAccordion").accordion({heightStyle: "content", collapsible: true});
+        
+        jQuery('#postTitleColor').wpColorPicker();
+        jQuery('#excColor').wpColorPicker();
     });
 
 }(jQuery));

@@ -185,16 +185,16 @@
             <td></td>
     </tr>
     <tr>
-        <td>Post title color:</td>
         <td><label
-                for="<?php echo $widgetInstance->get_field_id('postTitleColor'); ?>">
+                for="<?php echo $widgetInstance->get_field_id('postTitleColor'); ?>">Post title color: </label></td>
+        <td>
                 <input class="wp-color-picker-field" data-default-color="#ffffff"
                        size="3pt"
                        id="<?php echo $widgetInstance->get_field_id('postTitleColor'); ?>"
                        name="<?php echo $widgetInstance->get_field_name('postTitleColor'); ?>"
                        type="text"
                        value="<?php echo esc_attr($options['postTitleColor']); ?>" />
-            </label></td>
+            </td>
         <td></td>
     </tr>
 </table>
@@ -215,15 +215,15 @@
             <td></td>
     </tr>
     <tr>
-        <td>Excerpt text color:</td>
         <td><label
-                for="<?php echo $widgetInstance->get_field_id('excColor'); ?>">
+                for="<?php echo $widgetInstance->get_field_id('excColor'); ?>">Excerpt text color: </label></td>
+        <td>
                 <input class="wp-color-picker-field" data-default-color="#ffffff"
                        size="3pt"
                        id="<?php echo $widgetInstance->get_field_id('excColor'); ?>"
                        name="<?php echo $widgetInstance->get_field_name('excColor'); ?>"
                        type="text" value="<?php echo esc_attr($options['excColor']); ?>" />
-            </label></td>
+            </td>
         <td></td>
     </tr>
 </table>
