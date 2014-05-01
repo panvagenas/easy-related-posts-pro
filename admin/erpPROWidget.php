@@ -47,7 +47,7 @@ class erpPROWidget extends WP_Widget {
 		$plugin = easyRelatedPostsPRO::get_instance();
 		// check if it's time to take action
 		if ( is_single( $post->ID ) ) {
-			if (($plugin->isInExcludedPostTypes( $post ) && $instance['ptypeExclude']) || ($plugin->isInExcludedTaxonomies( $post ) && $instance['taxExclude'])) {
+			if ($plugin->isInExcludedPostTypes( $post ) || $plugin->isInExcludedTaxonomies( $post )) {
 				return;
 			}
 			// Fill missing options
@@ -63,19 +63,9 @@ class erpPROWidget extends WP_Widget {
 
 			$mainOpts = new erpPROMainOpts();
 
-			// Check if we have to exclude taxos or post types
-			if ( isset( $instance [ "taxExclude" ] ) && $instance [ "taxExclude" ] ) {
 				$instance [ 'tags' ] = $mainOpts->getTags();
 				$instance [ 'categories' ] = $mainOpts->getCategories();
-			} else {
-				$instance [ 'tags' ] = array ();
-				$instance [ 'categories' ] = array ();
-			}
-			if ( isset( $instance [ "ptypeExclude" ] ) && $instance [ "ptypeExclude" ] ) {
 				$instance [ 'postTypes' ] = $mainOpts->getPostTypes();
-			} else {
-				$instance [ 'postTypes' ] = array ();
-			}
 
 			$widOpts = new erpPROWidOpts($instance);
 

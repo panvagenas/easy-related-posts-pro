@@ -107,12 +107,4 @@ class erpPROShortCodeOpts extends erpPROOptions {
 	public function getHideIfNoPosts() {
 		return $this->getValue('hideIfNoPosts');
 	}
-
-	public function getTaxExclude() {
-		return $this->getValue('taxExclude');
-	}
-
-	public function getPtypeExclude() {
-		return $this->getValue('ptypeExclude');
-	}
 }

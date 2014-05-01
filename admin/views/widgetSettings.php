@@ -84,26 +84,6 @@
 </p>
 <p>
     <label
-        for="<?php echo $widgetInstance->get_field_id('wid_taxExlude'); ?>">
-            <?php _e('Use taxonomies filter <span class="use-tax-filter erp-help-aster" id="excluder">*</span>'); ?>
-        <input class=""
-               id="<?php echo $widgetInstance->get_field_id('taxExclude'); ?>"
-               name="<?php echo $widgetInstance->get_field_name('taxExclude'); ?>"
-               type="checkbox" <?php echo checked($options['taxExclude']); ?> />
-    </label>
-</p>
-<p>
-    <label
-        for="<?php echo $widgetInstance->get_field_id('ptypeExclude'); ?>">
-            <?php _e('Use post type filter <span class="use-ptype-filter erp-help-aster" id="excluder-ptype">*</span>'); ?>
-        <input class="erp_wid_opt5"
-               id="<?php echo $widgetInstance->get_field_id('ptypeExclude'); ?>"
-               name="<?php echo $widgetInstance->get_field_name('ptypeExclude'); ?>"
-               type="checkbox" <?php echo checked($options['ptypeExclude']); ?> />
-    </label>
-</p>
-<p>
-    <label
         for="<?php echo $widgetInstance->get_field_id('hideIfNoPosts'); ?>">
         <?php _e('Hide if no posts to show:'); ?> <input class="erp_wid_opt5"
                id="<?php echo $widgetInstance->get_field_id('hideIfNoPosts'); ?>"

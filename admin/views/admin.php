@@ -52,9 +52,6 @@ if (!function_exists('erpPROTaxGrouping')) {
             <div id="tabs-1">
                 <table class="gen-opt-table">
                     <tr>
-                        <th colspan="2">General Options</th>
-                    </tr>
-                    <tr>
                         <td>
                             <label for="activate"> Activate plugin : </label>
                         </td>

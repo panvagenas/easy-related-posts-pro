@@ -232,7 +232,7 @@
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 1.42857143;
-  color: #333333;
+  /*color: #333333;*/
   /*background-color: #ffffff;*/
 }
 .erpProContainer input,
@@ -244,12 +244,12 @@
   line-height: inherit;
 }
 .erpProContainer a {
-  color: #428bca;
+  /*color: #428bca;*/
   text-decoration: none;
 }
 .erpProContainer a:hover,
 .erpProContainer a:focus {
-  color: #2a6496;
+  /*color: #2a6496;*/
   text-decoration: underline;
 }
 .erpProContainer a:focus {

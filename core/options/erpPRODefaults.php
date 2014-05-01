@@ -364,8 +364,6 @@ class erpPRODefaults {
     public static $widOpts = array(
 	'dsplLayout' => 'basic',
 	'hideIfNoPosts' => false,
-	'taxExclude' => false,
-	'ptypeExclude' => false
     );
 
     /**
@@ -377,8 +375,6 @@ class erpPRODefaults {
     public static $widOptsValidations = array(
 	'dsplLayout' => array('type' => self::stringFormal),
 	'hideIfNoPosts' => array('type' => self::boolFormal),
-	'taxExclude' => array('type' => self::boolFormal),
-	'ptypeExclude' => array('type' => self::boolFormal)
     );
 
     /**
@@ -393,8 +389,6 @@ class erpPRODefaults {
 	'postTitleColor' => '#ffffff',
 	'excColor' => '#ffffff',
 	'hideIfNoPosts' => false,
-	'taxExclude' => false,
-	'ptypeExclude' => false,
 	'categories' => array(),
 	'tags' => array(),
 	'postTypes' => array(
@@ -417,8 +411,6 @@ class erpPRODefaults {
 	'postTitleColor' => array('type' => self::stringFormal),
 	'excColor' => array('type' => self::stringFormal),
 	'hideIfNoPosts' => array('type' => self::boolFormal),
-	'taxExclude' => array('type' => self::boolFormal),
-	'ptypeExclude' => array('type' => self::boolFormal),
 	'categories' => array('type' => self::arrayFormal),
 	'tags' => array('type' => self::arrayFormal),
 	'postTypes' => array('type' => self::arrayFormal)

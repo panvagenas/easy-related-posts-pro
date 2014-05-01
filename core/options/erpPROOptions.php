@@ -141,7 +141,9 @@ abstract class erpPROOptions {
 			return (string)$value;
 		}
 		if (filter_var($value, FILTER_VALIDATE_URL)) {
-			if (strpos($value, get_site_url()) === false) {
+                    $s = preg_replace('(https?://)', '',  $value);
+                    $u = preg_replace('(https?://)', '', get_site_url());
+			if (strpos($s, $u) === false) {
 				return null;
 			}
 		}
