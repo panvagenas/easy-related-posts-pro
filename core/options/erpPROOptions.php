@@ -342,7 +342,14 @@ abstract class erpPROOptions {
 	 * @since 1.0.0
 	 */
 	public function getDefaultThumbnail() {
-		return $this->getValue('defaultThumbnail');
+            if($this instanceof erpPROMainOpts){
+                $t = $this->getValue('defaultThumbnail');
+            } else {
+                erpPROPaths::requireOnce(erpPROPaths::$erpPROMainOpts);
+                $mOpts = new erpPROMainOpts();
+                $t = $mOpts->getDefaultThumbnail();
+            }
+            return !empty($t) ? $t : erpPRODefaults::$comOpts['defaultThumbnail'];
 	}
 
 	/**
@@ -427,4 +434,12 @@ abstract class erpPROOptions {
 	public function getDsplLayout() {
 		return $this->getValue('dsplLayout');
 	}
+        
+        public function getPostTitleColor() {
+            return $this->getValue('postTitleColor');
+        }
+        
+        public function getExcColor() {
+            return $this->getValue('excColor');
+        }
 }

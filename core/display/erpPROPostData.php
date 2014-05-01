@@ -90,6 +90,10 @@ class erpPROPostData {
      */
     private $positions = array();
     
+    /**
+     *
+     * @var erpPROOptions 
+     */
     private $options;
 
     /**
@@ -101,7 +105,7 @@ class erpPROPostData {
      * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
      * @since 1.0.0
      */
-    public function __construct(WP_Post $post, Array $options, $rating, $hostPost) {
+    public function __construct(WP_Post $post, erpPROOptions $options, $rating, $hostPost) {
         $this->options = $options;
         $this->post = $post;
         $this->ID = $post->ID;
@@ -156,8 +160,8 @@ class erpPROPostData {
      * @since 1.0.0
      */
     private function setTitle() {
-        $size = isset($this->options['postTitleFontSize']) ? $this->options['postTitleFontSize'] : 0;
-        $color = isset($this->options['postTitleColor']) ? $this->options['postTitleColor'] : 0;
+        $size = $this->options->getPostTitleFontSize();
+        $color = $this->options->getPostTitleColor();
         
         $fontColor = $color !== '#ffffff' ? ' color: '.$color.'; ' : '';
         $fontSize = $size !== 0 ? ' font-size: ' . $size . 'px; ' : '';
@@ -204,8 +208,8 @@ class erpPROPostData {
         $exc = wp_strip_all_tags($exc);
         
         
-        $size = isset($this->options['excFontSize']) ? $this->options['excFontSize'] : 0;
-        $color = isset($this->options['excColor']) ? $this->options['excColor'] : 0;
+        $size = $this->options->getExcFontSize();
+        $color = $this->options->getExcColor();
         
         $fontColor = $color !== '#ffffff' ? ' color: '.$color.'; ' : '';
         $fontSize = $size !== 0 ? ' font-size: ' . $size . 'px; ' : '';
@@ -262,15 +266,16 @@ class erpPROPostData {
      */
     public function getThumbnail($height, $width, $crop) {
         if (!isset($this->thumbnail)) {
-            $this->setThumbnail(erpPRODefaults::$comOpts ['defaultThumbnail']);
+            $this->setThumbnail($this->options->getDefaultThumbnail());
         }
 
-        if ($height && $crop) {
+        if (($height > 0 || $width > 0) && $crop) {
             $image = $this->resize($this->thumbnail, (int) $width, (int) $height, (bool) $crop);
             if (!is_wp_error($image) && !empty($image)) {
                 return $image;
             }
         }
+        
         return $this->thumbnail;
     }
 
@@ -313,7 +318,7 @@ class erpPROPostData {
      */
     public function setThumbnail($defaultThumbnail, $size = 'single-post-thumbnail') {
         $thumbnail = wp_get_attachment_image_src(get_post_thumbnail_id($this->ID), $size);
-        $this->thumbnail = isset($thumbnail [0]) ? $thumbnail [0] : $defaultThumbnail;
+        $this->thumbnail = isset($thumbnail [0]) && !empty($thumbnail [0]) ? $thumbnail [0] : $defaultThumbnail;
         return $this;
     }
 
@@ -357,12 +362,12 @@ class erpPROPostData {
      * @since 1.0.0
      */
     private function setPositions($options) {
-        if (!isset($options ['content'])) {
+        if (!$this->options->getContentPositioning() || !is_array($this->options->getContentPositioning())) {
             $this->positions [0] = &$this->thumbnail;
             $this->positions [1] = &$this->title;
             $this->positions [2] = &$this->excerpt;
         } else {
-            foreach ($options ['content'] as $k => $v) {
+            foreach ($this->options->getContentPositioning() as $k => $v) {
                 if ($v == 'title') {
                     $this->positions [$k] = &$this->title;
                 } elseif ($v == 'thumbnail') {

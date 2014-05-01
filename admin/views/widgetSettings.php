@@ -157,15 +157,7 @@
                id="<?php echo $widgetInstance->get_field_id('thumbnailWidth'); ?>"
                name="<?php echo $widgetInstance->get_field_name('thumbnailWidth'); ?>"
                type="number"
-               value="<?php echo esc_attr($options['thumbnailWidth']); ?>" /> </label> <br>
-    <label
-        for="<?php echo $widgetInstance->get_field_id('defaultThumbnail'); ?>">
-        <?php _e('Default thumbnail:'); ?> <input class=""
-               id="<?php echo $widgetInstance->get_field_id('defaultThumbnail'); ?>"
-               name="<?php echo $widgetInstance->get_field_name('defaultThumbnail'); ?>"
-               size="24" type="text"
-               value="<?php echo esc_attr($options['defaultThumbnail']); ?>" />
-    </label>
+               value="<?php echo esc_attr($options['thumbnailWidth']); ?>" /> </label>
 </p>
 <?php // FIXME Color picker not working when draging a new widget. User must save first ?>
 <p style="text-align: center">

@@ -64,6 +64,13 @@ class erpPRODefaults {
      */
     const erpPROWidgetOptionsArrayName = 'erpprowidget';
     
+    /**
+     * Version number is stored in DB as a WP option. 
+     * This is the name of the option
+     *
+     * @since 1.0.0
+     * @var string
+     */
     const versionNumOptName = 'erpPROVersionNumbers';
 
     /**
@@ -276,7 +283,7 @@ class erpPRODefaults {
 	    'excerpt'
 	),
 	'sortRelatedBy' => 'date_descending',
-	'defaultThumbnail' => FALSE, // TODO Set a default thumbnail
+	'defaultThumbnail' => EPR_PRO_DEFAULT_THUMBNAIL, 
 	'postTitleFontSize' => 0,
 	'excFontSize' => 0,
 	'excLength' => 15,

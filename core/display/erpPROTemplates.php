@@ -476,14 +476,14 @@ abstract class erpPROTemplates {
 
 			$rating = isset($ratings[get_the_ID()]) ? $ratings[get_the_ID()] : null;
 
-			$postData = new erpPROPostData($wpq->post, $this->options, $rating, $from);
-
+			$postData = new erpPROPostData($wpq->post, $optionsObj, $rating, $from);
+                        
 			if ($optionsObj->haveToShowExcerpt()) {
 				$postData->setExcerpt($optionsObj->getValue('excLength'), $optionsObj->getValue('moreTxt'));
 			}
 
 			if ($optionsObj->haveToShowThumbnail()) {
-				$postData->setThumbnail($optionsObj->getValue('defaultThumbnail'));
+				$postData->setThumbnail($optionsObj->getDefaultThumbnail());
 			}
 
 			array_push($data['posts'], $postData);

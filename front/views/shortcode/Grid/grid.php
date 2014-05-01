@@ -35,7 +35,7 @@ $excClass = $uniqueID . 'Exc';
                     }
                     ?>
                          >
-                        <a href="<?php echo $v->getPermalink() ?>" class="erpProPostLink">
+                        <a href="<?php echo $v->getPermalink() ?>" class="erpProPostLink" rel="nofollow">
                             <?php
                             foreach ($options['content'] as $key => $value) {
                                 include plugin_dir_path(__FILE__) . 'components/' . $value . '.php';
