@@ -254,7 +254,7 @@ class easyRelatedPostsPROAdmin {
 	    $opts = new erpPROMainOpts();
 
 	    $opts->setOptions(array(
-		'queryLimit' => 300
+		'queryLimit' => 1000
 	    ));
 	    $rel = erpProRelated::get_instance($opts);
 

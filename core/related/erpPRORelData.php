@@ -89,6 +89,7 @@ class erpPRORelData {
 	 * @param WP_Query $q
 	 * @param array $arguments
 	 * @param int $offset
+         * @return erpPRORelData
 	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since 1.0.0
 	 */
@@ -98,6 +99,7 @@ class erpPRORelData {
 // 		$this->offset = $offset;
 		$this->queryLimit = $limit;
 		$this->qArgs = $arguments;
+                return $this;
 	}
 
 	/**
@@ -113,6 +115,10 @@ class erpPRORelData {
 		if ($this->wpQuery == null) {
 			$this->wpQuery = new WP_Query($this->qArgs);
 		}
+                
+                remove_filter('post_limits', array ( $this,  'limitPosts' ));
+                wp_reset_postdata();
+                
 		return $this->wpQuery;
 
 	}

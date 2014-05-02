@@ -119,22 +119,11 @@ class erpPROQueryFormater {
 	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since
 	 *
-	 *
+	 * // TODO Remove unused params
 	 */
 	public function setMainArgs( $pid, $limit = 10, $offset = 0, $orderBy = 'date', $order = 'DESC' ) {
 		if ( $this->pid != $pid ) {
 			$this->clearQueryArgs();
-		}
-		$this->setQueryLimit( $limit, $offset );
-
-		if ( !has_filter( 'post_limits', array (
-				$this,
-				'limitPosts'
-		) ) ) {
-			add_filter( 'post_limits', array (
-					$this,
-					'limitPosts'
-			) );
 		}
 
 		$this->argsArray [ 'post_status' ] = 'publish';
@@ -349,28 +338,6 @@ class erpPROQueryFormater {
 			}
 		}
 		return $this;
-	}
-
-	/**
-	 * Limits posts in WP query.
-	 * !IMPORTAND! This is an action hook, not to be called directly.
-	 * $this->queryLimit must be set in order to actually work
-	 *
-	 * @param int $limit
-	 * @return string
-	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
-	 * @since 1.0.0
-	 */
-	public function limitPosts( $limit ) {
-		if ( $this->queryLimit > 0 ) {
-			if ( $this->queryOffset > 0 ) {
-				$offset = $this->offset;
-			} else {
-				$offset = 0;
-			}
-			return 'LIMIT ' . $offset . ', ' . $this->queryLimit;
-		}
-		return $limit;
 	}
 
 	/**

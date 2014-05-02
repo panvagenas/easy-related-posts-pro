@@ -71,7 +71,7 @@ class erpProRelated {
      * Deafult query limit when rating posts
      * @var int Default 100
      */
-    private $queryLimit = 100;
+    private $queryLimit = 500;
 
     /**
      * Return an instance of this class.
@@ -202,21 +202,29 @@ class erpProRelated {
         $queryLimit = $this->options->getValue('queryLimit');
         if (isset($queryLimit) && is_numeric($queryLimit)) {
             $qForm->setMainArgs($pid, $queryLimit);
+            $qLimit = $queryLimit;
         } else {
             $qForm->setMainArgs($pid, $this->queryLimit);
+            $qLimit = $this->queryLimit;
         }
 
         $postCats = get_the_category($pid);
         $postTags = get_the_tags($pid);
         $relTable = array();
         if (!empty($postCats)) {
-            $qForm->setCategories($postCats);
+            $qForm->clearTags()
+                    ->clearPostInParam()
+                    ->clearPostTypes()
+                    ->setCategories($postCats);
 
             $qForm->exPostTypes($this->options->getValue('postTypes'))
                     ->exCategories($this->options->getValue('categories'))
                     ->exTags($this->options->getValue('tags'));
-
-            $wpq = new WP_Query($qForm->getArgsArray());
+            $wpq = $this
+                    ->relData
+                    ->setQueryLimit($queryLimit, 0)
+                    ->setWP_Query($qForm->getArgsArray(), $qLimit, 0)
+                    ->getResult(); // TODO CC new WP_Query($qForm->getArgsArray());
             $postsArray = $wpq->posts;
             if (!empty($postsArray)) {
                 foreach ($postsArray as $key => $value) {
@@ -235,12 +243,18 @@ class erpProRelated {
             }
         }
         if (!empty($postTags)) {
-            $qForm->setTags($postTags);
+            $qForm->clearCategories()
+                    ->clearPostInParam()
+                    ->clearPostTypes()
+                    ->setTags($postTags);
             $qForm->exPostTypes($this->options->getValue('postTypes'))
                     ->exCategories($this->options->getValue('categories'))
                     ->exTags($this->options->getValue('tags'));
-
-            $wpq = new WP_Query($qForm->getArgsArray());
+            $wpq = $this
+                    ->relData
+                    ->setQueryLimit($queryLimit, 0)
+                    ->setWP_Query($qForm->getArgsArray(), $qLimit, 0)
+                    ->getResult(); // TODO CC new WP_Query($qForm->getArgsArray());
             $postsArray = $wpq->posts;
             if (!empty($postsArray)) {
                 $inserted = array_keys($relTable);
@@ -276,7 +290,7 @@ class erpProRelated {
 //                unset($relTable[$value['pid2']]);
 //            }
 //        }
-
+        wp_reset_postdata();
         return $relTable;
     }
 
