@@ -45,9 +45,9 @@ if (!function_exists('erpPROTaxGrouping')) {
                 <li><a href="#tabs-1">General Options</a></li>
                 <li><a href="#tabs-2">Content Options</a></li>
                 <li><a href="#tabs-3">Layout Options</a></li>
-                <li><a href="#tabs-4">Categories</a></li>
-                <li><a href="#tabs-5">Tags</a></li>
-                <li><a href="#tabs-6">Post Types</a></li>
+                <li><a href="#tabs-4">Excluded Categories</a></li>
+                <li><a href="#tabs-5">Excluded Tags</a></li>
+                <li><a href="#tabs-6">Excluded Post Types</a></li>
             </ul>
             <div id="tabs-1">
                 <table class="gen-opt-table">

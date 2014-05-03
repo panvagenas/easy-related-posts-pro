@@ -42,9 +42,6 @@ if (!function_exists('erpPROTaxGrouping')) {
             <li><a href="#tabs-1">General Options</a></li>
             <li><a href="#tabs-2">Content Options</a></li>
             <li><a href="#tabs-3">Layout Options</a></li>
-            <li><a href="#tabs-4">Categories</a></li>
-            <li><a href="#tabs-5">Tags</a></li>
-            <li><a href="#tabs-6">Post Types</a></li>
         </ul>
         <div id="tabs-0">
             <?php
@@ -100,6 +97,7 @@ if (!function_exists('erpPROTaxGrouping')) {
                                 class="erp-opttxt" 
                                 type="text" 
                                 value="<?php echo $erpPROOptions['title']; ?>" 
+                                data-tooltip 
                                 title="The text that will appear above the posts" 
                                 name="title">
                         </td>
@@ -128,7 +126,6 @@ if (!function_exists('erpPROTaxGrouping')) {
                 </table>
             </div>
             <div id="tabs-2">
-                <!--<h3>Content Options</h3>-->
                 <table class="con-opt-table">
                     <tr>
                         <th colspan="2">Content Options</th>
@@ -143,6 +140,7 @@ if (!function_exists('erpPROTaxGrouping')) {
                                 id="numberOfPostsToDisplay" 
                                 name="numberOfPostsToDisplay" 
                                 size="2pt" 
+                                data-tooltip 
                                 title="How many posts you'd like to display" 
                                 value="<?php echo $erpPROOptions['numberOfPostsToDisplay']; ?>" 
                                 type="number">
@@ -158,6 +156,7 @@ if (!function_exists('erpPROTaxGrouping')) {
                                 id="offset" 
                                 name="offset" 
                                 size="2pt" 
+                                data-tooltip 
                                 title="If you set this as an integer x > 0, then the first x related posts will not be displayed" 
                                 value="<?php echo $erpPROOptions['offset']; ?>" 
                                 type="number">
@@ -188,23 +187,33 @@ if (!function_exists('erpPROTaxGrouping')) {
             <div id="tabs-3">
                 <table class="lay-opt-table">
                     <tr>
-                        <th colspan="2">Layout Options</th>
+                        <th colspan="2">Content</th>
                     </tr>
                     <tr>
-                        <td><label for="content">Content to display: </label></td>
-                        <td><select class="" id="content" name="content">
+                        <td>
+                            <label for="content">Content to display: </label>
+                        </td>
+                        <td>
+                            <select class="" id="content" name="content">
                                 <?php
                                 foreach (erpPRODefaults::$contentPositioningOptions as $key => $value) {
                                     $o = strtolower(str_replace(',', '', str_replace(' ', '-', $value)));
                                     ?>
-                                    <option value="<?php echo $o; ?>"
-                                            <?php selected(implode('-', (array) $erpPROOptions['content']), $o); ?>>
-                                                <?php echo $value; ?>
+                                    <option
+                                        value="<?php echo $o; ?>"
+                                        <?php selected(implode('-', (array) $erpPROOptions['content']), $o); ?>>
+                                            <?php echo $value; ?>
                                     </option>
                                     <?php
                                 }
                                 ?>
-                            </select></td>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+                <table class="lay-opt-table">
+                    <tr>
+                        <th colspan="2">Thumbnail</th>
                     </tr>
                     <tr>
                         <td>
@@ -218,6 +227,7 @@ if (!function_exists('erpPROTaxGrouping')) {
                                 type="checkbox" 
                                 <?php checked($erpPROOptions['cropThumbnail']); ?>
                                 value="true" 
+                                data-tooltip
                                 title="Use this if you want the thumbnail to be croped.
                                 Setting the height to some value above zero and the width to zero will result in hard croped thumbnail.
                                 Setting both values above zero will result in soft croped, more artistic, thumbnail." 
@@ -252,6 +262,11 @@ if (!function_exists('erpPROTaxGrouping')) {
                                 type="number">
                         </td>
                     </tr>
+                </table>
+                <table class="lay-opt-table">
+                    <tr>
+                        <th colspan="2">Text</th>
+                    </tr>
                     <tr>
                         <td>
                             <label for="postTitleFontSize">Post title size (px) :</label>
@@ -262,9 +277,22 @@ if (!function_exists('erpPROTaxGrouping')) {
                                 id="postTitleFontSize" 
                                 name="postTitleFontSize" 
                                 size="2pt" 
+                                data-tooltip
                                 title="Here you can specify the text size of post title.If left zero you themes default h3 will be used." 
                                 value="<?php echo $erpPROOptions['postTitleFontSize']; ?>" 
                                 type="number">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="postTitleColor">Post title text color: </label>
+                        </td>
+                        <td>
+                            <input class="wp-color-picker-field" data-default-color="#ffffff"
+                                   size="3pt"
+                                   id="postTitleColor"
+                                   name="postTitleColor"
+                                   type="text" value="<?php echo $erpPROOptions['postTitleColor']; ?>" />
                         </td>
                     </tr>
                     <tr>
@@ -277,9 +305,22 @@ if (!function_exists('erpPROTaxGrouping')) {
                                 id="excFontSize" 
                                 name="excFontSize" 
                                 size="2pt" 
+                                data-tooltip
                                 title="Here you can specify the text size of post excerpt.If left zero you themes default paragraph will be used" 
                                 value="<?php echo $erpPROOptions['excFontSize']; ?>" 
                                 type="number">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="excColor">Post excerpt text color: </label>
+                        </td>
+                        <td>
+                            <input class="wp-color-picker-field" data-default-color="#ffffff"
+                                   size="3pt"
+                                   id="excColor"
+                                   name="excColor"
+                                   type="text" value="<?php echo $erpPROOptions['excColor']; ?>" />
                         </td>
                     </tr>
                     <tr>
@@ -292,6 +333,7 @@ if (!function_exists('erpPROTaxGrouping')) {
                                 id="excLength" 
                                 name="excLength" 
                                 size="2pt" 
+                                data-tooltip
                                 title="How many words post excerpt will span before the read more text. Extremely usefull if you want to cut off large excerpts" 
                                 value="<?php echo $erpPROOptions['excLength']; ?>" 
                                 type="number">
@@ -312,171 +354,30 @@ if (!function_exists('erpPROTaxGrouping')) {
                         </td>
                     </tr>
                 </table>
-                <?php
+                <table class="lay-opt-table">
+                    <tr>
+                        <th colspan="2">Theme options</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="dsplLayout">Theme :</label>
+                        </td>
+                        <td>
+                            <select class="dsplLayout"  name="dsplLayout">
+                                <?php
                 erpPROPaths::requireOnce(erpPROPaths::$erpPROShortcodeTemplates);
                 $temp = new erpPROShortcodeTemplates();
-                $templates = $temp->getTemplateNames();
-
-                echo '<label for="dsplLayout">Display layout :</label>';
-                echo '<select class="dsplLayout"  name="dsplLayout">';
-                foreach ($templates as $key => $val) {
-                    $valLow = strtolower(str_replace(' ', '_', $val));
-                    echo '<option value="' . $valLow . '"' . selected($erpPROOptions['dsplLayout'], $valLow, FALSE) . '>' . $val . '</option>';
-                }
-                echo '</select>';
-                ?>
+                                $templates = $temp->getTemplateNames();
+                                foreach ($templates as $key => $val) {
+                                    $valLow = strtolower(str_replace(' ', '_', $val));
+                                    echo '<option value="' . $valLow . '"' . selected($erpPROOptions['dsplLayout'], $valLow, FALSE) . '>' . $val . '</option>';
+                                }
+                                ?>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
                 <div class="templateSettings"></div>
-            </div>
-            <div id="tabs-4">
-                <!--<h3>Categories</h3>-->
-                <p>
-                    Any category you might choose here will be excluded from related
-                    posts. Also when user reads posts from these categories won't see
-                    any related post.<br>
-                </p>
-                <table class="cat-opt-table">
-                    <tr>
-                        <td><label for="select-all-cat">Check all :</label></td>
-                        <td><input type="checkbox" id="select-all-cat" class="select-all"></td>
-                    </tr>
-                </table>
-                <?php
-                $opts = array(
-                    'hide_empty' => 0
-                );
-                $cats = get_categories($opts);
-                $tags = get_tags($opts);
-                ?>
-                <div class="<?php if (count($cats) > 30) echo 'erpAccordion'; ?>">
-                    <?php
-                    foreach (erpPROTaxGrouping($cats) as $key => $v) {
-                        ?>
-                        <?php if (count($cats) > 30) echo '<h3>' . $key . '</h3>'; ?>
-                        <div>
-                            <table class="cat-opt-table">
-                                <?php
-                                foreach ($v as $k => $value) {
-                                    ?>
-                                    <tr>
-                                        <td><label for="categories-<?php echo $value->term_id; ?>"><?php echo $value->name; ?>
-                                                :</label></td>
-                                        <td><input class="erp-optchbx cat" id="categories-<?php echo $value->term_id; ?>"
-                                                   name="categories[]" type="checkbox"
-                                                   value="<?php echo $value->term_id; ?>"
-                                                   <?php if (in_array($value->term_id, $erpPROOptions['categories'])) echo 'checked="checked"'; ?> />
-                                        </td>
-                                    </tr>
-                                    <?php
-                                }
-                                ?>
-                            </table>
-                        </div>
-                        <?php
-                    }
-                    ?>
-                </div>
-                ?>
-            </div>
-            <div id="tabs-5">
-                <!--<h3>Tags</h3>-->
-                <p>
-                    Any tag you might choose here will be excluded from related posts.
-                    Also when user reads posts from these tags won't see any related
-                    post.<br> Please note that you must select <em>Tags</em> for <em>Get
-                        posts by</em> option in <em>General options</em> tab.
-                </p>
-                <table class="tag-opt-table">
-                    <tr>
-                        <td><label for="select-all-tag">Check all :</label></td>
-                        <td><input type="checkbox" id="select-all-tag" class="select-all"></td>
-                    </tr>
-                </table>
-                <div class="<?php if (count($tags) > 30) echo 'erpAccordion'; ?>">
-                    <?php
-                    foreach (erpPROTaxGrouping($tags) as $key => $v) {
-                        ?>
-                        <?php if (count($tags) > 30) echo '<h3>' . $key . '</h3>'; ?>
-                        <div>
-                            <table class="tag-opt-table">
-                                <?php
-                                foreach ($v as $k => $value) {
-                                    ?>
-
-                                    <tr>
-                                        <td><label for="tags-<?php echo $value->term_id; ?>"><?php echo $value->name; ?> :</label></td>
-                                        <td><input class="erp-optchbx tag" id="tags-<?php echo $value->term_id; ?>" name="tags[]"
-                                                   type="checkbox" value="<?php echo $value->term_id; ?>"
-                                                   <?php if (in_array($value->term_id, $erpPROOptions['tags'])) echo 'checked="checked"'; ?> />
-                                        </td>
-                                    </tr>
-                                    <?php
-                                }
-                                ?>
-                            </table>
-                        </div>
-                        <?php
-                    }
-                    ?>
-                </div>
-            </div>
-            <div id="tabs-6">
-                <!--<h3>Tags</h3>-->
-                <p>
-                    Any post type you might choose here will be excluded from related
-                    posts. Also when user reads posts from these types won't see any
-                    related post.<br>
-                </p>
-                <table class="type-opt-table">
-                    <tr>
-                        <td><h4>Custom post types</h4></td>
-                        <td><input type="checkbox" id="select-all-custom"
-                                   class="select-all"></td>
-                    </tr>
-                    <?php
-                    $post_types = get_post_types(array(
-                        '_builtin' => false
-                            ), 'objects');
-                    foreach ($post_types as $k => $v) {
-                        ?>
-                        <tr>
-                            <td><label for="custom-post-types-<?php echo $k; ?>"><?php echo $v->name; ?>
-                                    :</label></td>
-                            <td><input class="erp-optchbx custom"
-                                       id="custom-post-types-<?php echo $k; ?>" name="postTypes[]"
-                                       type="checkbox" value="<?php echo $k; ?>"
-                                       <?php if (in_array($k, $erpPROOptions['postTypes'])) echo 'checked="checked"'; ?> />
-                            </td>
-                        </tr>
-                        <?php
-                    }
-                    ?>
-                    <tr>
-                        <td><h4>
-                                Built in post types<span id="builtinwarn"
-                                                         style="color: #FF00FF; font-size: 140%;"> *</span>
-                            </h4></td>
-                        <td><input type="checkbox" id="select-all-built-in"
-                                   class="select-all"></td>
-                    </tr>
-                    <?php
-                    $post_types = get_post_types(array(
-                        '_builtin' => true
-                            ), 'objects');
-                    foreach ($post_types as $k => $v) {
-                        ?>
-                        <tr>
-                            <td><label for="builtin-post-types-<?php echo $k; ?>"><?php echo $v->name; ?>
-                                    :</label></td>
-                            <td><input class="erp-optchbx built-in"
-                                       id="builtin-post-types-<?php echo $k; ?>" name="postTypes[]"
-                                       type="checkbox" value="<?php echo $k; ?>"
-                                       <?php if (in_array($k, $erpPROOptions['postTypes'])) echo 'checked="checked"'; ?> />
-                            </td>
-                        </tr>
-                        <?php
-                    }
-                    ?>
-                </table>
             </div>
         </form>
     </div>
@@ -581,102 +482,37 @@ if (!function_exists('erpPROTaxGrouping')) {
              * Load templates options
              **********************************************************************/
             $('.dsplLayout')
-                    .change(
-                            function() {
-                                var data = {
-                                    action: 'loadSCTemplateOptions',
-                                    template: $(this).val(),
-                                    profileName: $('#profile').val()
-                                };
-                                var that = $(this).parent().children('.templateSettings');
-                                jQuery
-                                        .post(
-                                                ajaxurl,
-                                                data,
-                                                function(response) {
-                                                    if (response == false) {
-                                                        alert('Template has no options or template folder couldn\'t be found');
-                                                        that.fadeOut('slow', null, function() {
-                                                            $(this).html('');
-                                                        });
-                                                    } else {
-                                                        that
-                                                                .html(
-                                                                        response['content']).fadeIn('slow');
-                                                    }
-                                                }, 'json');
-                            });
-            $('.dsplLayout').trigger('change');
+                .change(
+                        function() {
+                            var data = {
+                                action: 'loadSCTemplateOptions',
+                                template: $(this).val(),
+                                profileName: $('#profile').val()
+                            };
 
-            /***********************************************************************
-             * Check all checkboxes
-             **********************************************************************/
-            $('#select-all-custom').click(function() {
-                if (!$(this).is(':checked')) {
-                    $('.custom').attr('checked', false);
-                } else {
-                    $('.custom').attr('checked', 'checked');
-                }
-            });
-
-            $('.custom').change(function() {
-                if ($('.custom:checked').length === $('.custom').length) {
-                    $('#select-all-custom').attr('checked', 'checked');
-                } else {
-                    $('#select-all-custom').attr('checked', false);
-                }
-            });
-
-            $('#select-all-built-in').click(function() {
-                if (!$(this).is(':checked')) {
-                    $('.built-in').attr('checked', false);
-                } else {
-                    $('.built-in').attr('checked', 'checked');
-                }
-            });
-
-            $('.built-in').change(function() {
-                if ($('.built-in:checked').length === $('.built-in').length) {
-                    $('#select-all-built-in').attr('checked', 'checked');
-                } else {
-                    $('#select-all-built-in').attr('checked', false);
-                }
-            });
-
-            $('#select-all-tag').click(function() {
-                if (!$(this).is(':checked')) {
-                    $('.tag').attr('checked', false);
-                } else {
-                    $('.tag').attr('checked', 'checked');
-                }
-            });
-
-            $('.tag').change(function() {
-                if ($('.tag:checked').length === $('.tag').length) {
-                    $('#select-all-tag').attr('checked', 'checked');
-                } else {
-                    $('#select-all-tag').attr('checked', false);
-                }
-            });
-
-            $('#select-all-cat').click(function() {
-                if (!$(this).is(':checked')) {
-                    $('.cat').attr('checked', false);
-                } else {
-                    $('.cat').attr('checked', 'checked');
-                }
-            });
-
-            $('.cat').change(function() {
-                if ($('.cat:checked').length === $('.cat').length) {
-                    $('#select-all-cat').attr('checked', 'checked');
-                } else {
-                    $('#select-all-cat').attr('checked', false);
-                }
-            });
-
-            $(".erpAccordion").accordion({heightStyle: "content", collapsible: true});
-
+                            jQuery
+                                    .post(
+                                            ajaxurl,
+                                            data,
+                                            function(response) {
+                                                if (response == false) {
+                                                    alert('Template has no options or template folder couldn\'t be found');
+                                                    $('.templateSettings').fadeOut('slow', null, function() {
+                                                        $(this).html('');
+                                                    });
+                                                } else {
+                                                    $('.templateSettings')
+                                                            .html(
+                                                                    response['content']).fadeIn('slow');
+                                                }
+                                            }, 'json');
+                        });
+        $('.dsplLayout').trigger('change');
+        
+        jQuery('#postTitleColor').wpColorPicker();
+        jQuery('#excColor').wpColorPicker();
+        
+        $( document ).tooltip({ items: "[data-tooltip]" });
         })(jQuery);
     </script>
 </div>

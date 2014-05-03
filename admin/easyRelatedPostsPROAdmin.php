@@ -279,6 +279,7 @@ class easyRelatedPostsPROAdmin {
 	    wp_enqueue_style($this->plugin_slug . '-admin-styles', plugins_url('assets/css/admin.css', __FILE__), array(), easyRelatedPostsPRO::VERSION);
 	}
 	if ($screen->id === 'post') {
+            wp_enqueue_style('wp-color-picker');
 	    wp_enqueue_style($this->plugin_slug . '-admin-styles', plugins_url('assets/css/admin.css', __FILE__), array(), easyRelatedPostsPRO::VERSION);
 	    wp_enqueue_style($this->plugin_slug . '-SCHelper-styles', plugins_url('assets/css/SCHelper.css', __FILE__), array(), easyRelatedPostsPRO::VERSION);
 	}
@@ -326,6 +327,7 @@ class easyRelatedPostsPROAdmin {
 	if ($screen->id === 'post') {
 	    wp_enqueue_script('jquery');
 	    wp_enqueue_script('jquery-ui-core');
+            wp_enqueue_script('wp-color-picker');
 	    wp_enqueue_script('jquery-ui-tabs');
 	    wp_enqueue_script('jquery-ui-dialog');
 	    wp_enqueue_script('jquery-ui-tooltip');
