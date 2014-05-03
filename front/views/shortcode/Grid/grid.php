@@ -13,8 +13,22 @@ $containerClass = $uniqueID . 'Container';
 $thumbClass = $uniqueID . 'Thumbnail';
 $titleClass = $uniqueID . 'PostTitle';
 $excClass = $uniqueID . 'Exc';
+
+$style = '';
+if(isset($options['backgroundColor']) && $options['backgroundColor'] != '#ffffff'){
+    $style .= ' background-color: '.$options['backgroundColor'].'; ';
+}
+if(isset($options['borderWeight']) && $options['borderWeight'] > 0 ){
+    $style .= ' border: '.$options['borderWeight'].'px solid; ';
+}
+if(isset($options['borderRadius']) && $options['borderRadius'] > 0 ){
+    $style .= ' border-radius:  '.$options['borderRadius'].'px; ';
+}
+if(isset($options['borderColor']) && $options['borderColor'] != '#ffffff'){
+    $style .= ' border-color: '.$options['borderColor'].'; ';
+}
 ?>
-<div class="erpProContainer <?php echo $containerClass; ?>">
+<div class="erpProContainer <?php echo $containerClass; ?>" style="<?php echo $style; ?>">
     <div class="container-fluid">
         <div class="row">
             <h2 class="erpProTitle col-md-12" style="line-height: 1.4;"><?php if (isset($title)) echo $title; ?></h2>
@@ -27,8 +41,9 @@ $excClass = $uniqueID . 'Exc';
                     <div class="row">
                         <?php
                     }
+                    $columnClass = 12 / $options['numOfPostsPerRow'];
                     ?>
-                    <div class="col-md-<?php echo 12 / $options['numOfPostsPerRow']; ?>"
+                    <div class="col-md-<?php echo $columnClass; ?> col-lg-<?php echo $columnClass; ?> col-sm-<?php echo $columnClass; ?>"
                     <?php
                     if (current_user_can('activate_plugins')) {
                         echo 'title="Rating: ' . $v->getRating() . ' Post date: ' . $v->getTheTime() . '"';

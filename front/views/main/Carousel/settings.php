@@ -18,7 +18,7 @@
 	    <label for="carouselAutoTime">Auto scroll time: </label>
 	</td>
 	<td>
-	    <input class="erp-opttxt" id="carouselAutoTime" name="carouselAutoTime" type="number"value="<?php echo $carouselAutoTime; ?>"/>
+            <input class="erp-opttxt" id="carouselAutoTime" name="carouselAutoTime" min="0" type="number"value="<?php echo $carouselAutoTime; ?>"/>
 	</td>
     </tr>
     <tr>
@@ -26,7 +26,7 @@
 	    <label for="carouselMinVisible">Minimum visible items: </label>
 	</td>
 	<td>
-	    <input class="erp-opttxt" id="carouselMinVisible" name="carouselMinVisible" type="number"value="<?php echo $carouselMinVisible; ?>"/>
+            <input class="erp-opttxt" id="carouselMinVisible" name="carouselMinVisible" type="number" min="1" value="<?php echo $carouselMinVisible; ?>"/>
 	</td>
     </tr>
     <tr>
@@ -34,7 +34,7 @@
 	    <label for="carouselMaxVisible">Max visible items: </label>
 	</td>
 	<td>
-	    <input class="erp-opttxt" id="carouselMaxVisible" name="carouselMaxVisible" type="number"value="<?php echo $carouselMaxVisible; ?>"/>
+            <input class="erp-opttxt" id="carouselMaxVisible" name="carouselMaxVisible" type="number" min="2" value="<?php echo $carouselMaxVisible; ?>"/>
 	</td>
     </tr>
     <tr>

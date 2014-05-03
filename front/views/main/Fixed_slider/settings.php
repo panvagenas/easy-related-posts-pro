@@ -31,7 +31,7 @@
 	    <label for="numOfPostsPerRow">Number of posts per row: </label>
 	</td>
 	<td>
-            <input class="erp-opttxt" id="numOfPostsPerRow" name="numOfPostsPerRow" type="number"value="<?php echo $numOfPostsPerRow; ?>" readonly="readonly"/>
+            <input class="erp-opttxt" id="numOfPostsPerRow" name="numOfPostsPerRow" type="text"value="<?php echo $numOfPostsPerRow; ?>" readonly="readonly"/>
             <div id="numOfPostsPerRowSlider"></div>
 	</td>
     </tr>

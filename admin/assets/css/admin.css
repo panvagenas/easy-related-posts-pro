@@ -10,6 +10,7 @@
 #erp-opt-general table{
     vertical-align: top;
     width:70%;
+    max-width: 500px;
 }
 #erp-opt-general .cat-opt-table tr,
 #erp-opt-general .tag-opt-table tr,
@@ -40,9 +41,4 @@
     border-left: none;
     border-right: none;
     border-radius: 0px;
-}
-
-#erp-opt-general .erp-help-aster {
-    color: magenta;
-    font-size: 130%;
 }
