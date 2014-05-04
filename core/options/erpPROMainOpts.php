@@ -94,4 +94,8 @@ class erpPROMainOpts extends erpPROOptions {
         return $this->getValue('relPosition');
     }
 
+    public function getDisableTrackingSystem() {
+        return $this->getValue('disableTrackingSystem');
+    }
+
 }

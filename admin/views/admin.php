@@ -69,6 +69,22 @@ if (!function_exists('erpPROTaxGrouping')) {
                     </tr>
                     <tr>
                         <td>
+                            <label for="disableTrackingSystem">Disable tracking system : </label>
+                        </td>
+                        <td>
+                            <input 
+                                id="disableTrackingSystem" 
+                                class="erp-optchbx" 
+                                type="checkbox" 
+                                <?php checked($erpPROOptions ['disableTrackingSystem']); ?> 
+                                data-tooltip
+                                title="When tracking system is disabled then plugin won’t store any info in user's browser (cookie)." 
+                                value="true" 
+                                name="disableTrackingSystem">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
                             <label for="title">Title to display : </label>
                         </td>
                         <td>

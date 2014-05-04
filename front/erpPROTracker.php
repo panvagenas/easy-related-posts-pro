@@ -24,6 +24,7 @@ class erpPROTracker {
      */
     private $db;
     private $wpSession;
+    private $disableTracking;
 
     /**
      * Constructor
@@ -31,9 +32,10 @@ class erpPROTracker {
      * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
      * @since 1.0.0
      */
-    function __construct(erpPRODBActions $dbActions, $wpSession) {
+    function __construct(erpPRODBActions $dbActions, $wpSession, $disableTracking) {
         $this->db = $dbActions;
         $this->wpSession = $wpSession;
+        $this->disableTracking = $disableTracking;
     }
 
     /**
@@ -50,7 +52,7 @@ class erpPROTracker {
         $request = $this->getRequestString();
         $id = url_to_postid($request);
 
-        if ($id > 0) {
+        if ($id > 0 && !$this->disableTracking) {
             $this->setAsVisited($id);
         }
 

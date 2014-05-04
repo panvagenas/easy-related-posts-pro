@@ -119,7 +119,7 @@ class easyRelatedPostsPRO {
          * Check if rating system is on in order to call tracker
          */
         // if ( $this->isRatingSystemOn() ) {
-        $tracker = new erpPROTracker($this->DB, $this->wpSession);
+        $tracker = new erpPROTracker($this->DB, $this->wpSession,  $this->mainOpts->getDisableTrackingSystem());
         add_action('init', array(
             $tracker,
             'tracker'
