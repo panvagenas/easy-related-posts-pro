@@ -1,6 +1,10 @@
 <?php
 /**
- *
+ * @package   Easy_Related_Posts_Templates_Shortcode
+ * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
+ * @license   // TODO Licence
+ * @link      http://erp.xdark.eu
+ * @copyright 2014 Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 // If this file is called directly, abort.
 if (!defined('WPINC')) {

@@ -1,10 +1,5 @@
 <?php
 /**
- * Grid template settings.
- *
- * This file will be loaded in plugin settings page
- * when grid template is sellected
- *
  * @package   Easy_Related_Posts_Templates_Main
  * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
  * @license   // TODO Licence

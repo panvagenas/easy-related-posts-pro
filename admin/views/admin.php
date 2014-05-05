@@ -62,7 +62,7 @@ if (!function_exists('erpPROTaxGrouping')) {
                                 type="checkbox" 
                                 <?php checked($erpPROOptions ['activate']); ?> 
                                 data-tooltip
-                                title="If you want to use only the widget of this plugin, uncheck this" 
+                                title="From here you can prevent the plugin from spanning in main content area. When this is checked the plugin displays related posts in main content area. If you unchecked it then no related posts will be displayed in main content area. Please note that this option doesn’t prevent the plugin to display  related posts in other areas like in sidebar as a widget or wherever you have included shortcodes" 
                                 value="true" 
                                 name="activate">
                         </td>
@@ -94,7 +94,7 @@ if (!function_exists('erpPROTaxGrouping')) {
                                 type="text" 
                                 value="<?php echo $erpPROOptions['title']; ?>" 
                                 data-tooltip
-                                title="The text that will appear above the posts" 
+                                title="This is the title that is displayed above related posts. You can leave this blank if you don’t want a title to be displayed but keep in mind that templates may override this options and display a default title in this case" 
                                 name="title">
                         </td>
                     </tr>
@@ -103,11 +103,21 @@ if (!function_exists('erpPROTaxGrouping')) {
                             <label for="fetchBy">Rate posts by :</label>
                         </td>
                         <td>
-                            <select class="erp-optsel" id="fetchBy" name="fetchBy">
-                                <?php
-                                foreach (erpPRODefaults::$fetchByOptions as $key => $value) {
-                                    $valLow = strtolower(str_replace(',', '', str_replace(' ', '_', $value)));
-                                    ?>
+                            <select 
+                                class="erp-optsel" 
+                                id="fetchBy" 
+                                name="fetchBy"
+                                data-tooltip 
+                                title="This is a critical options for Easy Related Posts. Upon this is based the way Easy Related Posts builds the relations between your posts and affects the result that will be displayed in the end user.
+
+                                Easy Related Posts uses a intuitive algorithm to rate the relations between the posts in your site (you can read more in how it works page). Two main parameters in this algorithm are post categories and tags. This option defines the weight that these two parameters will have in rating. So when you choose only Categories then any post tags will be ignored when it comes to rating, if you choose Categories first, then tags then post categories will have more weight than tags etc.
+
+                                Consider which taxonomy you use the most, which one describes the best your posts and choose the right option for you."
+                                >
+                                    <?php
+                                    foreach (erpPRODefaults::$fetchByOptions as $key => $value) {
+                                        $valLow = strtolower(str_replace(',', '', str_replace(' ', '_', $value)));
+                                        ?>
                                     <option 
                                         value="<?php echo $valLow; ?>" 
                                         <?php selected($erpPROOptions['fetchBy'], $valLow) ?>>
@@ -135,7 +145,7 @@ if (!function_exists('erpPROTaxGrouping')) {
                                 name="numberOfPostsToDisplay" 
                                 size="2pt" 
                                 data-tooltip
-                                title="How many posts you'd like to display" 
+                                title="This is the number of posts that will be displayed (if there are enough of course). Please use integers to populate this field" 
                                 value="<?php echo $erpPROOptions['numberOfPostsToDisplay']; ?>" 
                                 type="number">
                         </td>
@@ -151,7 +161,7 @@ if (!function_exists('erpPROTaxGrouping')) {
                                 name="offset" 
                                 size="2pt" 
                                 data-tooltip
-                                title="If you set this as an integer x > 0, then the first x related posts will not be displayed" 
+                                title="If you set this field in an integer x above zero then the first x related posts will not be displayed. Please use only positive integer numbers or 0 if you don’t want any offset to occur." 
                                 value="<?php echo $erpPROOptions['offset']; ?>" 
                                 type="number">
                         </td>
@@ -161,10 +171,18 @@ if (!function_exists('erpPROTaxGrouping')) {
                             <label for="sortRelatedBy">Sort related by :</label>
                         </td>
                         <td>
-                            <select class="erp-optsel" id="sortRelatedBy" name="sortRelatedBy">
-                                <?php
-                                foreach (erpPRODefaults::$sortKeys as $key => $value) {
-                                    ?>
+                            <select 
+                                class="erp-optsel" 
+                                id="sortRelatedBy" 
+                                name="sortRelatedBy"
+                                data-tooltip 
+                                title="This is another critical field in Easy Related Posts. It describes how related posts will be sorted in order to display them in the front-end. Options are very descriptive and you should be able to understand in a glance their scope.
+
+                                Keep in mind that Number of posts to display and Offset options may affect the sort order."
+                                >
+                                    <?php
+                                    foreach (erpPRODefaults::$sortKeys as $key => $value) {
+                                        ?>
                                     <option 
                                         value="<?php echo $key; ?>" 
                                         <?php selected($erpPROOptions['sortRelatedBy'], $key) ?>>
@@ -188,7 +206,13 @@ if (!function_exists('erpPROTaxGrouping')) {
                             Position: 
                         </td>
                         <td>
-                            <select class="" id="relPosition" name="relPosition">
+                            <select 
+                                class="" 
+                                id="relPosition" 
+                                name="relPosition"
+                                data-tooltip 
+                                title="Choose the position of the related posts in main content area"
+                                >
                                 <option
                                     value="top"
                                     <?php selected($erpPROOptions['relPosition'], 'top'); ?>>
@@ -207,11 +231,18 @@ if (!function_exists('erpPROTaxGrouping')) {
                             <label for="content">Content to display: </label>
                         </td>
                         <td>
-                            <select class="" id="content" name="content">
-                                <?php
-                                foreach (erpPRODefaults::$contentPositioningOptions as $key => $value) {
-                                    $o = strtolower(str_replace(',', '', str_replace(' ', '-', $value)));
-                                    ?>
+                            <select class="" 
+                                    id="content" 
+                                    name="content"
+                                    data-tooltip 
+                                    title="From here you can choose the content for each related posts that will be displayed in the front-end. You have 7 options so you can choose exactly the content to display.
+
+                                    Please note that templates may override this option and not all options are suitable for all templates. In example a template that is build to display post titles as a list may not give the more elegant appearance if you choose to display thumbnails also. So make the choice taking into account the chosen template and the options it provides you."
+                                    >
+                                        <?php
+                                        foreach (erpPRODefaults::$contentPositioningOptions as $key => $value) {
+                                            $o = strtolower(str_replace(',', '', str_replace(' ', '-', $value)));
+                                            ?>
                                     <option
                                         value="<?php echo $o; ?>"
                                         <?php selected(implode('-', (array) $erpPROOptions['content']), $o); ?>>
@@ -241,9 +272,11 @@ if (!function_exists('erpPROTaxGrouping')) {
                                 <?php checked($erpPROOptions['cropThumbnail']); ?>
                                 value="true" 
                                 data-tooltip
-                                title="Use this if you want the thumbnail to be croped.
-                                Setting the height to some value above zero and the width to zero will result in hard croped thumbnail.
-                                Setting both values above zero will result in soft croped, more artistic, thumbnail." 
+                                title="Use this  option if you want the thumbnail to be cropped.
+
+                                Setting the width in the next option, to some value above zero and the height to zero will result in hard cropped thumbnail. Setting both values above zero will result in soft cropped, more artistic, thumbnail.
+
+                                If both height and width are above zero, then thumbnail will be soft cropped." 
                                 >
                         </td>
                     </tr>
@@ -258,7 +291,12 @@ if (!function_exists('erpPROTaxGrouping')) {
                                 name="thumbnailHeight" 
                                 size="2pt" 
                                 value="<?php echo $erpPROOptions['thumbnailHeight']; ?>" 
-                                type="number">
+                                type="number"
+                                data-tooltip
+                                title="Here you can set the height of the thumbnail that will be displayed in related post content.If you set both height and width to a value above zero then the thumbnail will be soft cropped.
+
+                                Please set this as low as possible to prevent slow page loading from big images and use only positive integers to populate the field."
+                                >
                         </td>
                     </tr>
                     <tr>
@@ -272,7 +310,12 @@ if (!function_exists('erpPROTaxGrouping')) {
                                 name="thumbnailWidth" 
                                 size="2pt" 
                                 value="<?php echo $erpPROOptions['thumbnailWidth']; ?>" 
-                                type="number">
+                                type="number"
+                                data-tooltip 
+                                title="Here you can set the width of the thumbnail that will be displayed in related post content.If height is set to zero then this will result  in an image scaling.
+
+                                Please set this as low as possible to prevent slow page loading from big images and use only positive integers to populate the field."
+                                >
                         </td>
                     </tr>
                     <tr>
@@ -282,7 +325,9 @@ if (!function_exists('erpPROTaxGrouping')) {
                         <td>
                             <input class=""
                                    data-tooltip
-                                   title="Enter the url to an image you want to use as a default thumbnail"
+                                   title="If you have chosen to display a thumbnail for related posts but none is available for a certain post, then this post will use the thumbnail you choose here. The default thumbnail value that is set here, is used by all Easy Related Posts components.
+
+                                   Please note that using external URLs is not allowed, so you must select an image from your gallery or under you WordPress installation folder."
                                    id="defaultThumbnail"
                                    name="defaultThumbnail"
                                    size="30" type="text"
@@ -305,7 +350,7 @@ if (!function_exists('erpPROTaxGrouping')) {
                                 name="postTitleFontSize" 
                                 size="2pt" 
                                 data-tooltip
-                                title="Here you can specify the text size of post title.If left zero you themes default h3 will be used." 
+                                title="Given an integer above zero will set the title font size in this value" 
                                 value="<?php echo $erpPROOptions['postTitleFontSize']; ?>" 
                                 type="number">
                         </td>
@@ -319,7 +364,11 @@ if (!function_exists('erpPROTaxGrouping')) {
                                    size="3pt"
                                    id="postTitleColor"
                                    name="postTitleColor"
-                                   type="text" value="<?php echo $erpPROOptions['postTitleColor']; ?>" />
+                                   type="text" value="<?php echo $erpPROOptions['postTitleColor']; ?>" 
+                                   data-tooltip
+                                   title="Set the colour if the post title. Default color is white. If white is selected your themes default color for h4 heading, will be used as related posts title color." 
+
+                                   />
                         </td>
                     </tr>
                     <tr>
@@ -333,7 +382,7 @@ if (!function_exists('erpPROTaxGrouping')) {
                                 name="excFontSize" 
                                 size="2pt" 
                                 data-tooltip
-                                title="Here you can specify the text size of post excerpt.If left zero you themes default paragraph will be used" 
+                                title="Given an integer above zero will set the title font size in this value" 
                                 value="<?php echo $erpPROOptions['excFontSize']; ?>" 
                                 type="number">
                         </td>
@@ -347,7 +396,10 @@ if (!function_exists('erpPROTaxGrouping')) {
                                    size="3pt"
                                    id="excColor"
                                    name="excColor"
-                                   type="text" value="<?php echo $erpPROOptions['excColor']; ?>" />
+                                   type="text" value="<?php echo $erpPROOptions['excColor']; ?>" 
+                                   data-tooltip 
+                                   title="Set the colour if the post excerpt. Default color is white. If white is selected your themes default color for paragraphs, will be used as related posts title color"
+                                   />
                         </td>
                     </tr>
                     <tr>
@@ -361,7 +413,7 @@ if (!function_exists('erpPROTaxGrouping')) {
                                 name="excLength" 
                                 size="2pt" 
                                 data-tooltip
-                                title="How many words post excerpt will span before the read more text. Extremely usefull if you want to cut off large excerpts" 
+                                title="You can set the length of the excerpt text in words through this field. This is pretty useful when you want to decrease the text that will be displayed as a description in a related post, so you will have" 
                                 value="<?php echo $erpPROOptions['excLength']; ?>" 
                                 type="number">
                         </td>
@@ -390,16 +442,21 @@ if (!function_exists('erpPROTaxGrouping')) {
                             <label for="dsplLayout">Theme :</label>
                         </td>
                         <td>
-                            <select class="dsplLayout"  name="dsplLayout">
-                                <?php
-                                erpPROPaths::requireOnce(erpPROPaths::$erpPROMainTemplates);
-                                $temp = new erpPROMainTemplates();
-                                $templates = $temp->getTemplateNames();
-                                foreach ($templates as $key => $val) {
-                                    $valLow = strtolower(str_replace(' ', '_', $val));
-                                    echo '<option value="' . $valLow . '"' . selected($erpPROOptions['dsplLayout'], $valLow, FALSE) . '>' . $val . '</option>';
-                                }
-                                ?>
+                            <select 
+                                class="dsplLayout"  
+                                name="dsplLayout"
+                                data-tooltip 
+                                title="From the dropdown you can define the appearance of the plugin in the main content area. When a theme is selected the additional options will show up bellow theme selection dropdown"
+                                >
+                                    <?php
+                                    erpPROPaths::requireOnce(erpPROPaths::$erpPROMainTemplates);
+                                    $temp = new erpPROMainTemplates();
+                                    $templates = $temp->getTemplateNames();
+                                    foreach ($templates as $key => $val) {
+                                        $valLow = strtolower(str_replace(' ', '_', $val));
+                                        echo '<option value="' . $valLow . '"' . selected($erpPROOptions['dsplLayout'], $valLow, FALSE) . '>' . $val . '</option>';
+                                    }
+                                    ?>
                             </select>
                         </td>
                     </tr>
@@ -409,9 +466,12 @@ if (!function_exists('erpPROTaxGrouping')) {
             <div id="tabs-4">
                 <!--<h3>Categories</h3>-->
                 <p>
-                    Any category you might choose here will be excluded from related
-                    posts. Also when user reads posts from these categories won't see
-                    any related post.<br>
+                    In this tab you specify categories that you don’t want to fetch from or show, related posts. 
+                    In order to exclude a category, that post must have all categories that are specified in 
+                    this settings section. That means that if a post has categories foo and bar, then you must 
+                    check both in Categories tab of the settings page. If you choose only one of them, then 
+                    the post won’t be excluded.<br>
+                    Please note that the selections of Categories, Tags or Post Types tabs, affects the main content plugin as much as widget and shortcode section of plugin
                 </p>
                 <table class="cat-opt-table">
                     <tr>
@@ -461,10 +521,11 @@ if (!function_exists('erpPROTaxGrouping')) {
             <div id="tabs-5">
                 <!--<h3>Tags</h3>-->
                 <p>
-                    Any tag you might choose here will be excluded from related posts.
-                    Also when user reads posts from these tags won't see any related
-                    post.<br> Please note that you must select <em>Tags</em> for <em>Get
-                        posts by</em> option in <em>General options</em> tab.
+                    This tab works pretty much the same as the Categories tab, 
+                    only that it refers to tags. Please note that if a post is 
+                    excluded by Categories then even if it’s tags are not in the 
+                    excluded ones, no related post will show up.<br>
+                    Please note that the selections of Categories, Tags or Post Types tabs, affects the main content plugin as much as widget and shortcode section of plugin
                 </p>
                 <table class="tag-opt-table">
                     <tr>
@@ -503,9 +564,13 @@ if (!function_exists('erpPROTaxGrouping')) {
             <div id="tabs-6">
                 <!--<h3>Tags</h3>-->
                 <p>
-                    Any post type you might choose here will be excluded from related
-                    posts. Also when user reads posts from these types won't see any
-                    related post.<br>
+                    Here you can define post types that you want to exclude from related posts. 
+                    If a post is of type that is checked here, then no related post will be shown when user 
+                    browsing this post and of course it wont appear in related post of any other post.<br>
+                    Please note that the selections of Categories, Tags or Post Types tabs, affects the main 
+                    content plugin as much as widget and shortcode section of plugin.<br>
+                <strong>Built in post types should be left in default values. Please use them only if you are 
+                    experiencing post types relative issues.</strong>
                 </p>
                 <table class="type-opt-table">
                     <tr>
@@ -517,17 +582,29 @@ if (!function_exists('erpPROTaxGrouping')) {
                     $post_types = get_post_types(array(
                         '_builtin' => false
                             ), 'objects');
-                    foreach ($post_types as $k => $v) {
+                    if(!empty($post_types)){
                         ?>
-                        <tr>
-                            <td><label for="custom-post-types-<?php echo $k; ?>"><?php echo $v->name; ?>
-                                    :</label></td>
-                            <td><input class="erp-optchbx custom" id="custom-post-types-<?php echo $k; ?>"
-                                       name="postTypes[]" type="checkbox" value="<?php echo $k; ?>"
-                                       <?php if (in_array($k, $erpPROOptions['postTypes'])) echo 'checked="checked"'; ?> />
-                            </td>
-                        </tr>
-                        <?php
+                        <?php 
+                        foreach ($post_types as $k => $v) {
+                            ?>
+                            <tr>
+                                <td><label for="custom-post-types-<?php echo $k; ?>"><?php echo $v->name; ?>
+                                        :</label></td>
+                                <td><input class="erp-optchbx custom" id="custom-post-types-<?php echo $k; ?>"
+                                           name="postTypes[]" type="checkbox" value="<?php echo $k; ?>"
+                                           <?php if (in_array($k, $erpPROOptions['postTypes'])) echo 'checked="checked"'; ?> />
+                                </td>
+                            </tr>
+                            <?php
+                        }
+                    } else {
+                        ?>
+                            <tr>
+                                <td colspan="2" style="text-align: center;">
+                                    You don't have any custom post types
+                                </td>
+                            </tr>    
+                        <?php 
                     }
                     ?>
                     <tr>

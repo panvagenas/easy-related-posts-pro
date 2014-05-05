@@ -1,5 +1,5 @@
 <?php
-if (!$options['thumbCaption']) {
+if (!$options['thumbCaption'] || !in_array('thumbnail', $options['content'])) {
 	?>
 	<h4 class="<?php echo $titleClass; ?>"><strong><?php echo $v->getTitle();?></strong></h4>
 	<?php

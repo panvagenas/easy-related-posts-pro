@@ -1,5 +1,0 @@
-<?php
-?>
-	<h3><?php echo $v->getTitle();?></h3>
-<?php
-?>

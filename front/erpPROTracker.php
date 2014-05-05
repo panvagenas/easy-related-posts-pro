@@ -48,7 +48,6 @@ class erpPROTracker {
             return;
         }
 
-        $refererName = $this->getRefererName(isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '' );
         $request = $this->getRequestString();
         $id = url_to_postid($request);
 
@@ -56,10 +55,10 @@ class erpPROTracker {
             $this->setAsVisited($id);
         }
 
-        if ($refererName === 'local') {
+        if ($this->isRefLocal(isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '' )) {
             $parsedReq = $this->parseSearchQuery($request);
             if (isset($parsedReq['erp_from']) && $id > 0) {
-                $this->db->addClick($parsedReq['erp_from'], $id);
+                $this->db->addClick((int)$parsedReq['erp_from'], $id);
             }
         }
     }
@@ -80,7 +79,7 @@ class erpPROTracker {
         } else {
             $this->wpSession ['visited'] = serialize(array(
                 $pid
-                    ));
+            ));
         }
     }
 
@@ -102,12 +101,12 @@ class erpPROTracker {
      * @return string or boolean. The referer if found (local for local navigation) or false if ref not found
      * @since 1.0.0
      */
-    private function getRefererName($refString) {
+    private function isRefLocal($refString) {
         if (is_int(strpos($refString, site_url()))) {
-            return 'local';
+            return true;
         }
 
-        return 'unknown';
+        return false;
     }
 
     /**

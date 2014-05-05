@@ -1,9 +1,10 @@
 <?php
 /**
- * @title 
- * @description This is the template description
- * @options 
- * @settings 
+ * @package   Easy_Related_Posts_Templates_Widget
+ * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
+ * @license   // TODO Licence
+ * @link      http://erp.xdark.eu
+ * @copyright 2014 Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 // If this file is called directly, abort.
 if (!defined('WPINC')) {
@@ -14,7 +15,7 @@ $thumbClass = $uniqueID . 'Thumbnail';
 $titleClass = $uniqueID . 'PostTitle';
 $excClass = $uniqueID . 'Exc';
 ?>
-<ul id="erpProWraper erpProContainer">
+<ul id="erpProContainer">
     <?php
     if (isset($posts)) {
         foreach ($posts as $k => $v) {
@@ -26,7 +27,7 @@ $excClass = $uniqueID . 'Exc';
             }
             ?>
                 >
-                <a href="<?php echo $v->getPermalink() ?>" class="erpProPostLink col-lg-12 col-md-12 col-sm-12 col-xs-12" rel="nofollow">
+                <a href="<?php echo $v->getPermalink() ?>" class="erpProPostLink" rel="nofollow">
                     <?php
                     foreach ($options['content'] as $key => $value) {
                         include plugin_dir_path(__FILE__) . 'components/' . $value . '.php';
@@ -40,7 +41,7 @@ $excClass = $uniqueID . 'Exc';
     ?>
 </ul>
 <?php
-if ($options['thumbCaption']) {
+if ($options['thumbCaption'] && in_array('thumbnail', $options['content'])) {
     ?>
     <script type="text/javascript">
         (function($) {

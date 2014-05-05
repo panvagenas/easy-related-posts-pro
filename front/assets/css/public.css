@@ -7,6 +7,7 @@
 
 .erpProContainer{
 	position: relative;
+        clear: both;
 }
 .erpProContainer h3 {
     font-size: 100%;

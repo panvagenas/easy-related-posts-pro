@@ -6,7 +6,6 @@
  * @copyright 2014 Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 ?>
-<br>
 <label for="<?php echo $widgetInstance->get_field_id('carouselPauseHover'); ?>">Pause on hover: </label>
 <input class="erp-optchbx" id="<?php echo $widgetInstance->get_field_id('carouselPauseHover'); ?>" name="<?php echo $widgetInstance->get_field_name('carouselPauseHover'); ?>" type="checkbox" <?php checked((bool) $carouselPauseHover); ?> />
 <br>

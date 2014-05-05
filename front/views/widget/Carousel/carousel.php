@@ -1,9 +1,10 @@
 <?php
 /**
- * @title Grid
- * @description This is the template description
- * @options gridOptions.php
- * @settings gridSettings.php
+ * @package   Easy_Related_Posts_Templates_Widget
+ * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
+ * @license   // TODO Licence
+ * @link      http://erp.xdark.eu
+ * @copyright 2014 Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 // If this file is called directly, abort.
 if (!defined('WPINC')) {
@@ -19,7 +20,7 @@ $navDown = $uniqueID . 'NavDown';
 ?>
 <div class="erpProContainer <?php echo $containerClass; ?>">
     <div class="erpNavArrow erpWidCarouPrev-<?php echo $widIDNumber; ?> <?php echo $navUp; ?>"
-         style="width:100%;height:50px;background-image:url(<?php echo plugin_dir_url(__FILE__) . '/assets/arrow-up.png'; ?> ); border-radius:5px 5px 0 0;"></div>
+         style="width:100%;height:25px;background-image:url(<?php echo plugin_dir_url(__FILE__) . '/assets/arrow-up.png'; ?> ); border-radius:5px 5px 0 0;"></div>
     <ul class="erpProWidCarousel erpProWidUl-<?php echo $widIDNumber . ' ' . $carouWraperClass; ?>" style="width:100%;">
         <?php
         if (isset($posts)) {
@@ -46,7 +47,7 @@ $navDown = $uniqueID . 'NavDown';
         ?>
     </ul>
     <div class="erpNavArrow erpWidCarouNext-<?php echo $widIDNumber; ?> <?php echo $navDown; ?>"
-         style="width:100%;height:50px;background-image:url(<?php echo plugin_dir_url(__FILE__) . '/assets/arrow-down.png'; ?> ); border-radius:0 0 5px 5px;"></div>
+         style="width:100%;height:25px;background-image:url(<?php echo plugin_dir_url(__FILE__) . '/assets/arrow-down.png'; ?> ); border-radius:0 0 5px 5px;"></div>
 </div>
 <script type="text/javascript" >
     (function($) {

@@ -25,7 +25,7 @@ class erpPROWidget extends WP_Widget {
 		parent::__construct( erpPRODefaults::erpPROWidgetOptionsArrayName, 'Easy Related Posts PRO', array (
 				'description' => __( 'Show related posts ' )
 		), array (
-				'width' => 400
+				'width' => 500
 		) );
 	}
 
