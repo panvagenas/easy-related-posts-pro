@@ -411,7 +411,6 @@ if (!function_exists('erpPROTaxGrouping')) {
                                 class="erp-opttxt" 
                                 id="excLength" 
                                 name="excLength" 
-                                size="2pt" 
                                 data-tooltip
                                 title="You can set the length of the excerpt text in words through this field. This is pretty useful when you want to decrease the text that will be displayed as a description in a related post, so you will have" 
                                 value="<?php echo $erpPROOptions['excLength']; ?>" 

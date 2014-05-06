@@ -95,10 +95,6 @@ class erpUninstall {
          * Del version numbers
          */
         self::deleteVersionNumbers();
-	
-	/**
-	 * TODO Is it posible to del resized images?
-	 */
     }
     
     private static function delRelTable() {

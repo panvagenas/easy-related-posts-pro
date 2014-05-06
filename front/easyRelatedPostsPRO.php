@@ -449,10 +449,10 @@ class easyRelatedPostsPRO {
      * @since 1.0.0
      */
     public function enqueue_styles() {
-        wp_enqueue_style($this->plugin_slug . '-plugin-styles', plugins_url('assets/css/public.css', __FILE__), array(), self::VERSION);
-        wp_register_style($this->plugin_slug . '-bootstrap', plugins_url('assets/css/bootstrap.css', __FILE__), array(), self::VERSION);
-        wp_register_style($this->plugin_slug . '-bootstrap-text', plugins_url('assets/css/bootstrap-text.css', __FILE__), array(), self::VERSION);
-        wp_register_style($this->plugin_slug . '-erpPROCaptionCSS', plugins_url('assets/css/captionjs.css', __FILE__), array(), self::VERSION);
+        wp_enqueue_style($this->plugin_slug . '-plugin-styles', plugins_url('assets/css/public.min.css', __FILE__), array(), self::VERSION);
+        wp_register_style($this->plugin_slug . '-bootstrap', plugins_url('assets/css/bootstrap.min.css', __FILE__), array(), self::VERSION);
+        wp_register_style($this->plugin_slug . '-bootstrap-text', plugins_url('assets/css/bootstrap-text.min.css', __FILE__), array(), self::VERSION);
+        wp_register_style($this->plugin_slug . '-erpPROCaptionCSS', plugins_url('assets/css/captionjs.min.css', __FILE__), array(), self::VERSION);
     }
 
     /**
@@ -461,8 +461,8 @@ class easyRelatedPostsPRO {
      * @since 1.0.0
      */
     public function enqueue_scripts() {
-        wp_enqueue_script($this->plugin_slug . '-plugin-script', plugins_url('assets/js/public.js', __FILE__), array('jquery'), self::VERSION);
-        wp_enqueue_script($this->plugin_slug . '-erpPROCaptionJS', plugins_url('assets/js/jquery.caption.js', __FILE__), array('jquery'), self::VERSION);
+        wp_enqueue_script($this->plugin_slug . '-plugin-script', plugins_url('assets/js/public.min.js', __FILE__), array('jquery'), self::VERSION);
+        wp_enqueue_script($this->plugin_slug . '-erpPROCaptionJS', plugins_url('assets/js/jquery.caption.min.js', __FILE__), array('jquery'), self::VERSION);
     }
 
     /**

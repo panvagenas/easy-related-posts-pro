@@ -28,18 +28,6 @@ ERPSlider.prototype.sliderInitializer = function() {
 
     switch (this.position) {
         case "left":
-            this.container.css({
-                "bottom": "0px",
-                "left": "0px",
-                "max-height": "80%"
-            });
-            this.transBkg(this.transparency, "bottom-trns");
-            this.container.prepend(contCloseHTML);
-            this.container.prepend(contOpenHTML);
-            this.container.prepend(titleHTML);
-            this.container.children('.erp_cont_open').css('top', '0px');
-            this.container.children('.erp_cont_close').css('top', '0px');
-            break;
         case "right":
         case "top":
             this.container.css({

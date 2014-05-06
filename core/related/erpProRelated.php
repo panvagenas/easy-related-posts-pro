@@ -199,15 +199,10 @@ class erpProRelated {
         $ratingSystem = erpPRORatingSystem::get_instance($this->relData);
 
         // Check if a query limit is set.
-        $queryLimit = $this->options->getValue('queryLimit');
-        if (isset($queryLimit) && is_numeric($queryLimit)) {
-            $qForm->setMainArgs($pid, $queryLimit);
-            $qLimit = $queryLimit;
-        } else {
-            $qForm->setMainArgs($pid, $this->queryLimit);
-            $qLimit = $this->queryLimit;
-        }
-
+        $qLimit = (isset($queryLimit) && is_numeric($queryLimit)) ? $queryLimit : $this->queryLimit;
+        
+        $qForm->setMainArgs($pid);
+        
         $postCats = get_the_category($pid);
         $postTags = get_the_tags($pid);
         $relTable = array();
@@ -224,7 +219,7 @@ class erpProRelated {
                     ->relData
                     ->setQueryLimit($queryLimit, 0)
                     ->setWP_Query($qForm->getArgsArray(), $qLimit, 0)
-                    ->getResult(); // TODO CC new WP_Query($qForm->getArgsArray());
+                    ->getResult();
             $postsArray = $wpq->posts;
             if (!empty($postsArray)) {
                 foreach ($postsArray as $key => $value) {
@@ -254,7 +249,7 @@ class erpProRelated {
                     ->relData
                     ->setQueryLimit($queryLimit, 0)
                     ->setWP_Query($qForm->getArgsArray(), $qLimit, 0)
-                    ->getResult(); // TODO CC new WP_Query($qForm->getArgsArray());
+                    ->getResult();
             $postsArray = $wpq->posts;
             if (!empty($postsArray)) {
                 $inserted = array_keys($relTable);

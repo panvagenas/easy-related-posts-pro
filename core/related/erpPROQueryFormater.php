@@ -119,9 +119,8 @@ class erpPROQueryFormater {
 	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
 	 * @since
 	 *
-	 * // TODO Remove unused params
 	 */
-	public function setMainArgs( $pid, $limit = 10, $offset = 0, $orderBy = 'date', $order = 'DESC' ) {
+	public function setMainArgs( $pid, $orderBy = 'date', $order = 'DESC' ) {
 		if ( $this->pid != $pid ) {
 			$this->clearQueryArgs();
 		}

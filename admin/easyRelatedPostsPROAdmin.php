@@ -186,21 +186,6 @@ class easyRelatedPostsPROAdmin {
 	 * MCE Helper
 	 */
 
-	/**
-	 * ******************************************
-	 * TODO Remove this before release
-	 */
-	function my_refresh_mce($ver) {
-	    $ver += 13;
-	    return $ver;
-	}
-
-	// init process for button control
-	add_filter('tiny_mce_version', 'my_refresh_mce');
-	/**
-	 * TODO Remove this before release
-	 * *****************************************
-	 */
 	add_action('init', array(
 	    $this,
 	    'erpPROButtonHook'
@@ -276,11 +261,11 @@ class easyRelatedPostsPROAdmin {
 	$screen = get_current_screen();
 	if ($this->plugin_screen_hook_suffix == $screen->id || 'widgets' == $screen->id) {
 	    wp_enqueue_style('wp-color-picker');
-	    wp_enqueue_style($this->plugin_slug . '-admin-styles', plugins_url('assets/css/admin.css', __FILE__), array(), easyRelatedPostsPRO::VERSION);
+	    wp_enqueue_style($this->plugin_slug . '-admin-styles', plugins_url('assets/css/admin.min.css', __FILE__), array(), easyRelatedPostsPRO::VERSION);
 	}
 	if ($screen->id === 'post') {
             wp_enqueue_style('wp-color-picker');
-	    wp_enqueue_style($this->plugin_slug . '-admin-styles', plugins_url('assets/css/admin.css', __FILE__), array(), easyRelatedPostsPRO::VERSION);
+	    wp_enqueue_style($this->plugin_slug . '-admin-styles', plugins_url('assets/css/admin.min.css', __FILE__), array(), easyRelatedPostsPRO::VERSION);
 	    wp_enqueue_style($this->plugin_slug . '-SCHelper-styles', plugins_url('assets/css/SCHelper.css', __FILE__), array(), easyRelatedPostsPRO::VERSION);
 	}
     }
@@ -308,19 +293,19 @@ class easyRelatedPostsPROAdmin {
 	    wp_enqueue_script('jquery-ui-accordion');
             wp_enqueue_script('jquery-ui-slider');
 
-	    wp_enqueue_script($this->plugin_slug . '-admin-script', plugins_url('assets/js/admin.js', __FILE__), array(
+	    wp_enqueue_script($this->plugin_slug . '-admin-script', plugins_url('assets/js/admin.min.js', __FILE__), array(
 		'jquery',
 		'jquery-ui-tabs'
 		    // $this->plugin_slug . '-qtip'
 		    ), easyRelatedPostsPRO::VERSION);
 	}
 	if ($this->plugin_screen_hook_suffix == $screen->id) {
-	    wp_enqueue_script($this->plugin_slug . '-main-settings', plugins_url('assets/js/mainSettings.js', __FILE__), array(
+	    wp_enqueue_script($this->plugin_slug . '-main-settings', plugins_url('assets/js/mainSettings.min.js', __FILE__), array(
 		$this->plugin_slug . '-admin-script'
 		    ), easyRelatedPostsPRO::VERSION);
 	}
 	if ('widgets' == $screen->id) {
-	    wp_enqueue_script($this->plugin_slug . '-widget-settings', plugins_url('assets/js/widgetSettings.js', __FILE__), array(
+	    wp_enqueue_script($this->plugin_slug . '-widget-settings', plugins_url('assets/js/widgetSettings.min.js', __FILE__), array(
 		$this->plugin_slug . '-admin-script'
 		    ), easyRelatedPostsPRO::VERSION);
 	}
@@ -446,8 +431,6 @@ class easyRelatedPostsPROAdmin {
      * This is for a future release.
      * It should be called through ajax and rebuild cache for all posts in that are cached
      * 
-     * FIXME This functionality will not be used until we find a way to make sure mem limit not reached
-     *
      * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
      * @since 1.0.0
      */
@@ -785,7 +768,7 @@ class easyRelatedPostsPROAdmin {
 	if (!isset($screen->id) || $screen->id !== 'post') {
 	    return $pluginArray;
 	}
-	$pluginArray ['erpproshortcodehelper'] = plugins_url('/assets/js/erpPROMCEPlugin.js', __FILE__);
+	$pluginArray ['erpproshortcodehelper'] = plugins_url('/assets/js/erpPROMCEPlugin.min.js', __FILE__);
 	return $pluginArray;
     }
 

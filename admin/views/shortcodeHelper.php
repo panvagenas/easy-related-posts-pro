@@ -404,7 +404,6 @@ if (!function_exists('erpPROTaxGrouping')) {
              * Profile management
              **********************************************************************/
             $('#profile').change(function() {
-                console.log("MY");
                 var dil = $('#erpDialogContent');
                 var dialogContainer = $('#erpDialog');
                 getData = {

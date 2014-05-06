@@ -15,9 +15,7 @@
 	<td>
 	    <select class="" id="position" name="position">
 		<option value="top" <?php echo selected($position, 'top'); ?>>Top</option>
-		<option value="right" <?php echo selected($position, 'right'); ?>>Right</option>
 		<option value="bottom" <?php echo selected($position, 'bottom'); ?>>Bottom</option>
-		<option value="left" <?php echo selected($position, 'left'); ?>>Left</option>
 	    </select>
 	</td>
     </tr>
@@ -52,7 +50,7 @@
 	    <label for="triggerAfter">Trigger after: </label>
 	</td>
 	<td>
-	    <input class="erp-opttxt" id="triggerAfter" name="triggerAfter" type="number"value="<?php echo $triggerAfter; ?>"/>
+	    <input class="erp-opttxt" id="triggerAfter" name="triggerAfter" type="number" value="<?php echo $triggerAfter; ?>"/>
             <div id="triggerAfterSlider"></div>
 	</td>
     </tr>

@@ -193,7 +193,6 @@
                    Please set this as low as possible to prevent slow page loading from big images and use only positive integers to populate the field"/> 
         </td>
     </tr>
-    <?php // FIXME Color picker not working when draging a new widget. User must save first ?>
     <tr>
         <td colspan="2" style="text-align: center">
             <strong>Title</strong>

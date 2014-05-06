@@ -1,11 +1,11 @@
-/**
+/*!
  * @author    Panagiotis Vagenas <pan.vagenas@gmail.com>
  * @license   // TODO Licence
  * @link      http://erp.xdark.eu
  * @copyright 2014 Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
 @charset "UTF-8";
-@IMPORT url("./jQ.css");
+@IMPORT url("./jQ.min.css");
 
 #erp-opt-general table{
     vertical-align: top;
