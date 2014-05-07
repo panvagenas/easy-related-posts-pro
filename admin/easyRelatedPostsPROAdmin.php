@@ -5,7 +5,6 @@
  *
  * @package   Easy_Related_Posts_Admin
  * @author    Panagiotis Vagenas <pan.vagenas@gmail.com>
- * @license   // TODO Licence
  * @link      http://erp.xdark.eu
  * @copyright 2014 Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
@@ -228,6 +227,7 @@ class easyRelatedPostsPROAdmin {
 	    // Post is now unpublished, we should remove cache entries
 	    $this->deletePostInCache($pid);
 	} elseif ($newStatus == 'publish') {
+            $this->deletePostInCache($pid);
             $plugin = easyRelatedPostsPRO::get_instance();
             
             if($plugin->isInExcludedPostTypes($pid) || $plugin->isInExcludedTaxonomies($pid)){

@@ -5,19 +5,17 @@
  *
  * @package   Easy related posts
  * @author    Panagiotis Vagenas <pan.vagenas@gmail.com>
- * @license   // TODO Licence
  * @link      http://erp.xdark.eu
  * @copyright 2014 Panagiotis Vagenas <pan.vagenas@gmail.com>
  *
  * @wordpress-plugin
  * Plugin Name:       Easy Related Posts PRO
  * Plugin URI:        http://erp.xdark.eu
- * Description:       @TODO Plugin description
+ * Description:       A powerfull plugin to display related posts
  * Version:           1.0.0
  * Author:            Panagiotis Vagenas <pan.vagenas@gmail.com>
  * Author URI:        http://xdark.eu
  * Text Domain:       easy-related-posts-eng
- * License:           @TODO Licence 
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Domain Path:       /languages
  * Codecanyon URI:    @TODO Codecanyon uri
@@ -121,6 +119,9 @@ function erpPROShortcode($attrs) {
     }
 
     global $post;
+    if($post == null){
+        return '';
+    }
     erpPROPaths::requireOnce(erpPROPaths::$erpPROShortcode);
 
     $sc = new erpPROShortcode($attrs['profile']);

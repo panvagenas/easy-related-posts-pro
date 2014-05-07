@@ -1,6 +1,5 @@
 /*!
  * @author    Panagiotis Vagenas <pan.vagenas@gmail.com>
- * @license   // TODO Licence
  * @link      http://erp.xdark.eu
  * @copyright 2014 Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
