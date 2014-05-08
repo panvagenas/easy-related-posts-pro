@@ -6,7 +6,6 @@
  *
  * @package Easy_Related_Posts_Related
  * @author    Panagiotis Vagenas <pan.vagenas@gmail.com>
- * @license GPL-2.0+
  * @link http://example.com
  * @copyright 2014 Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
