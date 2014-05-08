@@ -32,7 +32,7 @@
 	    <label for="backgroundColor">Background color: </label>
 	</td>
 	<td>
-	    <input class="erp-opttxt" id="backgroundColor" name="backgroundColor" type="number"value="<?php echo $backgroundColor; ?>"/>
+	    <input class="erp-opttxt" id="backgroundColor" name="backgroundColor" type="text" value="<?php echo $backgroundColor; ?>"/>
 	</td>
     </tr>
     <tr>
@@ -40,7 +40,7 @@
 	    <label for="backgroundTransparency">Background transparency: </label>
 	</td>
 	<td>
-            <input class="erp-opttxt" id="backgroundTransparency" name="backgroundTransparency" type="number"value="<?php echo $backgroundTransparency; ?>"/>
+            <input class="erp-opttxt" id="backgroundTransparency" name="backgroundTransparency" type="number" value="<?php echo $backgroundTransparency; ?>"/>
             <div id="backgroundTransparencySlider"></div>
         </td>
     </tr>
