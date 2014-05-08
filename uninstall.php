@@ -98,10 +98,9 @@ class erpUninstall {
     
     private static function delRelTable() {
 	global $wpdb;
-	$optionsTableName  = $wpdb->prefix . ERP_PRO_RELATIVE_TABLE;
-	require_once ( ABSPATH . 'wp-admin/includes/upgrade.php' );
-	$sql = "DROP TABLE IF EXISTS " . $optionsTableName . ";";
-	dbDelta( $sql );
+	$relTableName  = $wpdb->prefix . ERP_PRO_RELATIVE_TABLE;
+	$sql = "DROP TABLE IF EXISTS " . $relTableName . ";";
+	$wpdb->query($sql);
     }
     
     private static function delMainOptions() {
