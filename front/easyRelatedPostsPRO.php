@@ -402,7 +402,7 @@ class easyRelatedPostsPRO {
     private static function single_activate() {
         erpPROPaths::requireOnce(erpPROPaths::$erpPROActivator);
 
-        $compareVersions = erpPRODefaults::compareVersion(get_option(ERP_PRO_SLUG . '_version'));
+        $compareVersions = erpPRODefaults::compareVersion(get_option(erpDefaults::versionNumOptName));
         if ($compareVersions < 0) {
             erpPROActivator::createERPTable();
             erpPROActivator::addNonExistingMainOptions(erpPRODefaults::$comOpts + erpPRODefaults::$mainOpts, EPR_PRO_MAIN_OPTIONS_ARRAY_NAME);
