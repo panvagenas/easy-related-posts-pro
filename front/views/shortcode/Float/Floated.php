@@ -63,7 +63,7 @@ $style .= ' padding: 0.5em; ';
                      >
                     <a href="<?php echo $v->getPermalink() ?>" class="erpProPostLink" rel="nofollow">
                         <?php
-                        foreach ($options['content'] as $key => $value) {
+                        foreach ($optionsObj->getContentPositioning() as $key => $value) {
                             include plugin_dir_path(__FILE__) . 'components/' . $value . '.php';
                         }
                         ?>
@@ -75,7 +75,7 @@ $style .= ' padding: 0.5em; ';
     </div>
 </div>
 <?php
-if ($options['thumbCaption'] && in_array('thumbnail', $options['content'])) {
+if ($options['thumbCaption'] && in_array('thumbnail', $optionsObj->getContentPositioning())) {
     ?>
     <script type="text/javascript">
         (function($) {

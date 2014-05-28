@@ -1,6 +1,6 @@
 <?php
 /**
- * @package   Easy_Related_Posts_Templates_Shortcode
+ * @package   Easy_Related_Posts_Templates_Main
  * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
  * @link      http://erp.xdark.eu
  * @copyright 2014 Panagiotis Vagenas <pan.vagenas@gmail.com>
@@ -34,7 +34,7 @@ $navRight = $uniqueID . 'NavRight';
                      >
                     <a href="<?php echo $v->getPermalink() ?>" class="erpProPostLink" rel="nofollow">
                         <?php
-                        foreach ($options ['content'] as $key => $value) {
+                        foreach ($optionsObj->getContentPositioning() as $key => $value) {
                             include plugin_dir_path(__FILE__) . 'components/' . $value . '.php';
                         }
                         ?>
@@ -54,7 +54,7 @@ $navRight = $uniqueID . 'NavRight';
     (function($) {
         $(function() {
 <?php
-if ($options ['thumbCaption']) {
+if ($options ['thumbCaption'] && in_array('thumbnail', $optionsObj->getContentPositioning())) {
     ?>
                 $('.<?php echo $titleClass; ?>').html("");
                 $(window).load(function() {

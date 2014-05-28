@@ -216,7 +216,7 @@ class erpProRelated {
                     ->exTags($this->options->getValue('tags'));
             $wpq = $this
                     ->relData
-                    ->setQueryLimit($queryLimit, 0)
+                    ->setQueryLimit($qLimit, 0)
                     ->setWP_Query($qForm->getArgsArray(), $qLimit, 0)
                     ->getResult();
             $postsArray = $wpq->posts;
@@ -246,7 +246,7 @@ class erpProRelated {
                     ->exTags($this->options->getValue('tags'));
             $wpq = $this
                     ->relData
-                    ->setQueryLimit($queryLimit, 0)
+                    ->setQueryLimit($qLimit, 0)
                     ->setWP_Query($qForm->getArgsArray(), $qLimit, 0)
                     ->getResult();
             $postsArray = $wpq->posts;
@@ -289,6 +289,7 @@ class erpProRelated {
     }
 
     /**
+     * TODO
      * Returns the best rated posts for all options defined 
      * in erpPRODefaults::$fetchByOptionsWeights, 
      * erpPRODefaults::$sortRelatedByOption
