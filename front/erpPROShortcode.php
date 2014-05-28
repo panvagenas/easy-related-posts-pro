@@ -56,7 +56,7 @@
 			return '';
 		}
 
-		erpPROPaths::requireOnce(erpPROPaths::$erpPROShortcodeTemplates);
+		erpPROPaths::requireOnce(erpPROPaths::$VPluginThemeFactory);
 		erpPROPaths::requireOnce(erpPROPaths::$erpProRelated);
 
 		$relatedObj = erpProRelated::get_instance( $this->optObj );
@@ -67,16 +67,16 @@
 		if ( empty( $result ) || empty( $result->posts ) ) {
 			return '';
 		}
+                
+                VPluginThemeFactory::registerThemeInPathRecursive(erpPROPaths::getAbsPath(erpPROPaths::$scThemesFolder), $this->optObj->getDsplLayout());
+                $theme = VPluginThemeFactory::getThemeByName($this->optObj->getDsplLayout());
+                if(!$theme){
+                    return $content;
+                }
+                $theme->formPostData($result, $this->optObj, $ratings);
 
-		$template = new erpPROShortcodeTemplates();
-		$template->load($this->optObj->getDsplLayout());
-		$template->setOptions($this->optObj->getValue('templateOptions'));
-
-		if (!$template->isLoaded()) {
-			return '';
-		}
-		$relContent = $template->display( $result, $this->optObj, $ratings );
-
+                $relContent = $theme->render();
+                
 		$this->setSuppressOthers();
 
 		return $relContent;

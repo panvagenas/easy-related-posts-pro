@@ -170,7 +170,7 @@ class easyRelatedPostsPRO {
          */
         if ($this->isShowTime($post) && !$this->isInExcludedPostTypes($post) && !$this->isInExcludedTaxonomies($post) && (bool) $this->mainOpts->getValue('activate')) {
 
-            erpPROPaths::requireOnce(erpPROPaths::$erpPROMainTemplates);
+            erpPROPaths::requireOnce(erpPROPaths::$VPluginThemeFactory);
             erpPROPaths::requireOnce(erpPROPaths::$erpProRelated);
 
             $relatedObj = erpProRelated::get_instance($this->mainOpts);
@@ -180,12 +180,14 @@ class easyRelatedPostsPRO {
                 return $content;
             }
 
-            $template = new erpPROMainTemplates();
-            $template->load($this->mainOpts->getDsplLayout());
-            if (!$template->isLoaded()) {
+            VPluginThemeFactory::registerThemeInPathRecursive(erpPROPaths::getAbsPath(erpPROPaths::$mainThemesFolder), $this->mainOpts->getDsplLayout());
+            $theme = VPluginThemeFactory::getThemeByName($this->mainOpts->getDsplLayout());
+            if(!$theme){
                 return $content;
             }
-            $relContent = $template->display($result, $this->mainOpts, $ratings, false);
+            $theme->formPostData($result, $this->mainOpts, $ratings);
+                        
+            $relContent = $theme->render();
 
             return $this->mainOpts->getPosition() == 'top' ?  $relContent . $content : $content.$relContent;
         }

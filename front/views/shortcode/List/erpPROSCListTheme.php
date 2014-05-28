@@ -68,7 +68,7 @@ class erpPROSCListTheme extends erpPROTheme{
      * Type of theme eg main, widget etc
      * @var string
      */
-    protected $type = 'main';
+    protected $type = 'shortcode';
 
     /**
      * Always call the parent constructor at child classes
