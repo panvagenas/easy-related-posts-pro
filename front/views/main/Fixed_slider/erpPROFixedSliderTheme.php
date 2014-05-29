@@ -20,7 +20,7 @@
 /**
  * @copyright 2014 Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
-erpPROPaths::requireOnce(erpPaths::$erpPROTheme);
+erpPROPaths::requireOnce(erpPROPaths::$erpPROTheme);
 
 /**
  * Description of erpTheme

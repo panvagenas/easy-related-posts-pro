@@ -637,7 +637,7 @@ if (!function_exists('erpPROTaxGrouping')) {
         <input id="clearCacheButton" class="button" type="button" value="Clear cache" name="clearCacheButton">
         <?php //<input id="rebuildCacheButton" class="button" type="button" value="Rebuild cache" name="rebuildCacheButton"> ?>
         <script type="text/javascript">
-            var templateRoot = "<?php echo $temp->getTemplatesBasePath(); ?>";
+            var templateRoot = "<?php echo erpPROPaths::getAbsPath(erpPROPaths::$mainThemesFolder); ?>";
             var options = {};
 <?php
 $tabSpec = filter_input(INPUT_GET, 'tab-spec');

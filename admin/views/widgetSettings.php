@@ -299,7 +299,7 @@
 
 </p>
 <script type="text/javascript">
-    var templateRoot = "<?php echo $temp->getTemplatesBasePath(); ?>";
+    var templateRoot = "<?php echo erpPROPaths::getAbsPath(erpPROPaths::$widgetThemesFolder); ?>";
     jQuery(document).ready(function($) {
 
         jQuery('#<?php echo $widgetInstance->get_field_id("postTitleColor"); ?>').wpColorPicker();
