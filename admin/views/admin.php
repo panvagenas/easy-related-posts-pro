@@ -447,12 +447,11 @@ if (!function_exists('erpPROTaxGrouping')) {
                                 title="From the dropdown you can define the appearance of the plugin in the main content area. When a theme is selected the additional options will show up bellow theme selection dropdown"
                                 >
                                     <?php
-                                    erpPROPaths::requireOnce(erpPROPaths::$erpPROMainTemplates);
-                                    $temp = new erpPROMainTemplates();
-                                    $templates = $temp->getTemplateNames();
+                                    erpPROPaths::requireOnce(erpPROPaths::$VPluginThemeFactory);
+                                    VPluginThemeFactory::registerThemeInPathRecursive(erpPROPaths::getAbsPath(erpPROPaths::$mainThemesFolder));
+                                    $templates = VPluginThemeFactory::getThemesNames();
                                     foreach ($templates as $key => $val) {
-                                        $valLow = strtolower(str_replace(' ', '_', $val));
-                                        echo '<option value="' . $valLow . '"' . selected($erpPROOptions['dsplLayout'], $valLow, FALSE) . '>' . $val . '</option>';
+                                        echo '<option value="' . $val . '"' . selected($erpPROOptions['dsplLayout'], $val, FALSE) . '>' . $val . '</option>';
                                     }
                                     ?>
                             </select>

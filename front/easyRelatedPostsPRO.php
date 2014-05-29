@@ -169,7 +169,11 @@ class easyRelatedPostsPRO {
          * Check if is time to take action
          */
         if ($this->isShowTime($post) && !$this->isInExcludedPostTypes($post) && !$this->isInExcludedTaxonomies($post) && (bool) $this->mainOpts->getValue('activate')) {
-
+            erpPROPaths::requireOnce(erpPROPaths::$erpPROTheme);
+            if (erpPROTheme::areOthersSuppressed()) {
+                    return $content;
+            }
+            
             erpPROPaths::requireOnce(erpPROPaths::$VPluginThemeFactory);
             erpPROPaths::requireOnce(erpPROPaths::$erpProRelated);
 

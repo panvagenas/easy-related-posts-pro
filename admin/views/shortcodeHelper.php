@@ -362,16 +362,20 @@ if (!function_exists('erpPROTaxGrouping')) {
                             <label for="dsplLayout">Theme :</label>
                         </td>
                         <td>
-                            <select class="dsplLayout"  name="dsplLayout">
-                                <?php
-                erpPROPaths::requireOnce(erpPROPaths::$erpPROShortcodeTemplates);
-                $temp = new erpPROShortcodeTemplates();
-                                $templates = $temp->getTemplateNames();
-                                foreach ($templates as $key => $val) {
-                                    $valLow = strtolower(str_replace(' ', '_', $val));
-                                    echo '<option value="' . $valLow . '"' . selected($erpPROOptions['dsplLayout'], $valLow, FALSE) . '>' . $val . '</option>';
-                                }
-                                ?>
+                            <select 
+                                class="dsplLayout"  
+                                name="dsplLayout"
+                                data-tooltip 
+                                title="From the dropdown you can define the appearance of the plugin in the main content area. When a theme is selected the additional options will show up bellow theme selection dropdown"
+                                >
+                                    <?php
+                                    erpPROPaths::requireOnce(erpPROPaths::$VPluginThemeFactory);
+                                    VPluginThemeFactory::registerThemeInPathRecursive(erpPROPaths::getAbsPath(erpPROPaths::$scThemesFolder));
+                                    $templates = VPluginThemeFactory::getThemesNames();
+                                    foreach ($templates as $key => $val) {
+                                        echo '<option value="' . $val . '"' . selected($erpPROOptions['dsplLayout'], $val, FALSE) . '>' . $val . '</option>';
+                                    }
+                                    ?>
                             </select>
                         </td>
                     </tr>

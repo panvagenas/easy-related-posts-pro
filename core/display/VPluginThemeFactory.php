@@ -175,10 +175,7 @@ if (!class_exists('VPluginThemeFactory')) {
         }
 
         public static function getRegisteredThemes($type = false, $names = false) {
-            if ($names) {
-                return self::getThemesNames($type);
-            }
-            return $type ? self::getAllOfType($type) : self::$registeredThemes;
+            return self::$registeredThemes;
         }
 
         private static function isValidTheme($object) {

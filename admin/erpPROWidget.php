@@ -45,55 +45,55 @@ class erpPROWidget extends WP_Widget {
         // get instance of main plugin
         $plugin = easyRelatedPostsPRO::get_instance();
         // check if it's time to take action
-        if (is_single($post->ID)) {
-            if ($plugin->isInExcludedPostTypes($post) || $plugin->isInExcludedTaxonomies($post)) {
-                return;
-            }
-            // Fill missing options
-            if (empty($instance)) {
-                $instance = erpPRODefaults::$comOpts + erpPRODefaults::$widOpts;
-            } else {
-                $instance = $instance + erpPRODefaults::$comOpts + erpPRODefaults::$widOpts;
-            }
-
-            erpPROPaths::requireOnce(erpPROPaths::$erpProRelated);
-            erpPROPaths::requireOnce(erpPROPaths::$erpPROMainOpts);
-            erpPROPaths::requireOnce(erpPROPaths::$erpPROWidOpts);
-
-            $mainOpts = new erpPROMainOpts();
-
-            $instance ['tags'] = $mainOpts->getTags();
-            $instance ['categories'] = $mainOpts->getCategories();
-            $instance ['postTypes'] = $mainOpts->getPostTypes();
-
-            $widOpts = new erpPROWidOpts($instance);
-
-            // Get related
-            $relatedObj = erpProRelated::get_instance($widOpts);
-            $wpQ = $relatedObj->getRelated($post->ID);
-            // If we have some posts to show
-            if ($wpQ->have_posts()) {
-                erpPaths::requireOnce(erpPaths::$VPluginThemeFactory);
-                VPluginThemeFactory::registerThemeInPathRecursive(erpPaths::getAbsPath(erpPaths::$widgetThemesFolder), $instance ['dsplLayout']);
-                $theme = VPluginThemeFactory::getThemeByName($instance ['dsplLayout']);
-                if (!$theme) {
-                    $this->displayEmptyWidget($args, $instance);
-                }
-
-                $theme->setOptions($instance);
-                $theme->formPostData($wpQ, $widOpts, $relatedObj->getRatingsFromRelDataObj());
-                $content = $theme->renderW($this->number);
-                
-                // display rel content
-                echo $args ['before_widget'];
-                echo $args ['before_title'] . $instance ['title'] . $args ['after_title'];
-                echo $content;
-                echo $args ['after_widget'];
-            } else {
-                // else diplay empty widget
-                $this->displayEmptyWidget($args, $instance);
-            }
+        if (!is_single($post->ID)) {
+            return;
         }
+        
+        if ($plugin->isInExcludedPostTypes($post) || $plugin->isInExcludedTaxonomies($post)) {
+            return;
+        }
+        // Fill missing options
+        if (empty($instance)) {
+            $instance = erpPRODefaults::$comOpts + erpPRODefaults::$widOpts;
+        } else {
+            $instance = $instance + erpPRODefaults::$comOpts + erpPRODefaults::$widOpts;
+        }
+
+        erpPROPaths::requireOnce(erpPROPaths::$erpProRelated);
+        erpPROPaths::requireOnce(erpPROPaths::$erpPROMainOpts);
+        erpPROPaths::requireOnce(erpPROPaths::$erpPROWidOpts);
+
+        $mainOpts = new erpPROMainOpts();
+
+        $instance ['tags'] = $mainOpts->getTags();
+        $instance ['categories'] = $mainOpts->getCategories();
+        $instance ['postTypes'] = $mainOpts->getPostTypes();
+
+        $widOpts = new erpPROWidOpts($instance);
+
+        // Get related
+        $relatedObj = erpProRelated::get_instance($widOpts);
+        $wpQ = $relatedObj->getRelated($post->ID);
+        // If we have some posts to show
+        if (!$wpQ->have_posts()) {
+            $this->displayEmptyWidget($args, $instance);
+        }
+        erpPaths::requireOnce(erpPaths::$VPluginThemeFactory);
+        VPluginThemeFactory::registerThemeInPathRecursive(erpPaths::getAbsPath(erpPaths::$widgetThemesFolder), $instance ['dsplLayout']);
+        $theme = VPluginThemeFactory::getThemeByName($instance ['dsplLayout']);
+        if (!$theme) {
+            return $this->displayEmptyWidget($args, $instance);
+        }
+
+        $theme->setOptions($instance);
+        $theme->formPostData($wpQ, $widOpts, $relatedObj->getRatingsFromRelDataObj());
+        $content = $theme->renderW($this->number);
+
+        // display rel content
+        echo $args ['before_widget'];
+        echo $args ['before_title'] . $instance ['title'] . $args ['after_title'];
+        echo $content;
+        echo $args ['after_widget'];
     }
 
     /**

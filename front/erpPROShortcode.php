@@ -50,8 +50,8 @@
 			}
 		}
 
-		erpPROPaths::requireOnce(erpPROPaths::$erpPROTemplates);
-		if (!is_int($pid) || erpPROTemplates::areOthersSuppressed()) {
+		erpPROPaths::requireOnce(erpPROPaths::$erpPROTheme);
+		if (!is_int($pid) || erpPROTheme::areOthersSuppressed()) {
 			$this->setSuppressOthers();
 			return '';
 		}
@@ -150,11 +150,11 @@
 
 	private function setSuppressOthers() {
 		// Setting supress others option
-		erpPROPaths::requireOnce(erpPROPaths::$erpPROTemplates);
+		erpPROPaths::requireOnce(erpPROPaths::$erpPROTheme);
 		if ( $this->optObj->getSuppressOthers() === true ) {
-			erpPROTemplates::suppressOthers(true);
+			erpPROTheme::suppressOthers(true);
 		} elseif ( $this->optObj->getSuppressOthers() === false) {
-			erpPROTemplates::suppressOthers(false);
+			erpPROTheme::suppressOthers(false);
 		}
 	}
  }

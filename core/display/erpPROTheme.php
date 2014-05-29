@@ -242,6 +242,28 @@ if (!class_exists('VPluginTheme')) {
 
 abstract class erpPROTheme extends VPluginTheme {
 
+    /**
+     *
+     * @var bool
+     */
+    private static $supressOthers = false;
+
+    /**
+     * Set suppressOthers field
+     * @param bool $value Default is true
+     */
+    public static function suppressOthers($value = true) {
+        self::$supressOthers = $value;
+    }
+
+    /**
+     * Returns class field $supressOthers
+     * @return bool
+     */
+    public static function areOthersSuppressed() {
+        return self::$supressOthers;
+    }
+
     protected $css;
     protected $basePath;
     protected $js;

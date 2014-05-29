@@ -110,12 +110,13 @@ class erpUninstall {
     }
     
     private static function delTemplateOptions() {
-	erpPROPaths::requireOnce(erpPROPaths::$erpPROMainTemplates);
-	$mTemps = new erpPROMainTemplates();
-	foreach ($mTemps->getTemplateNames() as $key => $value) {
-	    $mTemps->load($value);
-	    $mTemps->deleteTemplateOptions();
-	}
+        erpPROPaths::requireOnce(erpPROPaths::$VPluginThemeFactory);
+        VPluginThemeFactory::registerThemeInPathRecursive(erpPROPaths::getAbsPath(erpPROPaths::$mainThemesFolder));
+        $themes = VPluginThemeFactory::getRegisteredThemes();
+        
+        foreach ((array)$themes as $key => $value) {
+            delete_option($value->getOptionsArrayName());
+        }
     }
     
     private static function delWidOptions() {
