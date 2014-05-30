@@ -300,38 +300,26 @@ abstract class erpPROTheme extends VPluginTheme {
         return $this->basePath;
     }
 
-    /**
-     * Enques all css files as specified in xml file
-     * @return \display\erpTemplates
-     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
-     * @since 2.0.0
-     */
     protected function enqueCSS() {
         if (isset($this->css) && is_array($this->css) && is_admin_bar_showing() && !is_admin() || !is_admin()) {
             foreach ($this->css as $key => $value) {
                 if (is_array($value)) {
-                    wp_enqueue_style($key, $this->getUrl($value['path']), $value['deps'], easyRelatedPosts::VERSION);
+                    wp_enqueue_style($key, $this->getUrl($value['path']), $value['deps'], easyRelatedPostsPRO::VERSION);
                 } else {
-                    wp_enqueue_style($key, $this->getUrl($value), array(), easyRelatedPosts::VERSION);
+                    wp_enqueue_style($key, $this->getUrl($value), array(), easyRelatedPostsPRO::VERSION);
                 }
             }
         }
         return $this;
     }
 
-    /**
-     * Enques all js files as specified in xml file
-     * @return \display\erpTemplates
-     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
-     * @since 2.0.0
-     */
     protected function enqueJS() {
         if (isset($this->js) && is_array($this->js) && is_admin_bar_showing() && !is_admin() || !is_admin()) {
             foreach ($this->js as $key => $value) {
                 if (is_array($value)) {
-                    wp_enqueue_script($key, $this->getUrl($value['path']), $value['deps'], easyRelatedPosts::VERSION, false);
+                    wp_enqueue_script($key, $this->getUrl($value['path']), $value['deps'], easyRelatedPostsPRO::VERSION, false);
                 } else {
-                    wp_enqueue_script($key, $this->getUrl($value), array(), easyRelatedPosts::VERSION, false);
+                    wp_enqueue_script($key, $this->getUrl($value), array(), easyRelatedPostsPRO::VERSION, false);
                 }
             }
         }
@@ -345,20 +333,13 @@ abstract class erpPROTheme extends VPluginTheme {
         return parent::render($filePath, $data, $echo);
     }
 
-    /**
-     * Get the url for a given file
-     * @param string $templateFileRelativePath Relative path from the template base path
-     * @return string Url
-     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
-     * @since 2.0.0
-     */
     protected function getUrl($templateFileRelativePath) {
         // Convert to absolute path
         $fullPath = $this->basePath . $templateFileRelativePath;
         // Split to parts
         $templateParts = explode(DIRECTORY_SEPARATOR, $fullPath);
         // Get base parts
-        $baseParts = explode(DIRECTORY_SEPARATOR, rtrim(EPR_BASE_PATH, '/ '));
+        $baseParts = explode(DIRECTORY_SEPARATOR, rtrim(EPR_PRO_BASE_PATH, '/ '));
         // Remove ..
         array_pop($baseParts);
         // Get the matching elements
@@ -370,6 +351,8 @@ abstract class erpPROTheme extends VPluginTheme {
     public function formPostData(WP_Query $wpq, erpPROOptions $optionsObj, $ratings = array()) {
         erpPROPaths::requireOnce(erpPROPaths::$erpPROPostData);
 
+        $from = get_the_ID();
+        
         $data = array(
             'title' => $optionsObj->getValue('title'),
             'options' => $this->options,
@@ -383,7 +366,7 @@ abstract class erpPROTheme extends VPluginTheme {
 
             $rating = isset($ratings[get_the_ID()]) ? $ratings[get_the_ID()] : null;
 
-            $postData = new erpPROPostData($wpq->post, $optionsObj, $rating);
+            $postData = new erpPROPostData($wpq->post, $optionsObj, $rating, $from);
 
             if ($optionsObj->haveToShowExcerpt()) {
                 $postData->setExcerpt($optionsObj->getValue('excLength'), $optionsObj->getValue('moreTxt'));
