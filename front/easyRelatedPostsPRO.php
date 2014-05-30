@@ -185,7 +185,7 @@ class easyRelatedPostsPRO {
             }
 
             VPluginThemeFactory::registerThemeInPathRecursive(erpPROPaths::getAbsPath(erpPROPaths::$mainThemesFolder), $this->mainOpts->getDsplLayout());
-            $theme = VPluginThemeFactory::getThemeByName($this->mainOpts->getDsplLayout());
+            $theme = VPluginThemeFactory::getThemeByName($this->mainOpts->getDsplLayout(), 'main');
             if(!$theme){
                 return $content;
             }

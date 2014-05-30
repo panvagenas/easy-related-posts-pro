@@ -80,7 +80,7 @@ class erpPROWidget extends WP_Widget {
         }
         erpPROPaths::requireOnce(erpPROPaths::$VPluginThemeFactory);
         VPluginThemeFactory::registerThemeInPathRecursive(erpPROPaths::getAbsPath(erpPROPaths::$widgetThemesFolder), $instance ['dsplLayout']);
-        $theme = VPluginThemeFactory::getThemeByName($instance ['dsplLayout']);
+        $theme = VPluginThemeFactory::getThemeByName($instance ['dsplLayout'], 'widget');
         if (!$theme) {
             return $this->displayEmptyWidget($args, $instance);
         }

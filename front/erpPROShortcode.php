@@ -69,7 +69,7 @@
 		}
                 
                 VPluginThemeFactory::registerThemeInPathRecursive(erpPROPaths::getAbsPath(erpPROPaths::$scThemesFolder), $this->optObj->getDsplLayout());
-                $theme = VPluginThemeFactory::getThemeByName($this->optObj->getDsplLayout());
+                $theme = VPluginThemeFactory::getThemeByName($this->optObj->getDsplLayout(), 'shortcode');
                 if(!$theme){
                     return '';
                 }

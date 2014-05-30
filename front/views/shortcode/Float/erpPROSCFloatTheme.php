@@ -99,7 +99,7 @@ class erpPROSCFloatTheme extends erpPROTheme {
     }
 
     public function render($path = '', Array $data = array(), $echo = false) {
-        return parent::render(plugin_dir_path(__FILE__) . 'floated.php', $data, $echo);
+        return parent::render(plugin_dir_path(__FILE__) . 'Floated.php', $data, $echo);
     }
 
     public function renderSettings($filePath = '', $echo = false) {
