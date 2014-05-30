@@ -71,8 +71,9 @@
                 VPluginThemeFactory::registerThemeInPathRecursive(erpPROPaths::getAbsPath(erpPROPaths::$scThemesFolder), $this->optObj->getDsplLayout());
                 $theme = VPluginThemeFactory::getThemeByName($this->optObj->getDsplLayout());
                 if(!$theme){
-                    return $content;
+                    return '';
                 }
+                $theme->setOptions($this->optObj->getOptions());
                 $theme->formPostData($result, $this->optObj, $ratings);
 
                 $relContent = $theme->render();

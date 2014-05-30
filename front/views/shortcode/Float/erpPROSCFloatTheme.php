@@ -27,7 +27,7 @@ erpPROPaths::requireOnce(erpPROPaths::$erpPROTheme);
  * 
  * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
-class erpPROSCCarouselTheme extends erpPROTheme {
+class erpPROSCFloatTheme extends erpPROTheme {
 
     /**
      * The name of the theme

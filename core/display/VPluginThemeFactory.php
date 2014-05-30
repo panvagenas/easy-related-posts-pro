@@ -40,7 +40,7 @@ if (!class_exists('VPluginThemeFactory')) {
          */
         public static $registeredThemes = array();
 
-        public static function registerTheme(erpTheme $theme) {
+        public static function registerTheme(erpPROTheme $theme) {
             if (!self::isRegistered($theme)) {
                 self::$registeredThemes[$theme->getUniqueID()] = $theme;
             }
@@ -125,7 +125,7 @@ if (!class_exists('VPluginThemeFactory')) {
         /**
          * Get all themes of a given type
          * @param string $type
-         * @return \erpTheme
+         * @return \erpPROTheme
          */
         public static function getAllOfType($type) {
             $out = array();
@@ -149,7 +149,7 @@ if (!class_exists('VPluginThemeFactory')) {
         /**
          * 
          * @param type $name
-         * @return null|erpTheme
+         * @return null|erpPROTheme
          */
         public static function getThemeByName($name, $type = null) {
             if (is_string($name)) {
@@ -179,7 +179,7 @@ if (!class_exists('VPluginThemeFactory')) {
         }
 
         private static function isValidTheme($object) {
-            return $object instanceof erpTheme;
+            return $object instanceof erpPROTheme;
         }
 
         private static function getClassesOfFile($filePath) {

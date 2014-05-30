@@ -367,8 +367,8 @@ abstract class erpPROTheme extends VPluginTheme {
         return plugins_url(implode(DIRECTORY_SEPARATOR, $relativeToPluginBase));
     }
 
-    public function formPostData(WP_Query $wpq, erpOptions $optionsObj, $ratings = array()) {
-        erpPaths::requireOnce(erpPaths::$erpPostData);
+    public function formPostData(WP_Query $wpq, erpPROOptions $optionsObj, $ratings = array()) {
+        erpPROPaths::requireOnce(erpPROPaths::$erpPROPostData);
 
         $data = array(
             'title' => $optionsObj->getValue('title'),
@@ -383,7 +383,7 @@ abstract class erpPROTheme extends VPluginTheme {
 
             $rating = isset($ratings[get_the_ID()]) ? $ratings[get_the_ID()] : null;
 
-            $postData = new erpPostData($wpq->post, $optionsObj, $rating);
+            $postData = new erpPROPostData($wpq->post, $optionsObj, $rating);
 
             if ($optionsObj->haveToShowExcerpt()) {
                 $postData->setExcerpt($optionsObj->getValue('excLength'), $optionsObj->getValue('moreTxt'));
