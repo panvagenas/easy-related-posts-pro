@@ -13,10 +13,6 @@ class erpPROPaths {
     // Display
     public static $erpPROPostData = 'core/display/erpPROPostData.php';
     public static $erpPROView = 'core/display/erpPROView.php';
-    public static $erpPROMainTemplates = 'core/display/erpPROMainTemplates.php';
-    public static $erpPROShortcodeTemplates = 'core/display/erpPROShortcodeTemplates.php';
-    public static $erpPROTemplates = 'core/display/erpPROTemplates.php';
-    public static $erpPROWidTemplates = 'core/display/erpPROWidTemplates.php';
     public static $erpPROTheme = 'core/display/erpPROTheme.php';
     public static $VPluginThemeFactory = 'core/display/VPluginThemeFactory.php';
     // Admin

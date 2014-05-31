@@ -84,18 +84,6 @@ class erpPROShortCodeOpts extends erpPROOptions {
         }
     }
 
-    public function getTemplateOptions($templateName, $newOptions) {
-        erpPROPaths::requireOnce(erpPROPaths::$erpPROShortcodeTemplates);
-        $template = new erpPROShortcodeTemplates();
-        $template->load($templateName);
-
-        if ($template->isLoaded()) {
-            return $template->saveTemplateOptions($newOptions);
-        } else {
-            return array();
-        }
-    }
-
     /*     * **********************************************************************
      * Geters for options
      * ********************************************************************** */
