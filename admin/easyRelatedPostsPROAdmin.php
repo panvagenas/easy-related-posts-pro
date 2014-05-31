@@ -101,8 +101,8 @@ class easyRelatedPostsPROAdmin {
          * Add an action link pointing to the options page.
          * *****************************************************
          */
-        $plugin_basename = plugin_basename(plugin_dir_path(__DIR__) . $this->plugin_slug . '.php');
-        add_filter('plugin_action_links_' . $plugin_basename, array(
+        $plugin_basename = plugin_basename(plugin_dir_path(__DIR__) . 'easy-related-posts-pro.php');
+        add_filter('plugin_action_links_'.$plugin_basename, array(
             $this,
             'add_action_links'
         ));
@@ -362,7 +362,7 @@ class easyRelatedPostsPROAdmin {
      */
     public function add_action_links($links) {
         return array_merge(array(
-            'settings' => '<a href="' . admin_url('options-general.php?page=' . $this->plugin_slug) . '">' . __('Settings', $this->plugin_slug) . '</a>'
+            'settings' => '<a href="' . admin_url('options-general.php?page=' . $this->plugin_slug . '_settings') . '">' . __('Settings', $this->plugin_slug) . '</a>'
                 ), $links);
     }
 
