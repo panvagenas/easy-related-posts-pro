@@ -1,6 +1,6 @@
 <?php
 /**
- * Grid template settings.
+ * Grid template settings. 
  *
  * This file will be loaded in plugin settings page
  * when grid template is sellected

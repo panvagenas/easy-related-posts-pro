@@ -1,6 +1,6 @@
 <?php
 /**
- * Carousel template settings.
+ * Carousel template settings. 
  *
  * This file will be loaded in plugin settings page
  * when carousel template is sellected
