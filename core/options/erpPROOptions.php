@@ -20,18 +20,11 @@ abstract class erpPROOptions {
     protected $options = NULL;
     protected $defaults;
 
-    /**
-     * @deprecated
-     *
-     * @since 1.0.0
-     * @var bool
-     */
-    protected $ratingSytem = NULL;
     protected $optionsArrayName = NULL;
 
     public function __construct() {
-        $this->ratingSytem = isset($this->options ['sortRelatedBy']) ? (bool) strpos($this->options ['sortRelatedBy'], 'rating') : false;
-        $this->defaults = &erpPRODefaults::$comOpts;
+        $this->defaults = erpPRODefaults::$comOpts;
+        $this->options = $this->defaults;
     }
 
     public function getOptionsArrayName() {
@@ -101,18 +94,6 @@ abstract class erpPROOptions {
             return $value;
         }
         return NULL;
-    }
-
-    /**
-     * Returns rating system field value.
-     * Instance scope
-     * @deprecated since version 1.0.0 This no longer should be considered since all posts are rated
-     * @return boolean
-     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
-     * @since 1.0.0
-     */
-    public function isRatingSystemOn() {
-        return $this->ratingSytem === NULL ? FALSE : $this->ratingSytem;
     }
 
     /**

@@ -39,7 +39,7 @@ class erpPROShortCodeOpts extends erpPROOptions {
 
     public function loadOptions($profileName) {
         $this->options = isset($this->profiles[$profileName]) ? $this->profiles[$profileName] : erpPRODefaults::$comOpts + erpPRODefaults::$shortCodeOpts;
-        $this->profileName = $profileName;
+        $this->profileName = empty($profileName) ? 'Basic' : $profileName;
         return $this;
     }
 

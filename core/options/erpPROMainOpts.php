@@ -21,12 +21,17 @@ class erpPROMainOpts extends erpPROOptions {
     public function __construct() {
         parent::__construct();
         $this->optionsArrayName = EPR_PRO_MAIN_OPTIONS_ARRAY_NAME;
-        $this->loadOptions();
         $this->defaults = erpPRODefaults::$mainOpts + erpPRODefaults::$comOpts;
+        $this->loadOptions();
     }
 
     public function loadOptions() {
-        $this->options = get_option($this->optionsArrayName);
+        $opt = get_option($this->optionsArrayName);
+        if($opt){
+            $this->options = $opt;
+        } else {
+            $this->options = $this->defaults;
+        }
     }
 
     /**
