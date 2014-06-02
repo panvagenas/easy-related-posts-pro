@@ -12,12 +12,11 @@
  * Plugin Name:       Easy Related Posts PRO
  * Plugin URI:        http://erp.xdark.eu
  * Description:       A powerfull plugin to display related posts
- * Version:           1.0.0
+ * Version:           1.0.1
  * Author:            Panagiotis Vagenas <pan.vagenas@gmail.com>
  * Author URI:        http://xdark.eu
  * Text Domain:       easy-related-posts-eng
  * Domain Path:       /languages
- * Codecanyon URI:    @TODO Codecanyon uri
  */
 // If this file is called directly, abort.
 if (!defined('WPINC')) {
