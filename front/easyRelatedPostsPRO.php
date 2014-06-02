@@ -414,10 +414,13 @@ class easyRelatedPostsPRO {
             erpPRODefaults::updateVersionNumbers();
         } elseif ($compareVersions === 0) {
             // Major update
+            erpPRODefaults::updateVersionNumbers();
         } elseif ($compareVersions === 1) {
             // Release update
+            erpPRODefaults::updateVersionNumbers();
         } elseif ($compareVersions === 2) {
             // Minor update
+            erpPRODefaults::updateVersionNumbers();
         }
 
         // Cron jobs

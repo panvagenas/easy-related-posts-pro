@@ -45,7 +45,7 @@ class erpPRODefaults {
      * @since 1.0.0
      * @var int
      */
-    const erpPROSubRelease = 0;
+    const erpPROSubRelease = 1;
 
     /**
      * Plugin version, used for cache-busting of style and script file references.
