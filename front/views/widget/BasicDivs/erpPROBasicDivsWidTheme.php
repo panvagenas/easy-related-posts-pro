@@ -20,26 +20,26 @@
 /**
  * @copyright 2014 Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
-erpPaths::requireOnce(erpPaths::$erpTheme);
+erpPROPaths::requireOnce(erpPROPaths::$erpPROTheme);
 
 /**
  * Description of erpTheme
  * 
  * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
-class erpBasicListWidTheme extends erpTheme{
+class erpPROBasicDivsWidTheme extends erpPROTheme{
 
     /**
      * The name of the theme
      * @var string 
      */
-    protected $name = 'Basic list';
+    protected $name = 'Basic';
 
     /**
      * A description for theme
      * @var string
      */
-    protected $description = 'Basic widget theme, displays related posts as a list';
+    protected $description = 'Basic widget theme using div tags';
 
     /**
      * An array name if you are going  to save options to DB
@@ -59,8 +59,8 @@ class erpBasicListWidTheme extends erpTheme{
     protected $css = array();
     protected $js = array();
     protected $preregScripts = array(
-        'css' => array('erp-bootstrap', 'erp-bootstrap-text', 'erp-erpCaptionCSS'),
-        'js' => array('erp-erpCaptionJS')
+        'css' => array('erp_pro-bootstrap', 'erp_pro-bootstrap-text', 'erp_pro-erpPROCaptionCSS'),
+        'js' => array('erp_pro-erpPROCaptionJS')
     );
     
     /**
