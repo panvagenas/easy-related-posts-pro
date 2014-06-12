@@ -64,6 +64,15 @@ class erpPRORatingSystem {
 	 * @var array
 	 */
 	private $post_date;
+        
+        /**
+	 * Add some entropy.
+	 *
+	 * @since 1.0.0
+	 * @var int
+         * @since 1.0.2
+	 */
+	protected $entropy = 0;
 
 	/**
 	 * Instance of this class.
@@ -72,6 +81,7 @@ class erpPRORatingSystem {
 	 * @var erpPRORatingSystem
 	 */
 	protected static $instance = null;
+        
 
 	/**
 	 * Initialize the plugin by setting localization and loading public scripts
@@ -226,6 +236,9 @@ class erpPRORatingSystem {
 			$this->post_date = array();
 			foreach ($this->relData->relTable as $key => $value) {
 				$rating = $this->calcCatRating($value)+$this->calcTagRating($value)+$this->calcClickRate($value);
+                                if($this->entropy){
+                                    $rating *= mt_rand((1-$this->entropy)*1000, 1000)/1000;
+                                }
 				if ($rating == 0) {
 					continue;
 				}
@@ -323,5 +336,14 @@ class erpPRORatingSystem {
                 }
             }
             return $included;
+        }
+        
+        /**
+         * Set entropy
+         * @param float $val
+         * @since 1.0.2
+         */
+        public function setEntropy($val) {
+            $this->entropy = (float)$val;
         }
 }

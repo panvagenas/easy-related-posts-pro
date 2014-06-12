@@ -181,6 +181,26 @@ if (!function_exists('erpPROTaxGrouping')) {
                             </select>
                         </td>
                     </tr>
+                    <tr>
+                        <td>
+                            <label for="entropy">Add some entropy :</label>
+                        </td>
+                        <td>
+                            <select 
+                                class="erp-optsel" 
+                                id="entropy" 
+                                name="entropy"
+                                data-tooltip 
+                                title=""
+                                >
+                                    <option value="0.0" <?php selected($erpPROOptions['entropy'], 0.0) ?>>No entropy</option>
+                                    <option value="0.0001" <?php selected($erpPROOptions['entropy'], 0.0001) ?>>Just a little</option>
+                                    <option value="0.2" <?php selected($erpPROOptions['entropy'], 0.2) ?>>Mix result a bit</option>
+                                    <option value="0.6" <?php selected($erpPROOptions['entropy'], 0.6) ?>>Almost random!</option>
+                                    <option value="1.0" <?php selected($erpPROOptions['entropy'], 1.0) ?>>Randomize result</option>
+                            </select>
+                        </td>
+                    </tr>
                 </table>
             </div>
             <div id="tabs-3">

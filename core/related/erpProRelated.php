@@ -155,6 +155,7 @@ class erpProRelated {
         $ratingSystem = erpPRORatingSystem::get_instance($this->relData);
         $weights = $this->calcWeights();
         $ratingSystem->setWeights($weights);
+        $ratingSystem->setEntropy($this->options->getEntropy());
         $ratingSystem->formRatingsArrays();
         $ratingSystem->sortRatingsArrays($this->options->getSortRelatedBy(true));
         $postsToExclude = isset($this->wpSession ['visited']) ? unserialize($this->wpSession ['visited']) : array();

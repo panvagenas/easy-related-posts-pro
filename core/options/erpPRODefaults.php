@@ -291,7 +291,8 @@ class erpPRODefaults {
         'thumbnailWidth' => 300,
         'cropThumbnail' => true,
         'postTitleColor' => '#ffffff',
-        'excColor' => '#ffffff'
+        'excColor' => '#ffffff',
+        'entropy' => 0
     );
 
     /**
@@ -316,7 +317,8 @@ class erpPRODefaults {
         'thumbnailWidth' => array('type' => self::intFormal, 'min' => 0),
         'cropThumbnail' => array('type' => self::boolFormal),
         'postTitleColor' => array('type' => self::stringFormal),
-        'excColor' => array('type' => self::stringFormal)
+        'excColor' => array('type' => self::stringFormal),
+        'entropy' => array('type' => self::floatFormal, 'min' => 0, 'max' => 1),
     );
 
     /**
@@ -426,7 +428,8 @@ class erpPRODefaults {
     public static $criticalOpts = array(
         'fetchBy',
         'numberOfPostsToDisplay',
-        'offset'
+        'offset',
+        'entropy'
             // 'sortRelatedBy'
     );
 

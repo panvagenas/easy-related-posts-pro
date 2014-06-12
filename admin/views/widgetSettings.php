@@ -104,6 +104,26 @@
         </td>
     </tr>
     <tr>
+        <td>
+            <label for="<?php echo $widgetInstance->get_field_id('entropy'); ?>">Add some entropy :</label>
+        </td>
+        <td>
+            <select 
+                class="erp-optsel" 
+                id="<?php echo $widgetInstance->get_field_id('entropy'); ?>" 
+                name="<?php echo $widgetInstance->get_field_name('entropy'); ?>"
+                data-tooltip 
+                title=""
+                >
+                    <option value="0.0" <?php selected($options['entropy'], 0.0) ?>>No entropy</option>
+                    <option value="0.0001" <?php selected($options['entropy'], 0.0001) ?>>Just a little</option>
+                    <option value="0.2" <?php selected($options['entropy'], 0.2) ?>>Mix result a bit</option>
+                    <option value="0.6" <?php selected($options['entropy'], 0.6) ?>>Almost random!</option>
+                    <option value="1.0" <?php selected($options['entropy'], 1.0) ?>>Randomize result</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
         <td style="text-align: right;"><label for="<?php echo $widgetInstance->get_field_id('hideIfNoPosts'); ?>"><?php _e('Hide if no posts to show:'); ?></label></td>
         <td>
             <input class="erp_wid_opt5"

@@ -428,4 +428,7 @@ abstract class erpPROOptions {
         return $this->getValue('excColor');
     }
 
+    public function getEntropy() {
+        return $this->getValue('entropy');
+    }
 }
