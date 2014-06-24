@@ -114,6 +114,8 @@
 }
 .erpProContainer img {
   border: 0;
+  margin-top: 3px;
+  margin-bottom: 3px;
 }
 .erpProContainer svg:not(:root) {
   overflow: hidden;

@@ -207,8 +207,8 @@ if (!function_exists('erpPROTaxGrouping')) {
                                 >
                                     <option value="0.0" <?php selected($erpPROOptions['entropy'], 0.0) ?>>No entropy</option>
                                     <option value="0.0001" <?php selected($erpPROOptions['entropy'], 0.0001) ?>>Just a little</option>
-                                    <option value="0.2" <?php selected($erpPROOptions['entropy'], 0.2) ?>>Mix result a bit</option>
-                                    <option value="0.6" <?php selected($erpPROOptions['entropy'], 0.6) ?>>Almost random!</option>
+                                    <option value="0.002" <?php selected($erpPROOptions['entropy'], 0.002) ?>>Mix result a bit</option>
+                                    <option value="0.3" <?php selected($erpPROOptions['entropy'], 0.3) ?>>Almost random!</option>
                                     <option value="1.0" <?php selected($erpPROOptions['entropy'], 1.0) ?>>Randomize result</option>
                             </select>
                         </td>

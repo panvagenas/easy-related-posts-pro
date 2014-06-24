@@ -45,7 +45,7 @@ class erpPRODefaults {
      * @since 1.0.0
      * @var int
      */
-    const erpPROSubRelease = 1;
+    const erpPROSubRelease = 2;
 
     /**
      * Plugin version, used for cache-busting of style and script file references.
@@ -53,7 +53,7 @@ class erpPRODefaults {
      * @since 1.0.0
      * @var string
      */
-    const erpPROVersionString = '1.0.0';
+    const erpPROVersionString = '1.0.2';
 
     /**
      * This should be upddated if widget class name change
@@ -257,6 +257,8 @@ class erpPRODefaults {
      */
     public static $contentPositioningOptions = array(
         'Title',
+        'Thumbnail',
+        'Excerpt',
         'Title, excerpt',
         'Title, thumbnail',
         'Thumbnail, title',
