@@ -94,9 +94,12 @@ add_action('erpPRO_weekly_event_hook', array('easyRelatedPostsPRO', 'weeklyCronJ
  * Register plugin and widget
  */
 add_action('plugins_loaded', array('easyRelatedPostsPRO', 'get_instance'));
-add_action('widgets_init', function () {
+
+function regERPPROWidget() {
     register_widget("erpPROWidget");
-});
+}
+
+add_action('widgets_init', 'regERPPROWidget');
 /**
  * Shortcode functionality
  */
