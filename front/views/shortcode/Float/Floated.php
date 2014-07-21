@@ -14,6 +14,12 @@ $thumbClass = $uniqueID . 'Thumbnail';
 $titleClass = $uniqueID . 'PostTitle';
 $excClass = $uniqueID . 'Exc';
 
+if ($options['thumbCaption'] && in_array('thumbnail', $optionsObj->getContentPositioning()) && !( class_exists( 'Jetpack' ) && Jetpack::is_module_active( 'photon' ) )){
+	$showThumbCaptions = true;
+} else {
+	$showThumbCaptions = false;
+}
+
 $style = '';
 if (isset($options['backgroundColor']) && $options['backgroundColor'] != '#ffffff') {
     $style .= ' background-color: ' . $options['backgroundColor'] . '; ';
@@ -75,7 +81,7 @@ $style .= ' padding: 0.5em; ';
     </div>
 </div>
 <?php
-if ($options['thumbCaption'] && in_array('thumbnail', $optionsObj->getContentPositioning())) {
+if ($showThumbCaptions) {
     ?>
     <script type="text/javascript">
         (function($) {

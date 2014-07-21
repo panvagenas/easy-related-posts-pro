@@ -27,6 +27,12 @@ if(isset($options['borderRadius']) && $options['borderRadius'] > 0 ){
 if(isset($options['borderColor']) && $options['borderColor'] != '#ffffff'){
     $style .= ' border-color: '.$options['borderColor'].'; ';
 }
+
+if ($options['thumbCaption'] && in_array('thumbnail', $optionsObj->getContentPositioning()) && !( class_exists( 'Jetpack' ) && Jetpack::is_module_active( 'photon' ) )){
+	$showThumbCaptions = true;
+} else {
+	$showThumbCaptions = false;
+}
 ?>
 <div class="erpProContainer <?php echo $containerClass; ?>" style="<?php echo $style; ?>">
     <div class="container-fluid">
@@ -73,7 +79,7 @@ if(isset($options['borderColor']) && $options['borderColor'] != '#ffffff'){
     </div>
 </div>
 <?php
-if ($options['thumbCaption'] && in_array('thumbnail', $optionsObj->getContentPositioning())) {
+if ($showThumbCaptions) {
     ?>
     <script type="text/javascript">
         (function($) {

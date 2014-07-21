@@ -16,6 +16,11 @@ $excClass = $uniqueID . 'Exc';
 $wraperClass = $uniqueID . 'Wraper';
 $navLeft = $uniqueID . 'NavLeft';
 $navRight = $uniqueID . 'NavRight';
+if ($options['thumbCaption'] && in_array('thumbnail', $optionsObj->getContentPositioning()) && !( class_exists( 'Jetpack' ) && Jetpack::is_module_active( 'photon' ) )){
+	$showThumbCaptions = true;
+} else {
+	$showThumbCaptions = false;
+}
 ?>
 <div class="metroW" style="display: none; width: 100%;"></div>
 <div class="erpProContainer <?php echo $containerClass; ?>">
@@ -54,7 +59,7 @@ $navRight = $uniqueID . 'NavRight';
     (function($) {
         $(function() {
 <?php
-if ($options ['thumbCaption'] && in_array('thumbnail', $optionsObj->getContentPositioning())) {
+if ($showThumbCaptions) {
     ?>
                 $('.<?php echo $titleClass; ?>').html("");
                 $(window).load(function() {
