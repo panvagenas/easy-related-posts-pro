@@ -367,7 +367,7 @@ if (!function_exists('erpPROTaxGrouping')) {
                                 class="erp-opttxt" 
                                 id="moreTxt" 
                                 name="moreTxt" 
-                                tile="The text that will apear after each post excerpt, if you choose to display it" 
+                                title="The text that will apear after each post excerpt, if you choose to display it" 
                                 value="<?php echo $erpPROOptions['moreTxt']; ?>" 
                                 type="text">
                         </td>
