@@ -29,7 +29,7 @@ if (isset($options['borderColor']) && $options['borderColor'] != '#ffffff') {
         <?php
         if (isset($posts)) {
             if($options['orderedList'] == true){
-                echo '<ol>';
+                ?> <ol> <?php 
             } else {
                 echo '<ul>';
             }
@@ -53,7 +53,7 @@ if (isset($options['borderColor']) && $options['borderColor'] != '#ffffff') {
                 <?php
             } // foreach ($posts as $k => $v)
             if($options['orderedList'] == true){
-                echo '</ol>';
+                ?> </ol> <?php 
             } else {
                 echo '</ul>';
             }
