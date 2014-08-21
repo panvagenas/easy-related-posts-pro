@@ -130,6 +130,7 @@ class erpPROTracker {
      * @since 1.0.0
      */
     private function is_bot() {
+        // TODO set previous result in wpsession to avoid looping everytime 
         $spiders = array(
             "abot",
             "dbot",
@@ -519,8 +520,9 @@ class erpPROTracker {
 
         foreach ($spiders as $spider) {
             // If the spider text is found in the current user agent, then return true
-            if (stripos($_SERVER ['HTTP_USER_AGENT'], $spider) !== false)
+            if (stripos($_SERVER ['HTTP_USER_AGENT'], $spider) !== false) {
                 return true;
+            }
         }
         // If it gets this far then no bot was found!
         return false;
