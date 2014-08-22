@@ -13,53 +13,43 @@
 ?>
 <table class="lay-opt-table">
     <tr>
-	<td>
-	    <label for="carouselAutoTime">Auto scroll time: </label>
-	</td>
-	<td>
+        <td>
+            <label for="carouselAutoTime">Auto scroll time: </label>
+        </td>
+        <td>
             <input class="erp-opttxt" id="carouselAutoTime" name="carouselAutoTime" min="0" type="number"value="<?php echo $carouselAutoTime; ?>"/>
-	</td>
+        </td>
     </tr>
     <tr>
-	<td>
-	    <label for="carouselMinVisible">Minimum visible items: </label>
-	</td>
-	<td>
+        <td>
+            <label for="carouselMinVisible">Minimum visible items: </label>
+        </td>
+        <td>
             <input class="erp-opttxt" id="carouselMinVisible" name="carouselMinVisible" type="number" min="1" value="<?php echo $carouselMinVisible; ?>"/>
-	</td>
+        </td>
     </tr>
     <tr>
-	<td>
-	    <label for="carouselMaxVisible">Max visible items: </label>
-	</td>
-	<td>
+        <td>
+            <label for="carouselMaxVisible">Max visible items: </label>
+        </td>
+        <td>
             <input class="erp-opttxt" id="carouselMaxVisible" name="carouselMaxVisible" type="number" min="2" value="<?php echo $carouselMaxVisible; ?>"/>
-	</td>
+        </td>
     </tr>
     <tr>
-	<td>
-	    <label for="carouselPauseHover">Pause on hover: </label>
-	</td>
-	<td>
-	    <input class="erp-optchbx" id="carouselPauseHover" name="carouselPauseHover" type="checkbox" <?php checked((bool) $carouselPauseHover); ?> />
-	</td>
+        <td>
+            <label for="carouselPauseHover">Pause on hover: </label>
+        </td>
+        <td>
+            <input class="erp-optchbx" id="carouselPauseHover" name="carouselPauseHover" type="checkbox" <?php checked((bool) $carouselPauseHover); ?> />
+        </td>
     </tr>
     <tr>
-		<td>
-		    <label for="thumbCaption">Use thumbnail captions: </label>
-		</td>
-		<td>
-	        <?php 
-	        if (class_exists( 'Jetpack' ) && Jetpack::is_module_active( 'photon' ) ){
-	        	?>
-	        	<input class="erp-optchbx" id="thumbCaption" name="thumbCaption" type="checkbox" disabled="disabled" /> <small><i>Disable Jetpack Photon plugin to use this option</i></small>
-	        	<?php 
-	        } else {
-	        	?>
-	        	<input class="erp-optchbx" id="thumbCaption" name="thumbCaption" type="checkbox" <?php checked((bool) $thumbCaption); ?> />
-	        	<?php 
-	        }
-	        ?>
-	    </td>
+        <td>
+            <label for="thumbCaption">Use thumbnail captions: </label>
+        </td>
+        <td>
+            <input class="erp-optchbx" id="thumbCaption" name="thumbCaption" type="checkbox" <?php checked((bool) $thumbCaption); ?> />
+        </td>
     </tr>
 </table>

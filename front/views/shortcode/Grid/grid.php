@@ -28,7 +28,7 @@ if(isset($options['borderColor']) && $options['borderColor'] != '#ffffff'){
     $style .= ' border-color: '.$options['borderColor'].'; ';
 }
 
-if ($options['thumbCaption'] && in_array('thumbnail', $optionsObj->getContentPositioning()) && !( class_exists( 'Jetpack' ) && Jetpack::is_module_active( 'photon' ) )){
+if ($options['thumbCaption'] && in_array('thumbnail', $optionsObj->getContentPositioning())){
 	$showThumbCaptions = true;
 } else {
 	$showThumbCaptions = false;

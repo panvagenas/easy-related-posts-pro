@@ -116,7 +116,8 @@ class erpPROPostData {
     }
 
     /**
-     * Get post title
+     * Get post title sourounded by a span tag and styled based on 
+     * options
      *
      * @return string
      * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
@@ -124,6 +125,51 @@ class erpPROPostData {
      */
     public function getTitle() {
         return $this->title;
+    }
+    
+    /**
+     * Get post title as provided from post obj
+     * @return string
+     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
+     * @since 1.0.2
+     */
+    public function getPostTitle() {
+        return $this->post->post_title;
+    }
+    
+    /**
+     * Get post title as provided from post obj with escaped 
+     * html chars
+     * 
+     * @param bool $raw True to get raw title from post obj, false 
+     * to get post title sourounded by a span tag and styled based on 
+     * options. Default false (formated).
+     * @return string
+     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
+     * @since 1.0.2
+     */
+    public function getPostTitleEscaped($raw = false) {
+        return $raw ? esc_attr($this->post->post_title) : esc_attr($this->getTitle());
+    }
+    
+    /**
+     * Get post author as provided from post obj
+     * @return string
+     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
+     * @since 1.0.2
+     */
+    public function getPostAuthor($param){
+        return $this->post->post_author;
+    }
+    
+    /**
+     * Get number of comments provided from post obj
+     * @return int
+     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
+     * @since 1.0.2
+     */
+    public function getPostCommentCount(){
+        return $this->post->comment_count;
     }
 
     /**

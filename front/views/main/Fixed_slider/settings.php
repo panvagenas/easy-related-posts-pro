@@ -8,73 +8,63 @@
 ?>
 <table class="lay-opt-table">
     <tr>
-	<td>
-	    <label for="position">Possition: </label>
-	</td>
-	<td>
-	    <select class="" id="position" name="position">
-		<option value="top" <?php echo selected($position, 'top'); ?>>Top</option>
-		<option value="bottom" <?php echo selected($position, 'bottom'); ?>>Bottom</option>
-	    </select>
-	</td>
+        <td>
+            <label for="position">Possition: </label>
+        </td>
+        <td>
+            <select class="" id="position" name="position">
+                <option value="top" <?php echo selected($position, 'top'); ?>>Top</option>
+                <option value="bottom" <?php echo selected($position, 'bottom'); ?>>Bottom</option>
+            </select>
+        </td>
     </tr>
     <tr>
-	<td>
-	    <label for="numOfPostsPerRow">Number of posts per row: </label>
-	</td>
-	<td>
+        <td>
+            <label for="numOfPostsPerRow">Number of posts per row: </label>
+        </td>
+        <td>
             <input class="erp-opttxt" id="numOfPostsPerRow" name="numOfPostsPerRow" type="text"value="<?php echo $numOfPostsPerRow; ?>" readonly="readonly"/>
             <div id="numOfPostsPerRowSlider"></div>
-	</td>
+        </td>
     </tr>
     <tr>
-	<td>
-	    <label for="backgroundColor">Background color: </label>
-	</td>
-	<td>
-	    <input class="erp-opttxt" id="backgroundColor" name="backgroundColor" type="text" value="<?php echo $backgroundColor; ?>"/>
-	</td>
+        <td>
+            <label for="backgroundColor">Background color: </label>
+        </td>
+        <td>
+            <input class="erp-opttxt" id="backgroundColor" name="backgroundColor" type="text" value="<?php echo $backgroundColor; ?>"/>
+        </td>
     </tr>
     <tr>
-	<td>
-	    <label for="backgroundTransparency">Background transparency: </label>
-	</td>
-	<td>
+        <td>
+            <label for="backgroundTransparency">Background transparency: </label>
+        </td>
+        <td>
             <input class="erp-opttxt" id="backgroundTransparency" max="1.00" min="0.00" step="0.01" name="backgroundTransparency" type="number" value="<?php echo $backgroundTransparency; ?>"/>
             <div id="backgroundTransparencySlider"></div>
         </td>
     </tr>
     <tr>
-	<td>
-	    <label for="triggerAfter">Trigger after: </label>
-	</td>
-	<td>
-	    <input class="erp-opttxt" id="triggerAfter" name="triggerAfter" max="0.90" min="0.10" step="0.01"  type="number" value="<?php echo $triggerAfter; ?>"/>
+        <td>
+            <label for="triggerAfter">Trigger after: </label>
+        </td>
+        <td>
+            <input class="erp-opttxt" id="triggerAfter" name="triggerAfter" max="0.90" min="0.10" step="0.01"  type="number" value="<?php echo $triggerAfter; ?>"/>
             <div id="triggerAfterSlider"></div>
-	</td>
+        </td>
     </tr>
     <tr>
-	<td>
-	    <label for="thumbCaption">Use thumbnail captions: </label>
-	</td>
-	<td>
-        <?php 
-        if (class_exists( 'Jetpack' ) && Jetpack::is_module_active( 'photon' ) ){
-        	?>
-        	<input class="erp-optchbx" id="thumbCaption" name="thumbCaption" type="checkbox" disabled="disabled" /> <small><i>Disable Jetpack Photon plugin to use this option</i></small>
-        	<?php 
-        } else {
-        	?>
-        	<input class="erp-optchbx" id="thumbCaption" name="thumbCaption" type="checkbox" <?php checked((bool) $thumbCaption); ?> />
-        	<?php 
-        }
-        ?>
-    </td>
+        <td>
+            <label for="thumbCaption">Use thumbnail captions: </label>
+        </td>
+        <td>
+            <input class="erp-optchbx" id="thumbCaption" name="thumbCaption" type="checkbox" <?php checked((bool) $thumbCaption); ?> />
+        </td>
     </tr>
 </table>
 <script type="text/javascript">
     jQuery(document).ready(function($) {
-        var valMap = [1,2,3,4,6,12];
+        var valMap = [1, 2, 3, 4, 6, 12];
         $("#numOfPostsPerRowSlider").slider({
             value: valMap.indexOf(<?php echo $numOfPostsPerRow; ?>),
             min: 0,
@@ -83,9 +73,9 @@
                 $("#numOfPostsPerRow").val(valMap[ui.value]);
             }
         });
-        
+
         jQuery('#backgroundColor').wpColorPicker();
-        
+
         $("#backgroundTransparencySlider").slider({
             value: <?php echo $backgroundTransparency; ?>,
             min: 0,
@@ -95,7 +85,7 @@
                 $("#backgroundTransparency").val(ui.value);
             }
         });
-        
+
         $("#triggerAfterSlider").slider({
             value: <?php echo $triggerAfter; ?>,
             min: 0.1,
