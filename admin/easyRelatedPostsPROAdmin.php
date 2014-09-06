@@ -69,6 +69,14 @@ class easyRelatedPostsPROAdmin {
         }
 
         /**
+         * Licence and plugin update functionality
+         */
+        add_action('admin_init', array(
+            $this,
+            'erp_pro_updater'
+        ));
+
+        /**
          * ******************************************************
          * Call $plugin_slug from public plugin class.
          * *****************************************************
@@ -102,7 +110,7 @@ class easyRelatedPostsPROAdmin {
          * *****************************************************
          */
         $plugin_basename = plugin_basename(plugin_dir_path(__DIR__) . 'easy-related-posts-pro.php');
-        add_filter('plugin_action_links_'.$plugin_basename, array(
+        add_filter('plugin_action_links_' . $plugin_basename, array(
             $this,
             'add_action_links'
         ));
@@ -179,6 +187,16 @@ class easyRelatedPostsPROAdmin {
         add_action('wp_ajax_erpgetShortCodeHelperContent', array(
             $this,
             'getShortCodeHelperContent'
+        ));
+
+        add_action('wp_ajax_erpKillLic', array(
+            $this,
+            'killLic'
+        ));
+
+        add_action('wp_ajax_erpLiveLic', array(
+            $this,
+            'liveLic'
         ));
 
         /**
@@ -670,17 +688,17 @@ class easyRelatedPostsPROAdmin {
             echo json_encode(false);
             die();
         }
-        
+
         erpPROPaths::requireOnce(erpPROPaths::$VPluginThemeFactory);
         VPluginThemeFactory::registerThemeInPathRecursive(erpPROPaths::getAbsPath(erpPROPaths::$mainThemesFolder), $_POST ['template']);
 
         $theme = VPluginThemeFactory::getThemeByName($_POST ['template']);
 
-        if(!$theme){
+        if (!$theme) {
             echo json_encode(false);
             die();
         }
-        
+
         $data = array(
             'content' => $theme->renderSettings('', false),
             'optionValues' => $theme->getOptions()
@@ -717,21 +735,153 @@ class easyRelatedPostsPROAdmin {
         }
 
         VPluginThemeFactory::registerThemeInPathRecursive(erpPROPaths::getAbsPath(erpPROPaths::$scThemesFolder), $_POST ['template']);
-        
+
         $templateObj = VPluginThemeFactory::getThemeByName($_POST ['template']);
-        if(!$templateObj){
+        if (!$templateObj) {
             echo json_encode(false);
             die();
         }
         $templateObj->setOptions($profileOpts);
-        
-        
+
+
 
         $data = array(
             'content' => $templateObj->renderSettings('', FALSE),
             'optionValues' => $profilesOptionsArray
         );
 
+        echo json_encode($data);
+        die();
+    }
+
+    public function killLic() {
+        // listen for our activate button to be clicked
+        if (isset($_POST['erp_license_deactivate'])) {
+
+            if (!check_admin_referer('erp_nonce', 'erp_nonce')) {
+                $data = array(
+                    'res' => false,
+                    'error' => 'You don\'t have the wrights!'
+                );
+            } else {
+
+                erpPROPaths::requireOnce(erpPROPaths::$erpPROMainOpts);
+                $opts = new erpPROMainOpts();
+                // retrieve the license from the database
+                $license = (string) filter_var($_POST['erp_license_deactivate'], FILTER_SANITIZE_STRING, array('flags' => FILTER_NULL_ON_FAILURE));
+
+
+                // data to send in our API request
+                $api_params = array(
+                    'edd_action' => 'deactivate_license',
+                    'license' => $license,
+                    'item_name' => urlencode(EDD_SL_ERP_PRO_ITEM_NAME), // the name of our product in EDD
+                    'url' => home_url()
+                );
+
+                // Call the custom API.
+                $response = wp_remote_get(add_query_arg($api_params, EDD_SL_ERP_PRO_STORE_URL), array('timeout' => 15, 'sslverify' => false));
+
+                // make sure the response came back okay
+                if (is_wp_error($response)) {
+                    $data = array(
+                        'res' => false,
+                        'error' => 'Contacting the server failed. Please try again later.'
+                    );
+                } else {
+
+                    // decode the license data
+                    $license_data = json_decode(wp_remote_retrieve_body($response));
+
+                    // TODO $license_data->license will be either "deactivated" or "failed" 
+                    if ($license_data->license == 'deactivated') {
+                        $opts->killLic();
+                        $data = array(
+                            'res' => true
+                        );
+                    } else {
+                        $data = array(
+                            'res' => false,
+                            'error' => 'Please check your input.'
+                        );
+                    }
+                }
+            }
+        } else {
+            $data = array(
+                'res' => false,
+                'error' => 'Wrong input.'
+            );
+        }
+        echo json_encode($data);
+        die();
+    }
+
+    public function liveLic() {
+        // listen for our activate button to be clicked
+        if (isset($_POST['erp_license_activate'])) {
+
+            // run a quick security check 
+            if (!check_admin_referer('erp_nonce', 'erp_nonce')) {
+                $data = array(
+                    'res' => false,
+                    'error' => 'You don\'t have the wrights!'
+                );
+            } else {// get out if we didn't click the Activate button
+                erpPROPaths::requireOnce(erpPROPaths::$erpPROMainOpts);
+                $opts = new erpPROMainOpts();
+                // retrieve the license from the database
+                $license = (string) filter_var($_POST['erp_license_activate'], FILTER_SANITIZE_STRING, array('flags' => FILTER_NULL_ON_FAILURE));
+
+
+                // data to send in our API request
+                $api_params = array(
+                    'edd_action' => 'activate_license',
+                    'license' => $license,
+                    'item_name' => urlencode(EDD_SL_ERP_PRO_ITEM_NAME), // the name of our product in EDD
+                    'url' => home_url()
+                );
+
+                // Call the custom API.
+                $response = wp_remote_get(add_query_arg($api_params, EDD_SL_ERP_PRO_STORE_URL), array('timeout' => 15, 'sslverify' => false));
+
+                // make sure the response came back okay
+                if (is_wp_error($response)) {
+                    $data = array(
+                        'res' => false,
+                        'error' => 'Error response'
+                    );
+                } else {
+
+                    // decode the license data
+                    $license_data = json_decode(wp_remote_retrieve_body($response));
+
+                    // $license_data->license will be either "valid" or "invalid"
+                    if ($license_data->license == 'valid') {
+                        $opts->setLicStatus(true, false);
+                        $opts->setRechkLic(false, false);
+                        $opts->setLic($license, true);
+                        $data = array(
+                            'res' => true,
+                            'response' => $license_data->license
+                        );
+                    } else {
+                        $opts->setLicStatus(false, false);
+                        $opts->setRechkLic(false, false);
+                        $opts->setLic($license, true);
+                        $data = array(
+                            'res' => false,
+                            'response' => $license_data->license
+                        );
+                    }
+                }
+            }
+        } else {
+            $data = array(
+                'res' => false,
+                'error' => 'Wrong input.'
+            );
+        }
         echo json_encode($data);
         die();
     }
@@ -787,6 +937,24 @@ class easyRelatedPostsPROAdmin {
         }
         $pluginArray ['erpproshortcodehelper'] = plugins_url('/assets/js/erpPROMCEPlugin.min.js', __FILE__);
         return $pluginArray;
+    }
+
+    public function erp_pro_updater() {
+        erpPROPaths::requireOnce(erpPROPaths::$erpPROMainOpts);
+        $opts = new erpPROMainOpts();
+
+        // retrieve our license key from the DB
+        $license_key = $opts->getLic();
+        // setup the updater
+        erpPROPaths::includeUpdater();
+        $edd_updater = new EDD_SL_Plugin_Updater(EDD_SL_ERP_PRO_STORE_URL, __FILE__, array(
+            'version' => erpPRODefaults::erpPROVersionString, // current version number
+            'license' => $license_key, // license key (used get_option above to retrieve from DB)
+            'item_name' => EDD_SL_ERP_PRO_ITEM_NAME, // name of this plugin
+            'author' => 'Panagiotis Vagenas <pan.vagenas@gmail.com>', // author of this plugin
+            'url' => home_url()
+                )
+        );
     }
 
 }

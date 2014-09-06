@@ -7,6 +7,8 @@
  * @link      http://erp.xdark.eu
  * @copyright 2014 Panagiotis Vagenas <pan.vagenas@gmail.com>
  */
+
+
 if (!function_exists('erpPROTaxGrouping')) {
 
     function erpPROTaxGrouping(Array $input) {
@@ -47,6 +49,7 @@ if (!function_exists('erpPROTaxGrouping')) {
                 <li><a href="#tabs-4">Excluded Categories</a></li>
                 <li><a href="#tabs-5">Excluded Tags</a></li>
                 <li><a href="#tabs-6">Excluded Post Types</a></li>
+                <li><a href="#tabs-7">License</a></li>
             </ul>
             <div id="tabs-1">
                 <table class="gen-opt-table">
@@ -650,6 +653,49 @@ if (!function_exists('erpPROTaxGrouping')) {
                     ?>
                 </table>
             </div>
+            <div id="tabs-7">
+                <?php
+                $license = $optObj->getLic();
+                $status = $optObj->getLicStatus();
+//                settings_fields('edd_sample_license'); 
+                ?>
+                <table class="lay-opt-table">
+                    <tbody>
+                        <tr valign="top">	
+                            <th scope="row" valign="top">
+                                    <?php _e('License Key'); ?>
+                            </th>
+                            <td>
+                                    <input id="licence" name="" type="text" class="regular-text" value="<?php esc_attr_e( $license ); ?>" />
+                            </td>
+                        </tr>
+                        <tr valign="top">	
+                            <th scope="row" valign="top">
+                                    <?php _e('Activate License'); ?>
+                            </th>
+                            <td>
+                                <?php if( $status !== false ) { ?>
+                                    <div id="erp_license_deactivate" class="button-secondary" ><?php _e('Deactivate License'); ?></div>
+                                <?php } else { ?>
+                                    <div id="erp_license_activate" class="button-secondary">Activate License</div>
+                                <?php } ?>
+                            </td>
+                        </tr>
+                        <tr valign="top">	
+                            <th scope="row" valign="top">
+                                    <?php _e('License status'); ?>
+                            </th>
+                            <td>
+                                <?php if( $status !== false ) { ?>
+                                    <div class="lic-active-text" ><?php _e('Active'); ?></div>
+                                <?php } else { ?>
+                                    <div class="lic-inactive-text" ><?php _e('Inactive'); ?></div>
+                                <?php } ?>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>	
+            </div>
             <!--</div>-->
         </div>
         <?php echo get_submit_button('Update options', 'primary large', 'Save'); ?>
@@ -666,5 +712,7 @@ if ($tabSpec !== null && $tabSpec !== false) {
 }
 ?>
         </script>
+        
+        <?php wp_nonce_field( 'erp_nonce', 'erp_nonce' ); ?>
     </form>
 </div>

@@ -69,6 +69,78 @@
                                                 $('#clearCacheButton').removeClass('loadingElement').prop('disabled', false);
                                             }, 'json');
                         });
+                        
+        
+        /***********************************************************************
+         * Licence management
+         **********************************************************************/
+        $('#erp_license_activate')
+                .click(
+                        function(event) {
+                            event.preventDefault();
+                            
+                            $(this).addClass('loadingElement').prop('disabled', true);
+                            var data = {
+                                action: 'erpLiveLic',
+                                'erp_license_activate' : $('#licence').val(),
+                                'erp_nonce': $('#erp_nonce').val()
+                            };
+                            jQuery
+                                    .post(
+                                            ajaxurl,
+                                            data,
+                                            function(response) {
+                                                console.log(response);
+                                                if (response['res'] == true) {
+                                                    alert('Licence activated!');
+                                                    location.reload(true);
+                                                } else {
+                                                    if(response['error'] != undefined){
+                                                        msg = 'There was an error: ' + response['error'];
+                                                    } else {
+                                                        msg = 'There was an error. Please check your input';
+                                                    }
+                                                    alert(msg);
+                                                    $('#erp_license_activate').removeClass('loadingElement').prop('disabled', false);
+                                                }
+                                            }, 'json');
+                        });
+                        
+        $('#erp_license_deactivate')
+                .click(
+                        function(event) {
+                            event.preventDefault();
+
+                            $(this).addClass('loadingElement').prop('disabled', true);
+                            var data = {
+                                action: 'erpKillLic',
+                                'erp_license_deactivate': $('#licence').val(),
+                                'erp_nonce': $('#erp_nonce').val()
+                            };
+                            jQuery
+                                    .post(
+                                            ajaxurl,
+                                            data,
+                                            function(response) {
+                                                console.log(response);
+                                                if (response['res'] == true) {
+                                                    alert('Licence deactivated');
+                                                    location.reload(true);
+                                                } else {
+                                                    if (response['error'] != undefined) {
+                                                        msg = 'There was an error: ' + response['error'];
+                                                    } else {
+                                                        msg = 'There was an error. Please check your input';
+                                                    }
+                                                    alert(msg);
+                                                    $('#erp_license_deactivate').removeClass('loadingElement').prop('disabled', false);
+                                                }
+                                            },
+                                            'json');
+                        }
+                );
+                        
+                        
         /***********************************************************************
          * Rebuild cache
          **********************************************************************/

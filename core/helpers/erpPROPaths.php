@@ -60,4 +60,10 @@ class erpPROPaths {
         return array_keys((array)get_class_vars(__CLASS__));
     }
 
+    public static function includeUpdater() {
+        if (!class_exists('EDD_SL_Plugin_Updater')) {
+            // load our custom updater if it doesn't already exist
+            include( EPR_PRO_BASE_PATH . 'includes/EDD_SL_Plugin_Updater.php' );
+        }
+    }
 }

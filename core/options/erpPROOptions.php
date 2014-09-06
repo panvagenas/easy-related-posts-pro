@@ -200,6 +200,9 @@ abstract class erpPROOptions {
                     case erpPRODefaults::boolFormal :
                         $validated [$key] = $this->validBool($value);
                         break;
+//                    case erpPRODefaults::licence :
+//                        $validated [$key] = $this->validLic($value);
+//                        break;
                     default:
                         break;
                 }
@@ -243,9 +246,9 @@ abstract class erpPROOptions {
         return $validated;
     }
 
-    /*     * **********************************************************************
+    /************************************************************************
      * Geters for options
-     * ********************************************************************** */
+     *********************************************************************** */
 
     /**
      * If we have to display the post thumb

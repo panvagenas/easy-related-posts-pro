@@ -86,6 +86,7 @@ class easyRelatedPostsPRO {
      * @var erpPRODBActions
      */
     protected $DB;
+    private $valid = null;
 
     /**
      * If rating system is in use then this should be true
@@ -263,7 +264,7 @@ class easyRelatedPostsPRO {
      * @since 1.0.0
      */
     public function isShowTime($post) {
-        if (empty($post) || !is_single($post->ID) || !is_main_query() || !in_the_loop()) {
+        if (empty($post) || !is_single($post->ID) || !is_main_query() || !in_the_loop() || !$this->valid()) {
             return FALSE;
         }
         return TRUE;
@@ -277,6 +278,35 @@ class easyRelatedPostsPRO {
      */
     public function get_plugin_slug() {
         return $this->plugin_slug;
+    }
+    
+    public function valid() {
+        if ($this->valid === null){
+            $this->calcValid();
+        }
+        return $this->valid;
+    }
+    
+    private function calcValid() {
+        if($this->mainOpts->getRechkLic() < (time() - 1209600)){
+            $v = $this->mainOpts->validLic();
+            if($v === 1){
+                $this->mainOpts->setLicStatus(true, false);
+                $this->mainOpts->setRechkLic(time(), true);
+                $this->valid = true;
+            } elseif ($v === 0) {
+                $this->mainOpts->setLicStatus(false, false);
+                $this->mainOpts->setRechkLic(time(), true);
+                $this->valid = false;
+            } else {
+                $this->mainOpts->setRechkLic(time(), true);
+                $this->valid = true;
+            }
+        } elseif($this->mainOpts->getLicStatus()) {
+            $this->valid = true;
+        } else {
+            $this->valid = false;
+        }
     }
 
     /**

@@ -44,6 +44,10 @@ if (!defined('ERP_PRO_RELATIVE_TABLE')) {
     define('ERP_PRO_RELATIVE_TABLE', ERP_PRO_SLUG . '_related');
 }
 
+define( 'EDD_SL_ERP_PRO_STORE_URL', 'http://erp.xdark.eu' );
+
+define( 'EDD_SL_ERP_PRO_ITEM_NAME', 'Easy Related Posts PRO' ); 
+
 /* ----------------------------------------------------------------------------*
  * Session functionality
  * ---------------------------------------------------------------------------- */

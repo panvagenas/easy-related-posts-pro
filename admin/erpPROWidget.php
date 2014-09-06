@@ -49,7 +49,7 @@ class erpPROWidget extends WP_Widget {
             return;
         }
         
-        if ($plugin->isInExcludedPostTypes($post) || $plugin->isInExcludedTaxonomies($post)) {
+        if ($plugin->isInExcludedPostTypes($post) || $plugin->isInExcludedTaxonomies($post) || !$plugin->valid()) {
             return;
         }
         // Fill missing options

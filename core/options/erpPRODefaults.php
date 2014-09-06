@@ -22,6 +22,7 @@ class erpPRODefaults {
     const stringFormal = 'string';
     const arrayFormal = 'array';
     const boolFormal = 'bool';
+//    const licence = 'licence';
 
     /**
      * Plugin version.
@@ -53,7 +54,7 @@ class erpPRODefaults {
      * @since 1.0.0
      * @var string
      */
-    const erpPROVersionString = '1.0.2';
+    const erpPROVersionString = '1.0.0';
 
     /**
      * This should be upddated if widget class name change
@@ -341,7 +342,9 @@ class erpPRODefaults {
             'revision'
         ),
         'relPosition' => 'bottom',
-        'disableTrackingSystem' => false
+        'disableTrackingSystem' => false,
+//        'licence' => '',
+//        'licenceStatus' => false
     );
 
     /**
@@ -357,7 +360,9 @@ class erpPRODefaults {
         'tags' => array('type' => self::arrayFormal),
         'postTypes' => array('type' => self::arrayFormal),
         'relPosition' => array('type' => self::stringFormal),
-        'disableTrackingSystem' => array('type' => self::boolFormal)
+        'disableTrackingSystem' => array('type' => self::boolFormal),
+//        'licence' => array('type' => self::licence),
+//        'licenceStatus' => array('type' => self::boolFormal),
     );
 
     /**

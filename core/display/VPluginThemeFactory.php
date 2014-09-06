@@ -109,7 +109,7 @@ if (!class_exists('VPluginThemeFactory')) {
             }
             return $out;
         }
-
+// TODO Tweak this, too slow
         public static function registerThemeInPathRecursive($path, $name = null) {
             $contents = VPluginFileHelper::dirToArrayRecursive($path);
             $absPath = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;

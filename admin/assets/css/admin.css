@@ -62,3 +62,21 @@
     width: 65%;
     text-align: left;
 }
+
+#erp-opt-general .lic-inactive-text {
+    background-color: red;
+    border: 1px solid !important;
+    border-radius: 5px;
+    padding: 5px;
+    max-width: -moz-fit-content;
+    max-width: fit-content;
+}
+
+#erp-opt-general .lic-active-text {
+    background-color: green;
+    border: 1px solid !important;
+    border-radius: 5px;
+    padding: 5px;
+    max-width: -moz-fit-content;
+    max-width: fit-content;
+}
