@@ -140,7 +140,25 @@ add_shortcode('erp', 'erpPROShortcode');
  * ---------------------------------------------------------------------------- */
 /**
  */
+function erp_pro_updater() {
+    erpPROPaths::requireOnce(erpPROPaths::$erpPROMainOpts);
+    $opts = new erpPROMainOpts();
+
+    // retrieve our license key from the DB
+    $license_key = $opts->getLic();
+    // setup the updater
+    erpPROPaths::includeUpdater();
+    $edd_updater = new EDD_SL_Plugin_Updater(EDD_SL_ERP_PRO_STORE_URL, __FILE__, array(
+        'version' => erpPRODefaults::erpPROVersionString, // current version number
+        'license' => $license_key, // license key (used get_option above to retrieve from DB)
+        'item_name' => EDD_SL_ERP_PRO_ITEM_NAME, // name of this plugin
+        'author' => 'Panagiotis Vagenas <pan.vagenas@gmail.com>', // author of this plugin
+        'url' => home_url()
+            )
+    );
+}
 if (is_admin()) {
     erpPROPaths::requireOnce(erpPROPaths::$easyRelatedPostsPROAdmin);
     add_action('plugins_loaded', array('easyRelatedPostsPROAdmin', 'get_instance'));
+    add_action('admin_init', 'erp_pro_updater');
 }

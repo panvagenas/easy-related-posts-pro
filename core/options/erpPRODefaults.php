@@ -54,8 +54,8 @@ class erpPRODefaults {
      * @since 1.0.0
      * @var string
      */
-    const erpPROVersionString = '1.0.0';
-
+    const erpPROVersionString = '1.0.2';
+    
     /**
      * This should be upddated if widget class name change
      *

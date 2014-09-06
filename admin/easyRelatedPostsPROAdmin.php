@@ -69,14 +69,6 @@ class easyRelatedPostsPROAdmin {
         }
 
         /**
-         * Licence and plugin update functionality
-         */
-        add_action('admin_init', array(
-            $this,
-            'erp_pro_updater'
-        ));
-
-        /**
          * ******************************************************
          * Call $plugin_slug from public plugin class.
          * *****************************************************
@@ -937,24 +929,6 @@ class easyRelatedPostsPROAdmin {
         }
         $pluginArray ['erpproshortcodehelper'] = plugins_url('/assets/js/erpPROMCEPlugin.min.js', __FILE__);
         return $pluginArray;
-    }
-
-    public function erp_pro_updater() {
-        erpPROPaths::requireOnce(erpPROPaths::$erpPROMainOpts);
-        $opts = new erpPROMainOpts();
-
-        // retrieve our license key from the DB
-        $license_key = $opts->getLic();
-        // setup the updater
-        erpPROPaths::includeUpdater();
-        $edd_updater = new EDD_SL_Plugin_Updater(EDD_SL_ERP_PRO_STORE_URL, __FILE__, array(
-            'version' => erpPRODefaults::erpPROVersionString, // current version number
-            'license' => $license_key, // license key (used get_option above to retrieve from DB)
-            'item_name' => EDD_SL_ERP_PRO_ITEM_NAME, // name of this plugin
-            'author' => 'Panagiotis Vagenas <pan.vagenas@gmail.com>', // author of this plugin
-            'url' => home_url()
-                )
-        );
     }
 
 }
