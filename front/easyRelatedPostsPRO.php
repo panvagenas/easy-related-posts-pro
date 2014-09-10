@@ -190,7 +190,11 @@ class easyRelatedPostsPRO {
             }
             $theme->formPostData($result, $this->mainOpts, $ratings);
                         
-            $relContent = $theme->render();
+            $relContent = $theme->render($theme->getBasePath());
+
+            if(is_wp_error($relContent)){
+                return $content;
+            }
 
             return $this->mainOpts->getPosition() == 'top' ?  $relContent . $content : $content.$relContent;
         }
@@ -274,7 +278,7 @@ class easyRelatedPostsPRO {
      * Return the plugin slug.
      *
      * @since 1.0.0
-     * @return Plugin slug variable.
+     * @return string Plugin slug variable.
      */
     public function get_plugin_slug() {
         return $this->plugin_slug;
@@ -282,31 +286,9 @@ class easyRelatedPostsPRO {
     
     public function valid() {
         if ($this->valid === null){
-            $this->calcValid();
+            $this->valid = $this->mainOpts->getLicStatus();
         }
         return $this->valid;
-    }
-    
-    private function calcValid() {
-        if($this->mainOpts->getRechkLic() < (time() - 1209600)){
-            $v = $this->mainOpts->validLic();
-            if($v === 1){
-                $this->mainOpts->setLicStatus(true, false);
-                $this->mainOpts->setRechkLic(time(), true);
-                $this->valid = true;
-            } elseif ($v === 0) {
-                $this->mainOpts->setLicStatus(false, false);
-                $this->mainOpts->setRechkLic(time(), true);
-                $this->valid = false;
-            } else {
-                $this->mainOpts->setRechkLic(time(), true);
-                $this->valid = true;
-            }
-        } elseif($this->mainOpts->getLicStatus()) {
-            $this->valid = true;
-        } else {
-            $this->valid = false;
-        }
     }
 
     /**
@@ -527,7 +509,15 @@ class easyRelatedPostsPRO {
         // Clean up table
         global $wpdb;
         $query = 'DELETE FROM ' . $wpdb->prefix . ERP_PRO_RELATIVE_TABLE . ' WHERE time < "' . date('Y-m-d H:i:s', time() - 2419200) . '"';
-        return $wpdb->query($query);
+        $dbResult = $wpdb->query($query);
+        erpPROPaths::requireOnce(erpPROPaths::$erpPROMainOpts);
+        $mainOpts = new erpPROMainOpts();
+        $v = $mainOpts->validLic();
+        if($v === 1){
+            $mainOpts->setLicStatus(true, true);
+        } elseif ($v === 0) {
+            $mainOpts->setLicStatus(false, true);
+        }
+        return $v && $dbResult;
     }
-
 }

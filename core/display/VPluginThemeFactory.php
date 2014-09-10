@@ -148,7 +148,7 @@ if (!class_exists('VPluginThemeFactory')) {
 
         /**
          * 
-         * @param type $name
+         * @param string $name
          * @return null|erpPROTheme
          */
         public static function getThemeByName($name, $type = null) {
