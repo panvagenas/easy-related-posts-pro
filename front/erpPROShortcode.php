@@ -27,7 +27,7 @@
 	 * @deprecated
 	 *
 	 * @since
-	 * @var unknown
+	 * @var array
 	 */
 	private $scOpts;
 
@@ -76,7 +76,7 @@
                 $theme->setOptions($this->optObj->getOptions());
                 $theme->formPostData($result, $this->optObj, $ratings);
 
-                $relContent = $theme->render();
+                $relContent = $theme->render($theme->getBasePath());
                 
 		$this->setSuppressOthers();
 

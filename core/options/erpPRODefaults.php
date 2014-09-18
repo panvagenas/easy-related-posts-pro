@@ -57,7 +57,7 @@ class erpPRODefaults {
     const erpPROVersionString = '1.0.2';
     
     /**
-     * This should be upddated if widget class name change
+     * This should be updated if widget class name change
      *
      * @since 1.0.0
      * @var string
@@ -243,7 +243,7 @@ class erpPRODefaults {
 
     /**
      * Fetch by weights
-     * @var type array
+     * @var array
      */
     public static $fetchByOptionsWeights = array(
         'categories' => array('clicks' => 0.15, 'categories' => 0.85, 'tags' => 0.0),

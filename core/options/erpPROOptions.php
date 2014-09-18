@@ -84,12 +84,13 @@ abstract class erpPROOptions {
     /**
      * Just unsets option value if present in objects instance options array
      *
-     * @return boolean Deleted option value if exists, NULL otherwise
+     * @param string $optionName
+     * @return mixed Deleted option value if exists, NULL otherwise
      * @since 1.0.0
      */
     public function deleteOption($optionName) {
         if (array_key_exists($optionName, $this->options)) {
-            $this->options [$optionName] = $value;
+            $value = $this->options [$optionName];
             unset($this->options [$optionName]);
             return $value;
         }

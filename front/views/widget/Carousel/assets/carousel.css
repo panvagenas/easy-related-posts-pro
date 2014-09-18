@@ -6,7 +6,6 @@
         -o-transition: background 0.2s linear;
         transition: background 0.2s linear;
         background-size: contain;
-        z-index: 100;
         background-position: center center;
         background-repeat: no-repeat;
         background-color: #eee;

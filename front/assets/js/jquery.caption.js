@@ -19,7 +19,7 @@
 			'mode'            : 'default',   // default | static | animated | hide
 			'debug_mode'      : false,       // Output debug info to the JS console
 			'force_dimensions': false        // Force the dimensions in case they can't be detected (e.g., image is not yet painted to viewport)
-		}
+		};
 
 		// Extend the options from defaults with user's options
 		var options = $.extend(defaults, opts || {});

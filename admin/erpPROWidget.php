@@ -185,6 +185,8 @@ class erpPROWidget extends WP_Widget {
             echo $args ['before_title'] . $instance ['title'] . $args ['after_title'];
             echo 'No related posts found';
             echo $args ['after_widget'];
+        } else {
+            echo '';
         }
     }
 

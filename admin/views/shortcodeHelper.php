@@ -460,7 +460,7 @@ if (!function_exists('erpPROTaxGrouping')) {
                         }
                         $('#profile').append('<option value="' + response.profileName + '" selected>' + response.profileName + '</option>');
                         return true;
-                    }
+                    };
                     $('#scForm').ajaxSubmit(formOptionsNewProfile);
                 } else {
                     alert('You must specify a profile name');
@@ -486,7 +486,7 @@ if (!function_exists('erpPROTaxGrouping')) {
                             } else {
                                 var dil = $('#erpDialogContent');
                                 getData = {
-                                    action: 'erpgetShortCodeHelperContent',
+                                    action: 'erpgetShortCodeHelperContent'
                                 };
                                 $.get(ajaxurl, getData, function(data) {
                                     if (data.error !== undefined) {
@@ -503,7 +503,8 @@ if (!function_exists('erpPROTaxGrouping')) {
             /***********************************************************************
              * Load templates options
              **********************************************************************/
-            $('.dsplLayout')
+            var dsplLayout =  $('.dsplLayout');
+	        dsplLayout
                 .change(
                         function() {
                             var data = {
@@ -529,7 +530,7 @@ if (!function_exists('erpPROTaxGrouping')) {
                                                 }
                                             }, 'json');
                         });
-        $('.dsplLayout').trigger('change');
+	        dsplLayout.trigger('change');
         
         jQuery('#postTitleColor').wpColorPicker();
         jQuery('#excColor').wpColorPicker();
