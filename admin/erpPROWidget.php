@@ -41,11 +41,14 @@ class erpPROWidget extends WP_Widget {
      * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
      */
     public function widget($args, $instance) {
+	    //TODO DEBUG
+	    do_action('debug', 'Widget ' . $this->id . ' Starting');
         global $post;
+
         // get instance of main plugin
         $plugin = easyRelatedPostsPRO::get_instance();
         // check if it's time to take action
-        if (!is_single($post->ID)) {
+        if (empty($post) || !isset($post->ID) || !is_single($post->ID)) {
             return;
         }
         
@@ -94,6 +97,9 @@ class erpPROWidget extends WP_Widget {
         echo $args ['before_title'] . $instance ['title'] . $args ['after_title'];
         echo $content;
         echo $args ['after_widget'];
+
+	    //TODO DEBUG
+	    do_action('debug', 'Widget ' . $this->id . ' Ended');
     }
 
     /**
@@ -161,9 +167,9 @@ class erpPROWidget extends WP_Widget {
                     unset($new_instance [$key]);
                 }
             } else {
-                // TODO Set notices class
-//                $message = new WP_Error_Notice('Theme ' . $new_instance ['dsplLayout'] . ' not found. Theme options discarded');
-//                WP_Admin_Notices::getInstance()->addNotice($message);
+                erpPROPaths::requireOnce(erpPROPaths::$WP_Admin_Notices);
+                $message = new WP_Error_Notice('Theme ' . $new_instance ['dsplLayout'] . ' not found. Theme options discarded');
+                WP_Admin_Notices::getInstance()->addNotice($message);
             }
         }
         // save updated options

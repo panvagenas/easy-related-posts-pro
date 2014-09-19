@@ -110,7 +110,7 @@ class erpPROMainOpts extends erpPROOptions
     public function saveOptions($newOptions)
     {
         $this->options = array_merge($this->options, $this->validateCommonOptions($newOptions) + $this->validateMainOptions($newOptions));
-        update_option($this->optionsArrayName, $this->options);
+        return update_option($this->optionsArrayName, $this->options);
     }
 
     /*     * **********************************************************************

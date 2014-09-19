@@ -130,7 +130,6 @@ class erpPROTracker {
      * @since 1.0.0
      */
     private function is_bot() {
-        // TODO set previous result in wpsession to avoid looping everytime 
         $spiders = array(
             "abot",
             "dbot",

@@ -91,6 +91,9 @@ if (!class_exists('VPluginThemeFactory')) {
         }
         
         private static function getThemeFromFile($filePath, $themeName = null) {
+	        if(strpos($filePath, '.php') === false){
+		        return null;
+	        }
             $classesInFile = self::getClassesOfFile($filePath);
             $out = null;
             if (is_array($classesInFile) && !empty($classesInFile)) {
@@ -109,14 +112,26 @@ if (!class_exists('VPluginThemeFactory')) {
             }
             return $out;
         }
-// TODO Tweak this, too slow
-        public static function registerThemeInPathRecursive($path, $name = null) {
+// TODO Tweak this, it's too slow
+        public static function registerThemeInPathRecursive($path, $name = null, $maxDepth = 1, $depth = 1) {
             $contents = VPluginFileHelper::dirToArrayRecursive($path);
             $absPath = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
             foreach ((array) $contents as $key => $value) {
                 if (is_array($value)) {
-                    self::registerThemeInPathRecursive($absPath . $key, $name);
+	                //TODO DEBUG
+	                do_action('debug', 'Path '.$key.' is array, recursion');
+	                if($maxDepth < $depth){
+		                //TODO DEBUG
+		                do_action('debug', 'Passed depth, bailing out');
+		                continue;
+	                }
+                    self::registerThemeInPathRecursive($absPath . $key, $name, $maxDepth, $depth + 1);
                 } else {
+	                if(strpos($value, '.php') === false){
+		                continue;
+	                }
+	                //TODO DEBUG
+	                do_action('debug', 'Path '.$value.' is file, registering');
                     self::registerThemeInPath($absPath . $value, $name);
                 }
             }

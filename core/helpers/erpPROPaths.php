@@ -10,6 +10,7 @@ class erpPROPaths {
     public static $erpPRODBHelper = 'core/helpers/erpPRODBHelper.php';
     public static $erpPROHTMLHelper = 'core/helpers/erpPROHTMLHelper.php';
     public static $erpPROFileHelper = 'core/helpers/erpPROFileHelper.php';
+	public static $WP_Admin_Notices = 'core/helpers/WP_Admin_Notices.php';
     // Display
     public static $erpPROPostData = 'core/display/erpPROPostData.php';
     public static $erpPROView = 'core/display/erpPROView.php';

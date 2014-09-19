@@ -21,914 +21,927 @@
  */
 class easyRelatedPostsPROAdmin {
 
-    /**
-     * Instance of this class.
-     *
-     * @since 1.0.0
-     * @var easyRelatedPostsPROAdmin
-     */
-    protected static $instance = null;
-
-    /**
-     * Slug of the plugin screen.
-     *
-     * @since 1.0.0
-     * @var string
-     */
-    protected $plugin_screen_hook_suffix = null;
-
-    /**
-     * The name of the array that holds SC profiles
-     *
-     * @since 1.0.0
-     * @var string
-     */
-    private $shortCodeProfilesArrayName = 'erpPROShortCodeProfiles';
-
-    /**
-     *
-     * @var string 
-     */
-    private $plugin_slug;
-
-    /**
-     * Initialize the plugin by loading admin scripts & styles and adding a
-     * settings page and menu.
-     *
-     * @since 1.0.0
-     */
-    private function __construct() {
-
-        /**
-         * *****************************************************
-         * admin class should only be available for super admins
-         * *****************************************************
-         */
-        if (!is_super_admin()) {
-            return;
-        }
-
-        /**
-         * ******************************************************
-         * Call $plugin_slug from public plugin class.
-         * *****************************************************
-         */
-        $plugin = easyRelatedPostsPRO::get_instance();
-        $this->plugin_slug = $plugin->get_plugin_slug();
-
-        // Load admin style sheet and JavaScript.
-        add_action('admin_enqueue_scripts', array(
-            $this,
-            'enqueue_admin_styles'
-        ));
-        add_action('admin_enqueue_scripts', array(
-            $this,
-            'enqueue_admin_scripts'
-        ));
-
-        /**
-         * ******************************************************
-         * Add the options page and menu item.
-         * *****************************************************
-         */
-        add_action('admin_menu', array(
-            $this,
-            'add_plugin_admin_menu'
-        ));
-
-        /**
-         * ******************************************************
-         * Add an action link pointing to the options page.
-         * *****************************************************
-         */
-        $plugin_basename = plugin_basename(plugin_dir_path(__DIR__) . 'easy-related-posts-pro.php');
-        add_filter('plugin_action_links_' . $plugin_basename, array(
-            $this,
-            'add_action_links'
-        ));
-
-        /**
-         * ******************************************************
-         * Save options
-         * *****************************************************
-         */
-        add_action('admin_post_save_' . EPR_PRO_MAIN_OPTIONS_ARRAY_NAME, array(
-            $this,
-            'saveOptions'
-        ));
-
-        // Do rating when saving posts
-        add_action('transition_post_status', array(
-            $this,
-            'doRating'
-                ), 10, 3);
-
-        /**
-         * ******************************************************
-         * Delete cache entries when a post is deleted
-         * *****************************************************
-         */
-        add_action('delete_post', array(
-            $this,
-            'deletePostInCache'
-                ), 10);
-
-        /**
-         * ******************************************************
-         * Ajax hooks
-         * *****************************************************
-         */
-        add_action('wp_ajax_loadTemplateOptions', array(
-            $this,
-            'loadTemplateOptions'
-        ));
-
-        add_action('wp_ajax_erpClearCache', array(
-            $this,
-            'clearCache'
-        ));
-
-        add_action('wp_ajax_erpRebuildCache', array(
-            $this,
-            'rebuildCache'
-        ));
-
-        add_action('wp_ajax_loadSCTemplateOptions', array(
-            $this,
-            'loadSCTemplateOptions'
-        ));
-        add_action('wp_ajax_erploadShortcodeProfile', array(
-            $this,
-            'loadShortcodeProfile'
-        ));
-        add_action('wp_ajax_erpsaveShortcodeProfile', array(
-            $this,
-            'saveShortcodeProfile'
-        ));
-
-        add_action('wp_ajax_erpdeleteShortCodeProfile', array(
-            $this,
-            'deleteShortCodeProfile'
-        ));
-
-        add_action('wp_ajax_erpgetShortCodeProfiles', array(
-            $this,
-            'getShortCodeProfiles'
-        ));
-
-        add_action('wp_ajax_erpgetShortCodeHelperContent', array(
-            $this,
-            'getShortCodeHelperContent'
-        ));
-
-        add_action('wp_ajax_erpKillLic', array(
-            $this,
-            'killLic'
-        ));
-
-        add_action('wp_ajax_erpLiveLic', array(
-            $this,
-            'liveLic'
-        ));
-
-        /**
-         * MCE Helper
-         */
-        add_action('init', array(
-            $this,
-            'erpPROButtonHook'
-        ));
-    }
-
-    /**
-     * Return an instance of this class.
-     *
-     * @since 1.0.0
-     * @return object A single instance of this class.
-     */
-    public static function get_instance() {
-
-        /*
-         * admin class should only be available for super admins
-         */
-        if (!is_super_admin()) {
-            return;
-        }
-
-        // If the single instance hasn't been set, set it now.
-        if (null == self::$instance) {
-            self::$instance = new self();
-        }
-
-        return self::$instance;
-    }
-
-    public function doRating($newStatus, $oldStatus, $post) {
-        // If a revision get the pid from parent
-        $revision = wp_is_post_revision($post->ID);
-        if ($revision) {
-            $pid = $revision;
-        } else {
-            $pid = $post->ID;
-        }
-
-        if ($oldStatus == 'publish' && $newStatus != 'publish') {
-            // Post is now unpublished, we should remove cache entries
-            $this->deletePostInCache($pid);
-        } elseif ($newStatus == 'publish') {
-            $this->deletePostInCache($pid);
-            $plugin = easyRelatedPostsPRO::get_instance();
-
-            if ($plugin->isInExcludedPostTypes($pid) || $plugin->isInExcludedTaxonomies($pid)) {
-                return;
-            }
-            erpPROPaths::requireOnce(erpPROPaths::$erpProRelated);
-            erpPROPaths::requireOnce(erpPROPaths::$erpPROMainOpts);
-
-            $opts = new erpPROMainOpts();
-
-            $opts->setOptions(array(
-                'queryLimit' => 1000
-            ));
-            $rel = erpProRelated::get_instance($opts);
-
-            $rel->doRating($pid);
-        }
-    }
-
-    /**
-     * Register and enqueue admin-specific style sheet.
-     *
-     * @since 1.0.0
-     * @return null Return early if no settings page is registered.
-     */
-    public function enqueue_admin_styles() {
-        if (!isset($this->plugin_screen_hook_suffix)) {
-            return;
-        }
-
-        $screen = get_current_screen();
-        if ($this->plugin_screen_hook_suffix == $screen->id || 'widgets' == $screen->id) {
-            wp_enqueue_style('wp-color-picker');
-            wp_enqueue_style($this->plugin_slug . '-admin-styles', plugins_url('assets/css/admin.min.css', __FILE__), array(), easyRelatedPostsPRO::VERSION);
-        }
-        if ($screen->id === 'post') {
-            wp_enqueue_style('wp-color-picker');
-            wp_enqueue_style($this->plugin_slug . '-admin-styles', plugins_url('assets/css/admin.min.css', __FILE__), array(), easyRelatedPostsPRO::VERSION);
-            wp_enqueue_style($this->plugin_slug . '-SCHelper-styles', plugins_url('assets/css/SCHelper.css', __FILE__), array(), easyRelatedPostsPRO::VERSION);
-        }
-    }
-
-    /**
-     * Register and enqueue admin-specific JavaScript.
-     *
-     * @since 1.0.0
-     * @return null Return early if no settings page is registered.
-     */
-    public function enqueue_admin_scripts() {
-        if (!isset($this->plugin_screen_hook_suffix)) {
-            return;
-        }
-
-        $screen = get_current_screen();
-
-        if ($this->plugin_screen_hook_suffix == $screen->id || 'widgets' == $screen->id) {
-            wp_enqueue_script('jquery');
-            wp_enqueue_script('jquery-ui-core');
-            wp_enqueue_script('wp-color-picker');
-            wp_enqueue_script('jquery-effects-fade');
-            wp_enqueue_script('jquery-ui-tabs');
-            wp_enqueue_script('jquery-ui-tooltip');
-            wp_enqueue_script('jquery-ui-accordion');
-            wp_enqueue_script('jquery-ui-slider');
-
-            wp_enqueue_script($this->plugin_slug . '-admin-script', plugins_url('assets/js/admin.min.js', __FILE__), array(
-                'jquery',
-                'jquery-ui-tabs'
-                    // $this->plugin_slug . '-qtip'
-                    ), easyRelatedPostsPRO::VERSION);
-        }
-        if ($this->plugin_screen_hook_suffix == $screen->id) {
-            wp_enqueue_script($this->plugin_slug . '-main-settings', plugins_url('assets/js/mainSettings.min.js', __FILE__), array(
-                $this->plugin_slug . '-admin-script'
-                    ), easyRelatedPostsPRO::VERSION);
-        }
-        if ('widgets' == $screen->id) {
-            wp_enqueue_script($this->plugin_slug . '-widget-settings', plugins_url('assets/js/widgetSettings.min.js', __FILE__), array(
-                $this->plugin_slug . '-admin-script'
-                    ), easyRelatedPostsPRO::VERSION);
-        }
-        if ($screen->id === 'post') {
-            wp_enqueue_script('jquery');
-            wp_enqueue_script('jquery-ui-core');
-            wp_enqueue_script('wp-color-picker');
-            wp_enqueue_script('jquery-ui-tabs');
-            wp_enqueue_script('jquery-ui-dialog');
-            wp_enqueue_script('jquery-ui-tooltip');
-            wp_enqueue_script('jquery-ui-accordion');
-            wp_enqueue_script('jquery-ui-slider');
-
-            wp_enqueue_script($this->plugin_slug . '-jq-form', plugins_url('assets/js/jq.form.min.js', __FILE__), array(
-                'jquery'
-                    ), easyRelatedPostsPRO::VERSION);
-        }
-    }
-
-    /**
-     * Register the administration menu for this plugin into the WordPress Dashboard menu.
-     *
-     * @since 1.0.0
-     */
-    public function add_plugin_admin_menu() {
-        $this->plugin_screen_hook_suffix = add_options_page(__('Easy Related Posts PRO Settings', $this->plugin_slug), __('Easy Related Posts PRO Settings', $this->plugin_slug), 'manage_options', $this->plugin_slug . '_settings', array(
-            $this,
-            'display_plugin_admin_page'
-        ));
-    }
-
-    /**
-     * Render the settings page for this plugin.
-     *
-     * @since 1.0.0
-     */
-    public function display_plugin_admin_page() {
-        if (!class_exists('erpPROView')) {
-            erpPROPaths::requireOnce(erpPROPaths::$erpPROView);
-        }
-        $defaultOptions = erpPRODefaults::$mainOpts + erpPRODefaults::$comOpts;
-        $optObj = new erpPROMainOpts();
-        $options = $optObj->getOptions();
-
-        $viewData ['erpPROOptions'] = is_array($options) ? array_merge($defaultOptions, $options) : $defaultOptions;
-        $viewData ['optObj'] = $optObj;
-
-        erpPROView::render(plugin_dir_path(__FILE__) . 'views/admin.php', $viewData, TRUE);
-    }
-
-    /**
-     * Add settings action link to the plugins page.
-     *
-     * @since 1.0.0
-     */
-    public function add_action_links($links) {
-        return array_merge(array(
-            'settings' => '<a href="' . admin_url('options-general.php?page=' . $this->plugin_slug . '_settings') . '">' . __('Settings', $this->plugin_slug) . '</a>'
-                ), $links);
-    }
-
-    /**
-     * Saves admin options.
-     * This is called through a hook
-     *
-     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
-     * @since 1.0.0
-     */
-    public function saveOptions() {
-        if (!current_user_can('manage_options')) {
-            wp_die('Not allowed');
-        }
-        erpPROPaths::requireOnce(erpPROPaths::$erpPROMainOpts);
-        // Save template options
-        if (isset($_POST ['dsplLayout'])) {
-            erpPROPaths::requireOnce(erpPROPaths::$VPluginThemeFactory);
-            VPluginThemeFactory::registerThemeInPathRecursive(erpPROPaths::getAbsPath(erpPROPaths::$mainThemesFolder), $_POST ['dsplLayout']);
-
-            $theme = VPluginThemeFactory::getThemeByName($_POST ['dsplLayout']);
-
-            if ($theme) {
-                $theme->saveSettings($_POST);
-                foreach ($theme->getDefOptions() as $key => $value) {
-                    unset($_POST [$key]);
-                }
-            } else {
-                // TODO Add notice class
-//                $message = new WP_Error_Notice('Theme '.$_POST ['dsplLayout'].' not found. Theme options discarded', 1, array('settings_page_erp_settings'));
-//                WP_Admin_Notices::getInstance()->addNotice($message);
-            }
-        }
-        // Save the rest of the options
-        $mainOptionsObj = new erpPROMainOpts();
-        $mainOptionsObj->saveOptions($_POST);
-        wp_redirect(add_query_arg(array(
-            'page' => $this->plugin_slug . '_settings',
-            'tab-spec' => wp_strip_all_tags($_POST ['tab-spec'])
-                        ), admin_url('options-general.php')));
-        exit();
-    }
-
-    /**
-     * Clears cache.
-     * !IMPORTAND! Not to be called directly. Only through ajax
-     *
-     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
-     * @since 1.0.0
-     */
-    public function clearCache() {
-        if (!user_can_access_admin_page() || !current_user_can('manage_options')) {
-            echo json_encode(false);
-            die();
-        }
-        erpPROPaths::requireOnce(erpPROPaths::$erpPRODBActions);
-        $db = erpPRODBActions::getInstance();
-        $db->emptyRelTable();
-        echo json_encode(true);
-        die();
-    }
-
-    public function deletePostInCache($pid) {
-        erpPROPaths::requireOnce(erpPROPaths::$erpPRODBActions);
-        $db = erpPRODBActions::getInstance();
-        $db->deleteAllOccurrences($pid);
-    }
-
-    /**
-     * This is for a future release.
-     * It should be called through ajax and rebuild cache for all posts in that are cached
-     * 
-     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
-     * @since 1.0.0
-     */
-    public function rebuildCache() {
-        if (!user_can_access_admin_page() || !current_user_can('manage_options')) {
-            echo json_encode(false);
-            die();
-        }
-        // This may take a while so set time limit to 0
-        set_time_limit(0);
-
-        erpPROPaths::requireOnce(erpPROPaths::$erpPRODBActions);
-        erpPROPaths::requireOnce(erpPROPaths::$erpPROMainOpts);
-        erpPROPaths::requireOnce(erpPROPaths::$erpProRelated);
-
-        $db = erpPRODBActions::getInstance();
-        $mainOpts = new erpPROMainOpts();
-        $rel = erpProRelated::get_instance($mainOpts);
-
-        $allCached = $db->getUniqueIds();
-        $db->emptyRelTable();
-
-        $plugin = easyRelatedPostsPRO::get_instance();
-        global $wpdb, $wp_actions;
-        foreach ($allCached as $key => $value) {
-            $pid = (int) $value ['pid'];
-
-            if ($plugin->isInExcludedPostTypes($pid) || $plugin->isInExcludedTaxonomies($pid)) {
-                continue;
-            }
-            $rel->doRating($pid);
-        }
-
-        echo json_encode(true);
-        die();
-    }
-
-    /**
-     * Echoes json string of the profile define in $_POST [ 'profileName' ].
-     * If profile not found in DB then echoes false
-     *
-     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
-     * @since 1.0.0
-     */
-    public function loadShortcodeProfile() {
-        if (!current_user_can('edit_posts')) {
-            echo json_encode(array(
-                'error' => 'Action not allowed'
-            ));
-            die();
-        }
-        if (!isset($_POST ['profileName'])) {
-            echo json_encode(array(
-                'error' => 'You must set a profile name'
-            ));
-            die();
-        }
-        erpPROPaths::requireOnce(erpPROPaths::$erpPROShortCodeOpts);
-        $profile = get_option(erpPROShortCodeOpts::$shortCodeProfilesArrayName);
-
-        if (!$profile || !isset($profile [$_POST ['profileName']]) || !is_array($profile [$_POST ['profileName']])) {
-            echo json_encode(array(
-                'error' => 'Profile not found in database'
-            ));
-            die();
-        }
-
-        echo json_encode($profile [$_POST ['profileName']]);
-        die();
-    }
-
-    /**
-     * Saves shortcode profile in DB
-     *
-     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
-     * @since 1.0.0
-     */
-    public function saveShortcodeProfile() {
-        if (!current_user_can('edit_posts')) {
-            echo json_encode(array(
-                'error' => 'Action not allowed'
-            ));
-            die();
-        }
-        if (!isset($_POST ['profileName']) || empty($_POST ['profileName'])) {
-            echo json_encode(array(
-                'error' => 'You must set a profile name and define all options'
-            ));
-            die();
-        }
-
-        $profileName = wp_strip_all_tags($_POST ['profileName']);
-        unset($_POST ['profileName']);
-        $profileOptions = $_POST;
-
-        erpPROPaths::requireOnce(erpPROPaths::$erpPROShortCodeOpts);
-
-        $scOpts = new erpPROShortCodeOpts();
-
-        $scOpts->loadOptions($profileName);
-
-        $res = $scOpts->saveOptions($profileOptions);
-
-        echo json_encode(array(
-            'result' => $res,
-            'profileName' => $profileName
-        ));
-        die();
-    }
-
-    /**
-     * Deletes a SC profile if is present in DB
-     *
-     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
-     * @since 1.0.0
-     */
-    public function deleteShortCodeProfile() {
-        if (!current_user_can('edit_posts')) {
-            echo json_encode(array(
-                'error' => 'Action not allowed'
-            ));
-            die();
-        }
-        if (!isset($_POST ['profileName']) || empty($_POST ['profileName'])) {
-            echo json_encode(array(
-                'error' => 'You must select a profile'
-            ));
-            die();
-        }
-
-        erpPROPaths::requireOnce(erpPROPaths::$erpPROShortCodeOpts);
-        $profile = get_option(erpPROShortCodeOpts::$shortCodeProfilesArrayName);
-        $profileName = wp_strip_all_tags($_POST ['profileName']);
-
-        if (!$profile || !isset($profile [$profileName]) || !is_array($profile [$profileName])) {
-            echo json_encode(array(
-                'error' => 'Profile not found in database'
-            ));
-            die();
-        } else {
-            unset($profile [$profileName]);
-            echo json_encode(update_option(erpPROShortCodeOpts::$shortCodeProfilesArrayName, $profile));
-            die();
-        }
-    }
-
-    /**
-     * Echoes json string with all SC profiles found in DB
-     *
-     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
-     * @since 1.0.0
-     */
-    public function getShortCodeProfiles() {
-        if (!current_user_can('edit_posts')) {
-            echo json_encode(array(
-                'error' => 'Action not allowed'
-            ));
-            die();
-        }
-
-        erpPROPaths::requireOnce(erpPROPaths::$erpPROShortCodeOpts);
-        $profile = get_option(erpPROShortCodeOpts::$shortCodeProfilesArrayName);
-
-        if (!is_array($profile)) {
-            $profile = array();
-        }
-        echo json_encode($profile);
-        die();
-    }
-
-    /**
-     * Echoes html to be desplayed in shortcode helper
-     *
-     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
-     * @since 1.0.0
-     */
-    public function getShortCodeHelperContent() {
-        if (!current_user_can('edit_posts')) {
-            echo json_encode(array(
-                'error' => 'Action not allowed'
-            ));
-            die();
-        }
-
-        erpPROPaths::requireOnce(erpPROPaths::$erpPROShortCodeOpts);
-
-        $profilesOptionsArray = get_option(erpPROShortCodeOpts::$shortCodeProfilesArrayName);
-        // If profile name is set get options
-        if (isset($_GET ['profileName'])) {
-            $profileName = wp_strip_all_tags($_GET ['profileName']);
-            $profileOpts = isset($profilesOptionsArray [$profileName]) ? $profilesOptionsArray [$profileName] : null;
-        }
-        // If no options are set get first profile in the array
-        if (empty($profileOpts)) {
-            $profileName = array_shift(array_keys($profilesOptionsArray));
-            $profileOpts = $profileName === null ? null : $profilesOptionsArray[$profileName];
-        }
-        // Profile array is empty or profile not found, set to defaults
-        if (empty($profileOpts)) {
-            $profileOpts = erpPRODefaults::$comOpts + erpPRODefaults::$shortCodeOpts;
-            $profileName = 'default';
-        }
-
-        erpPROPaths::requireOnce(erpPROPaths::$VPluginThemeFactory);
-        VPluginThemeFactory::registerThemeInPathRecursive(erpPROPaths::getAbsPath(erpPROPaths::$scThemesFolder), $profileOpts ['dsplLayout']);
-        $template = VPluginThemeFactory::getThemeByName($profileOpts ['dsplLayout']);
-
-        if (!$template) {
-            echo json_encode(array(
-                'error' => 'Theme is not defined'
-            ));
-            die();
-        }
-
-        erpPROPaths::requireOnce(erpPROPaths::$erpPROView);
-
-        echo erpPROView::render(plugin_dir_path(__FILE__) . '/views/shortcodeHelper.php', array(
-            'profileName' => $profileName,
-            'erpPROOptions' => $profileOpts,
-            'shortCodeProfilesArrayName' => $this->shortCodeProfilesArrayName
-        ));
-        die();
-    }
-
-    /**
-     * This is called through ajax hook and returns the plugin options as defined in template settings file
-     *
-     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
-     * @since 1.0.0
-     */
-    public function loadTemplateOptions() {
-        if (!isset($_POST ['template']) || !isset($_POST ['templateRoot'])) {
-            echo json_encode(false);
-            die();
-        }
-
-        erpPROPaths::requireOnce(erpPROPaths::$VPluginThemeFactory);
-        VPluginThemeFactory::registerThemeInPathRecursive(erpPROPaths::getAbsPath(erpPROPaths::$mainThemesFolder), $_POST ['template']);
-
-        $theme = VPluginThemeFactory::getThemeByName($_POST ['template']);
-
-        if (!$theme) {
-            echo json_encode(false);
-            die();
-        }
-
-        $data = array(
-            'content' => $theme->renderSettings('', false),
-            'optionValues' => $theme->getOptions()
-        );
-
-        echo json_encode($data);
-        die();
-    }
-
-    /**
-     * This is called through ajax hook and returns the plugin options as defined in template settings file
-     *
-     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
-     * @since 1.0.0
-     */
-    public function loadSCTemplateOptions() {
-        if (!isset($_POST ['template'])) {
-            echo json_encode(false);
-            die();
-        }
-
-        erpPROPaths::requireOnce(erpPROPaths::$VPluginThemeFactory);
-
-        if (isset($_POST ['profileName'])) {
-            $profileName = $_POST ['profileName'];
-            erpPROPaths::requireOnce(erpPROPaths::$erpPROShortCodeOpts);
-            $profilesOptionsArray = get_option(erpPROShortCodeOpts::$shortCodeProfilesArrayName);
-            $profileOpts = isset($profilesOptionsArray [$profileName]) ? $profilesOptionsArray [$profileName] : null;
-        }
-
-        if (empty($profileOpts)) {
-            $profileOpts = erpPRODefaults::$comOpts + erpPRODefaults::$shortCodeOpts;
-            $profileName = 'default';
-        }
-
-        VPluginThemeFactory::registerThemeInPathRecursive(erpPROPaths::getAbsPath(erpPROPaths::$scThemesFolder), $_POST ['template']);
-
-        $templateObj = VPluginThemeFactory::getThemeByName($_POST ['template']);
-        if (!$templateObj) {
-            echo json_encode(false);
-            die();
-        }
-        $templateObj->setOptions($profileOpts);
-
-
-
-        $data = array(
-            'content' => $templateObj->renderSettings('', FALSE),
-            'optionValues' => $profilesOptionsArray
-        );
-
-        echo json_encode($data);
-        die();
-    }
-
-    public function killLic() {
-        // listen for our activate button to be clicked
-        if (isset($_POST['erp_license_deactivate'])) {
-
-            if (!check_admin_referer('erp_nonce', 'erp_nonce')) {
-                $data = array(
-                    'res' => false,
-                    'error' => 'You don\'t have the wrights!'
-                );
-            } else {
-
-                erpPROPaths::requireOnce(erpPROPaths::$erpPROMainOpts);
-                $opts = new erpPROMainOpts();
-                // retrieve the license from the database
-                $license = (string) filter_var($_POST['erp_license_deactivate'], FILTER_SANITIZE_STRING, array('flags' => FILTER_NULL_ON_FAILURE));
-
-
-                // data to send in our API request
-                $api_params = array(
-                    'edd_action' => 'deactivate_license',
-                    'license' => $license,
-                    'item_name' => urlencode(EDD_SL_ERP_PRO_ITEM_NAME), // the name of our product in EDD
-                    'url' => home_url()
-                );
-
-                // Call the custom API.
-                $response = wp_remote_get(add_query_arg($api_params, EDD_SL_ERP_PRO_STORE_URL), array('timeout' => 15, 'sslverify' => false));
-
-                // make sure the response came back okay
-                if (is_wp_error($response)) {
-                    $data = array(
-                        'res' => false,
-                        'error' => 'Contacting the server failed. Please try again later.'
-                    );
-                } else {
-
-                    // decode the license data
-                    $license_data = json_decode(wp_remote_retrieve_body($response));
-
-                    // TODO $license_data->license will be either "deactivated" or "failed" 
-                    if ($license_data->license == 'deactivated') {
-                        $opts->killLic();
-                        $data = array(
-                            'res' => true
-                        );
-                    } else {
-                        $data = array(
-                            'res' => false,
-                            'error' => 'Please check your input.'
-                        );
-                    }
-                }
-            }
-        } else {
-            $data = array(
-                'res' => false,
-                'error' => 'Wrong input.'
-            );
-        }
-        echo json_encode($data);
-        die();
-    }
-
-    public function liveLic() {
-        // listen for our activate button to be clicked
-        if (isset($_POST['erp_license_activate'])) {
-
-            // run a quick security check 
-            if (!check_admin_referer('erp_nonce', 'erp_nonce')) {
-                $data = array(
-                    'res' => false,
-                    'error' => 'You don\'t have the wrights!'
-                );
-            } else {// get out if we didn't click the Activate button
-                erpPROPaths::requireOnce(erpPROPaths::$erpPROMainOpts);
-                $opts = new erpPROMainOpts();
-                // retrieve the license from the database
-                $license = (string) filter_var($_POST['erp_license_activate'], FILTER_SANITIZE_STRING, array('flags' => FILTER_NULL_ON_FAILURE));
-
-
-                // data to send in our API request
-                $api_params = array(
-                    'edd_action' => 'activate_license',
-                    'license' => $license,
-                    'item_name' => urlencode(EDD_SL_ERP_PRO_ITEM_NAME), // the name of our product in EDD
-                    'url' => home_url()
-                );
-
-                // Call the custom API.
-                $response = wp_remote_get(add_query_arg($api_params, EDD_SL_ERP_PRO_STORE_URL), array('timeout' => 15, 'sslverify' => false));
-
-                // make sure the response came back okay
-                if (is_wp_error($response)) {
-                    $data = array(
-                        'res' => false,
-                        'error' => 'Error response'
-                    );
-                } else {
-
-                    // decode the license data
-                    $license_data = json_decode(wp_remote_retrieve_body($response));
-
-                    // $license_data->license will be either "valid" or "invalid"
-                    if ($license_data->license == 'valid') {
-                        $opts->setLicStatus(true, false);
-                        $opts->setRechkLic(false, false);
-                        $opts->setLic($license, true);
-                        $data = array(
-                            'res' => true,
-                            'response' => $license_data->license
-                        );
-                    } else {
-                        $opts->setLicStatus(false, false);
-                        $opts->setRechkLic(false, false);
-                        $opts->setLic($license, true);
-                        $data = array(
-                            'res' => false,
-                            'response' => $license_data->license
-                        );
-                    }
-                }
-            }
-        } else {
-            $data = array(
-                'res' => false,
-                'error' => 'Wrong input.'
-            );
-        }
-        echo json_encode($data);
-        die();
-    }
-
-    /**
-     * Hooks shortcode helper to MCE editor
-     *
-     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
-     * @since 1.0.0
-     */
-    function erpPROButtonHook() {
-        if (current_user_can('edit_posts') && get_user_option('rich_editing') == 'true') {
-            add_filter("mce_external_plugins", array(
-                $this,
-                "defineMCEHelperJS"
-            ));
-            add_filter('mce_buttons', array(
-                $this,
-                'registerMCEButton'
-            ));
-        }
-    }
-
-    /**
-     * Adds custom button to MCE editor
-     *
-     * @param array $buttons
-     * @return array
-     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
-     * @since 1.0.0
-     */
-    function registerMCEButton($buttons) {
-        $screen = get_current_screen();
-        if (!isset($screen->id) || $screen->id !== 'post') {
-            return $buttons;
-        }
-        array_push($buttons, "|", "erpproshortcodehelper");
-        return $buttons;
-    }
-
-    /**
-     * Defines path to shortcode helper js file
-     *
-     * @param array $pluginArray
-     * @return array
-     * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
-     * @since 1.0.0
-     */
-    function defineMCEHelperJS($pluginArray) {
-        $screen = get_current_screen();
-        if (!isset($screen->id) || $screen->id !== 'post') {
-            return $pluginArray;
-        }
-        $pluginArray ['erpproshortcodehelper'] = plugins_url('/assets/js/erpPROMCEPlugin.min.js', __FILE__);
-        return $pluginArray;
-    }
+	/**
+	 * Instance of this class.
+	 *
+	 * @since 1.0.0
+	 * @var easyRelatedPostsPROAdmin
+	 */
+	protected static $instance = null;
+
+	/**
+	 * Slug of the plugin screen.
+	 *
+	 * @since 1.0.0
+	 * @var string
+	 */
+	protected $plugin_screen_hook_suffix = null;
+
+	/**
+	 * The name of the array that holds SC profiles
+	 *
+	 * @since 1.0.0
+	 * @var string
+	 */
+	private $shortCodeProfilesArrayName = 'erpPROShortCodeProfiles';
+
+	/**
+	 *
+	 * @var string
+	 */
+	private $plugin_slug;
+
+	/**
+	 * Initialize the plugin by loading admin scripts & styles and adding a
+	 * settings page and menu.
+	 *
+	 * @since 1.0.0
+	 */
+	private function __construct() {
+
+		/**
+		 * *****************************************************
+		 * admin class should only be available for super admins
+		 * *****************************************************
+		 */
+		if ( ! is_super_admin() ) {
+			return;
+		}
+
+		/**
+		 * ******************************************************
+		 * Call $plugin_slug from public plugin class.
+		 * *****************************************************
+		 */
+		$plugin            = easyRelatedPostsPRO::get_instance();
+		$this->plugin_slug = $plugin->get_plugin_slug();
+
+		// Load admin style sheet and JavaScript.
+		add_action( 'admin_enqueue_scripts', array(
+			$this,
+			'enqueue_admin_styles'
+		) );
+		add_action( 'admin_enqueue_scripts', array(
+			$this,
+			'enqueue_admin_scripts'
+		) );
+
+		/**
+		 * ******************************************************
+		 * Add the options page and menu item.
+		 * *****************************************************
+		 */
+		add_action( 'admin_menu', array(
+			$this,
+			'add_plugin_admin_menu'
+		) );
+
+		/**
+		 * ******************************************************
+		 * Add an action link pointing to the options page.
+		 * *****************************************************
+		 */
+		$plugin_basename = plugin_basename( plugin_dir_path( __DIR__ ) . 'easy-related-posts-pro.php' );
+		add_filter( 'plugin_action_links_' . $plugin_basename, array(
+			$this,
+			'add_action_links'
+		) );
+
+		/**
+		 * ******************************************************
+		 * Save options
+		 * *****************************************************
+		 */
+		add_action( 'admin_post_save_' . EPR_PRO_MAIN_OPTIONS_ARRAY_NAME, array(
+			$this,
+			'saveOptions'
+		) );
+
+		// Do rating when saving posts
+		add_action( 'transition_post_status', array(
+			$this,
+			'doRating'
+		), 10, 3 );
+
+		/**
+		 * ******************************************************
+		 * Delete cache entries when a post is deleted
+		 * *****************************************************
+		 */
+		add_action( 'delete_post', array(
+			$this,
+			'deletePostInCache'
+		), 10 );
+
+		/**
+		 * ******************************************************
+		 * Ajax hooks
+		 * *****************************************************
+		 */
+		add_action( 'wp_ajax_loadTemplateOptions', array(
+			$this,
+			'loadTemplateOptions'
+		) );
+
+		add_action( 'wp_ajax_erpClearCache', array(
+			$this,
+			'clearCache'
+		) );
+
+		add_action( 'wp_ajax_erpRebuildCache', array(
+			$this,
+			'rebuildCache'
+		) );
+
+		add_action( 'wp_ajax_loadSCTemplateOptions', array(
+			$this,
+			'loadSCTemplateOptions'
+		) );
+		add_action( 'wp_ajax_erploadShortcodeProfile', array(
+			$this,
+			'loadShortcodeProfile'
+		) );
+		add_action( 'wp_ajax_erpsaveShortcodeProfile', array(
+			$this,
+			'saveShortcodeProfile'
+		) );
+
+		add_action( 'wp_ajax_erpdeleteShortCodeProfile', array(
+			$this,
+			'deleteShortCodeProfile'
+		) );
+
+		add_action( 'wp_ajax_erpgetShortCodeProfiles', array(
+			$this,
+			'getShortCodeProfiles'
+		) );
+
+		add_action( 'wp_ajax_erpgetShortCodeHelperContent', array(
+			$this,
+			'getShortCodeHelperContent'
+		) );
+
+		add_action( 'wp_ajax_erpKillLic', array(
+			$this,
+			'killLic'
+		) );
+
+		add_action( 'wp_ajax_erpLiveLic', array(
+			$this,
+			'liveLic'
+		) );
+
+		/**
+		 * MCE Helper
+		 */
+		add_action( 'init', array(
+			$this,
+			'erpPROButtonHook'
+		) );
+	}
+
+	/**
+	 * Return an instance of this class.
+	 *
+	 * @since 1.0.0
+	 * @return object A single instance of this class.
+	 */
+	public static function get_instance() {
+
+		/*
+		 * admin class should only be available for super admins
+		 */
+		if ( ! is_super_admin() ) {
+			return;
+		}
+
+		// If the single instance hasn't been set, set it now.
+		if ( null == self::$instance ) {
+			self::$instance = new self();
+		}
+
+		return self::$instance;
+	}
+
+	public function doRating( $newStatus, $oldStatus, $post ) {
+		// If a revision get the pid from parent
+		$revision = wp_is_post_revision( $post->ID );
+		if ( $revision ) {
+			$pid = $revision;
+		} else {
+			$pid = $post->ID;
+		}
+
+		if ( $oldStatus == 'publish' && $newStatus != 'publish' ) {
+			// Post is now unpublished, we should remove cache entries
+			$this->deletePostInCache( $pid );
+		} elseif ( $newStatus == 'publish' ) {
+			$this->deletePostInCache( $pid );
+			$plugin = easyRelatedPostsPRO::get_instance();
+
+			if ( $plugin->isInExcludedPostTypes( $pid ) || $plugin->isInExcludedTaxonomies( $pid ) ) {
+				return;
+			}
+			erpPROPaths::requireOnce( erpPROPaths::$erpProRelated );
+			erpPROPaths::requireOnce( erpPROPaths::$erpPROMainOpts );
+
+			$opts = new erpPROMainOpts();
+
+			$opts->setOptions( array(
+				'queryLimit' => 1000
+			) );
+			$rel = erpProRelated::get_instance( $opts );
+
+			$rel->doRating( $pid );
+		}
+	}
+
+	/**
+	 * Register and enqueue admin-specific style sheet.
+	 *
+	 * @since 1.0.0
+	 * @return null Return early if no settings page is registered.
+	 */
+	public function enqueue_admin_styles() {
+		if ( ! isset( $this->plugin_screen_hook_suffix ) ) {
+			return;
+		}
+
+		$screen = get_current_screen();
+		if ( $this->plugin_screen_hook_suffix == $screen->id || 'widgets' == $screen->id ) {
+			wp_enqueue_style( 'wp-color-picker' );
+			wp_enqueue_style( $this->plugin_slug . '-admin-styles', plugins_url( 'assets/css/admin.min.css', __FILE__ ), array(), easyRelatedPostsPRO::VERSION );
+		}
+		if ( $screen->id === 'post' ) {
+			wp_enqueue_style( 'wp-color-picker' );
+			wp_enqueue_style( $this->plugin_slug . '-admin-styles', plugins_url( 'assets/css/admin.min.css', __FILE__ ), array(), easyRelatedPostsPRO::VERSION );
+			wp_enqueue_style( $this->plugin_slug . '-SCHelper-styles', plugins_url( 'assets/css/SCHelper.css', __FILE__ ), array(), easyRelatedPostsPRO::VERSION );
+		}
+	}
+
+	/**
+	 * Register and enqueue admin-specific JavaScript.
+	 *
+	 * @since 1.0.0
+	 * @return null Return early if no settings page is registered.
+	 */
+	public function enqueue_admin_scripts() {
+		if ( ! isset( $this->plugin_screen_hook_suffix ) ) {
+			return;
+		}
+
+		$screen = get_current_screen();
+
+		if ( $this->plugin_screen_hook_suffix == $screen->id || 'widgets' == $screen->id ) {
+			wp_enqueue_script( 'jquery' );
+			wp_enqueue_script( 'jquery-ui-core' );
+			wp_enqueue_script( 'wp-color-picker' );
+			wp_enqueue_script( 'jquery-effects-fade' );
+			wp_enqueue_script( 'jquery-ui-tabs' );
+			wp_enqueue_script( 'jquery-ui-tooltip' );
+			wp_enqueue_script( 'jquery-ui-accordion' );
+			wp_enqueue_script( 'jquery-ui-slider' );
+
+			wp_enqueue_script( $this->plugin_slug . '-admin-script', plugins_url( 'assets/js/admin.min.js', __FILE__ ), array(
+				'jquery',
+				'jquery-ui-tabs'
+				// $this->plugin_slug . '-qtip'
+			), easyRelatedPostsPRO::VERSION );
+		}
+		if ( $this->plugin_screen_hook_suffix == $screen->id ) {
+			wp_enqueue_script( $this->plugin_slug . '-main-settings', plugins_url( 'assets/js/mainSettings.min.js', __FILE__ ), array(
+				$this->plugin_slug . '-admin-script'
+			), easyRelatedPostsPRO::VERSION );
+		}
+		if ( 'widgets' == $screen->id ) {
+			wp_enqueue_script( $this->plugin_slug . '-widget-settings', plugins_url( 'assets/js/widgetSettings.min.js', __FILE__ ), array(
+				$this->plugin_slug . '-admin-script'
+			), easyRelatedPostsPRO::VERSION );
+		}
+		if ( $screen->id === 'post' ) {
+			wp_enqueue_script( 'jquery' );
+			wp_enqueue_script( 'jquery-ui-core' );
+			wp_enqueue_script( 'wp-color-picker' );
+			wp_enqueue_script( 'jquery-ui-tabs' );
+			wp_enqueue_script( 'jquery-ui-dialog' );
+			wp_enqueue_script( 'jquery-ui-tooltip' );
+			wp_enqueue_script( 'jquery-ui-accordion' );
+			wp_enqueue_script( 'jquery-ui-slider' );
+
+			wp_enqueue_script( $this->plugin_slug . '-jq-form', plugins_url( 'assets/js/jq.form.min.js', __FILE__ ), array(
+				'jquery'
+			), easyRelatedPostsPRO::VERSION );
+		}
+	}
+
+	/**
+	 * Register the administration menu for this plugin into the WordPress Dashboard menu.
+	 *
+	 * @since 1.0.0
+	 */
+	public function add_plugin_admin_menu() {
+		$this->plugin_screen_hook_suffix = add_options_page( __( 'Easy Related Posts PRO Settings', $this->plugin_slug ), __( 'Easy Related Posts PRO Settings', $this->plugin_slug ), 'manage_options', $this->plugin_slug . '_settings', array(
+			$this,
+			'display_plugin_admin_page'
+		) );
+	}
+
+	/**
+	 * Render the settings page for this plugin.
+	 *
+	 * @since 1.0.0
+	 */
+	public function display_plugin_admin_page() {
+		if ( ! class_exists( 'erpPROView' ) ) {
+			erpPROPaths::requireOnce( erpPROPaths::$erpPROView );
+		}
+		$defaultOptions = erpPRODefaults::$mainOpts + erpPRODefaults::$comOpts;
+		$optObj         = new erpPROMainOpts();
+		$options        = $optObj->getOptions();
+
+		$viewData ['erpPROOptions'] = is_array( $options ) ? array_merge( $defaultOptions, $options ) : $defaultOptions;
+		$viewData ['optObj']        = $optObj;
+
+		erpPROView::render( plugin_dir_path( __FILE__ ) . 'views/admin.php', $viewData, true );
+	}
+
+	/**
+	 * Add settings action link to the plugins page.
+	 *
+	 * @since 1.0.0
+	 */
+	public function add_action_links( $links ) {
+		return array_merge( array(
+			'settings' => '<a href="' . admin_url( 'options-general.php?page=' . $this->plugin_slug . '_settings' ) . '">' . __( 'Settings', $this->plugin_slug ) . '</a>'
+		), $links );
+	}
+
+	/**
+	 * Saves admin options.
+	 * This is called through a hook
+	 *
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
+	 * @since 1.0.0
+	 */
+	public function saveOptions() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( 'Not allowed' );
+		}
+		erpPROPaths::requireOnce( erpPROPaths::$erpPROMainOpts );
+
+		// Save template options
+		if ( isset( $_POST ['dsplLayout'] ) ) {
+			erpPROPaths::requireOnce( erpPROPaths::$VPluginThemeFactory );
+			VPluginThemeFactory::registerThemeInPathRecursive( erpPROPaths::getAbsPath( erpPROPaths::$mainThemesFolder ), $_POST ['dsplLayout'] );
+
+			$theme = VPluginThemeFactory::getThemeByName( $_POST ['dsplLayout'] );
+
+			if ( $theme ) {
+				$theme->saveSettings( $_POST );
+				foreach ( $theme->getDefOptions() as $key => $value ) {
+					unset( $_POST [ $key ] );
+				}
+			} else {
+				$message = new WP_Error_Notice( 'Theme ' . $_POST ['dsplLayout'] . ' not found. Theme options discarded', 1 );
+				WP_Admin_Notices::getInstance()->addNotice( $message );
+			}
+		}
+		// Save the rest of the options
+		$mainOptionsObj = new erpPROMainOpts();
+		$result = $mainOptionsObj->saveOptions( $_POST );
+
+		$message = $result
+			? new WP_Updated_Notice( 'Options saved', 1 )
+			: new WP_Error_Notice( 'No changes detected, options not updated', 1 );
+
+		WP_Admin_Notices::getInstance()->addNotice( $message );
+
+		wp_redirect( add_query_arg( array(
+			'page'     => $this->plugin_slug . '_settings',
+			'tab-spec' => wp_strip_all_tags( $_POST ['tab-spec'] )
+		), admin_url( 'options-general.php' ) ) );
+		exit();
+	}
+
+	/**
+	 * Clears cache.
+	 * !IMPORTANT! Not to be called directly. Only through ajax
+	 *
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
+	 * @since 1.0.0
+	 */
+	public function clearCache() {
+		if ( ! user_can_access_admin_page() || ! current_user_can( 'manage_options' ) ) {
+			echo json_encode( false );
+			die();
+		}
+		erpPROPaths::requireOnce( erpPROPaths::$erpPRODBActions );
+		$db = erpPRODBActions::getInstance();
+		$db->emptyRelTable();
+		echo json_encode( true );
+		die();
+	}
+
+	public function deletePostInCache( $pid ) {
+		erpPROPaths::requireOnce( erpPROPaths::$erpPRODBActions );
+		$db = erpPRODBActions::getInstance();
+		$db->deleteAllOccurrences( $pid );
+	}
+
+	/**
+	 * This is for a future release.
+	 * It should be called through ajax and rebuild cache for all posts in that are cached
+	 *
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
+	 * @since 1.0.0
+	 */
+	public function rebuildCache() {
+		if ( ! user_can_access_admin_page() || ! current_user_can( 'manage_options' ) ) {
+			echo json_encode( false );
+			die();
+		}
+		// This may take a while so set time limit to 0
+		set_time_limit( 0 );
+
+		erpPROPaths::requireOnce( erpPROPaths::$erpPRODBActions );
+		erpPROPaths::requireOnce( erpPROPaths::$erpPROMainOpts );
+		erpPROPaths::requireOnce( erpPROPaths::$erpProRelated );
+
+		$db       = erpPRODBActions::getInstance();
+		$mainOpts = new erpPROMainOpts();
+		$rel      = erpProRelated::get_instance( $mainOpts );
+
+		$allCached = $db->getUniqueIds();
+		$db->emptyRelTable();
+
+		$plugin = easyRelatedPostsPRO::get_instance();
+		global $wpdb, $wp_actions;
+		foreach ( $allCached as $key => $value ) {
+			$pid = (int) $value ['pid'];
+
+			if ( $plugin->isInExcludedPostTypes( $pid ) || $plugin->isInExcludedTaxonomies( $pid ) ) {
+				continue;
+			}
+			$rel->doRating( $pid );
+		}
+
+		echo json_encode( true );
+		die();
+	}
+
+	/**
+	 * Echoes json string of the profile define in $_POST [ 'profileName' ].
+	 * If profile not found in DB then echoes false
+	 *
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
+	 * @since 1.0.0
+	 */
+	public function loadShortcodeProfile() {
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			echo json_encode( array(
+				'error' => 'Action not allowed'
+			) );
+			die();
+		}
+		if ( ! isset( $_POST ['profileName'] ) ) {
+			echo json_encode( array(
+				'error' => 'You must set a profile name'
+			) );
+			die();
+		}
+		erpPROPaths::requireOnce( erpPROPaths::$erpPROShortCodeOpts );
+		$profile = get_option( erpPROShortCodeOpts::$shortCodeProfilesArrayName );
+
+		if ( ! $profile || ! isset( $profile [ $_POST ['profileName'] ] ) || ! is_array( $profile [ $_POST ['profileName'] ] ) ) {
+			echo json_encode( array(
+				'error' => 'Profile not found in database'
+			) );
+			die();
+		}
+
+		echo json_encode( $profile [ $_POST ['profileName'] ] );
+		die();
+	}
+
+	/**
+	 * Saves shortcode profile in DB
+	 *
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
+	 * @since 1.0.0
+	 */
+	public function saveShortcodeProfile() {
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			echo json_encode( array(
+				'error' => 'Action not allowed'
+			) );
+			die();
+		}
+		if ( ! isset( $_POST ['profileName'] ) || empty( $_POST ['profileName'] ) ) {
+			echo json_encode( array(
+				'error' => 'You must set a profile name and define all options'
+			) );
+			die();
+		}
+
+		$profileName = wp_strip_all_tags( $_POST ['profileName'] );
+		unset( $_POST ['profileName'] );
+		$profileOptions = $_POST;
+
+		erpPROPaths::requireOnce( erpPROPaths::$erpPROShortCodeOpts );
+
+		$scOpts = new erpPROShortCodeOpts();
+
+		$scOpts->loadOptions( $profileName );
+
+		$res = $scOpts->saveOptions( $profileOptions );
+
+		echo json_encode( array(
+			'result'      => $res,
+			'profileName' => $profileName
+		) );
+		die();
+	}
+
+	/**
+	 * Deletes a SC profile if is present in DB
+	 *
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
+	 * @since 1.0.0
+	 */
+	public function deleteShortCodeProfile() {
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			echo json_encode( array(
+				'error' => 'Action not allowed'
+			) );
+			die();
+		}
+		if ( ! isset( $_POST ['profileName'] ) || empty( $_POST ['profileName'] ) ) {
+			echo json_encode( array(
+				'error' => 'You must select a profile'
+			) );
+			die();
+		}
+
+		erpPROPaths::requireOnce( erpPROPaths::$erpPROShortCodeOpts );
+		$profile     = get_option( erpPROShortCodeOpts::$shortCodeProfilesArrayName );
+		$profileName = wp_strip_all_tags( $_POST ['profileName'] );
+
+		if ( ! $profile || ! isset( $profile [ $profileName ] ) || ! is_array( $profile [ $profileName ] ) ) {
+			echo json_encode( array(
+				'error' => 'Profile not found in database'
+			) );
+			die();
+		} else {
+			unset( $profile [ $profileName ] );
+			echo json_encode( update_option( erpPROShortCodeOpts::$shortCodeProfilesArrayName, $profile ) );
+			die();
+		}
+	}
+
+	/**
+	 * Echoes json string with all SC profiles found in DB
+	 *
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
+	 * @since 1.0.0
+	 */
+	public function getShortCodeProfiles() {
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			echo json_encode( array(
+				'error' => 'Action not allowed'
+			) );
+			die();
+		}
+
+		erpPROPaths::requireOnce( erpPROPaths::$erpPROShortCodeOpts );
+		$profile = get_option( erpPROShortCodeOpts::$shortCodeProfilesArrayName );
+
+		if ( ! is_array( $profile ) ) {
+			$profile = array();
+		}
+		echo json_encode( $profile );
+		die();
+	}
+
+	/**
+	 * Echoes html to be desplayed in shortcode helper
+	 *
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
+	 * @since 1.0.0
+	 */
+	public function getShortCodeHelperContent() {
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			echo json_encode( array(
+				'error' => 'Action not allowed'
+			) );
+			die();
+		}
+
+		erpPROPaths::requireOnce( erpPROPaths::$erpPROShortCodeOpts );
+
+		$profilesOptionsArray = get_option( erpPROShortCodeOpts::$shortCodeProfilesArrayName );
+		// If profile name is set get options
+		if ( isset( $_GET ['profileName'] ) ) {
+			$profileName = wp_strip_all_tags( $_GET ['profileName'] );
+			$profileOpts = isset( $profilesOptionsArray [ $profileName ] ) ? $profilesOptionsArray [ $profileName ] : null;
+		}
+		// If no options are set get first profile in the array
+		if ( empty( $profileOpts ) ) {
+			$profileName = array_shift( array_keys( $profilesOptionsArray ) );
+			$profileOpts = $profileName === null ? null : $profilesOptionsArray[ $profileName ];
+		}
+		// Profile array is empty or profile not found, set to defaults
+		if ( empty( $profileOpts ) ) {
+			$profileOpts = erpPRODefaults::$comOpts + erpPRODefaults::$shortCodeOpts;
+			$profileName = 'default';
+		}
+
+		erpPROPaths::requireOnce( erpPROPaths::$VPluginThemeFactory );
+		VPluginThemeFactory::registerThemeInPathRecursive( erpPROPaths::getAbsPath( erpPROPaths::$scThemesFolder ), $profileOpts ['dsplLayout'] );
+		$template = VPluginThemeFactory::getThemeByName( $profileOpts ['dsplLayout'] );
+
+		if ( ! $template ) {
+			echo json_encode( array(
+				'error' => 'Theme is not defined'
+			) );
+			die();
+		}
+
+		erpPROPaths::requireOnce( erpPROPaths::$erpPROView );
+
+		echo erpPROView::render( plugin_dir_path( __FILE__ ) . '/views/shortcodeHelper.php', array(
+			'profileName'                => $profileName,
+			'erpPROOptions'              => $profileOpts,
+			'shortCodeProfilesArrayName' => $this->shortCodeProfilesArrayName
+		) );
+		die();
+	}
+
+	/**
+	 * This is called through ajax hook and returns the plugin options as defined in template settings file
+	 *
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
+	 * @since 1.0.0
+	 */
+	public function loadTemplateOptions() {
+		if ( ! isset( $_POST ['template'] ) || ! isset( $_POST ['templateRoot'] ) ) {
+			echo json_encode( false );
+			die();
+		}
+
+		erpPROPaths::requireOnce( erpPROPaths::$VPluginThemeFactory );
+		VPluginThemeFactory::registerThemeInPathRecursive( erpPROPaths::getAbsPath( erpPROPaths::$mainThemesFolder ), $_POST ['template'] );
+
+		$theme = VPluginThemeFactory::getThemeByName( $_POST ['template'] );
+
+		if ( ! $theme ) {
+			echo json_encode( false );
+			die();
+		}
+
+		$data = array(
+			'content'      => $theme->renderSettings( '', false ),
+			'optionValues' => $theme->getOptions()
+		);
+
+		echo json_encode( $data );
+		die();
+	}
+
+	/**
+	 * This is called through ajax hook and returns the plugin options as defined in template settings file
+	 *
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
+	 * @since 1.0.0
+	 */
+	public function loadSCTemplateOptions() {
+		if ( ! isset( $_POST ['template'] ) ) {
+			echo json_encode( false );
+			die();
+		}
+
+		erpPROPaths::requireOnce( erpPROPaths::$VPluginThemeFactory );
+
+		if ( isset( $_POST ['profileName'] ) ) {
+			$profileName = $_POST ['profileName'];
+			erpPROPaths::requireOnce( erpPROPaths::$erpPROShortCodeOpts );
+			$profilesOptionsArray = get_option( erpPROShortCodeOpts::$shortCodeProfilesArrayName );
+			$profileOpts          = isset( $profilesOptionsArray [ $profileName ] ) ? $profilesOptionsArray [ $profileName ] : null;
+		}
+
+		if ( empty( $profileOpts ) ) {
+			$profileOpts = erpPRODefaults::$comOpts + erpPRODefaults::$shortCodeOpts;
+			$profileName = 'default';
+		}
+
+		VPluginThemeFactory::registerThemeInPathRecursive( erpPROPaths::getAbsPath( erpPROPaths::$scThemesFolder ), $_POST ['template'] );
+
+		$templateObj = VPluginThemeFactory::getThemeByName( $_POST ['template'] );
+		if ( ! $templateObj ) {
+			echo json_encode( false );
+			die();
+		}
+		$templateObj->setOptions( $profileOpts );
+
+
+		$data = array(
+			'content'      => $templateObj->renderSettings( '', false ),
+			'optionValues' => $profilesOptionsArray
+		);
+
+		echo json_encode( $data );
+		die();
+	}
+
+	public function killLic() {
+		// listen for our activate button to be clicked
+		if ( isset( $_POST['erp_license_deactivate'] ) ) {
+
+			if ( ! check_admin_referer( 'erp_nonce', 'erp_nonce' ) ) {
+				$data = array(
+					'res'   => false,
+					'error' => 'You don\'t have the wrights!'
+				);
+			} else {
+
+				erpPROPaths::requireOnce( erpPROPaths::$erpPROMainOpts );
+				$opts = new erpPROMainOpts();
+				// retrieve the license from the database
+				$license = (string) filter_var( $_POST['erp_license_deactivate'], FILTER_SANITIZE_STRING, array( 'flags' => FILTER_NULL_ON_FAILURE ) );
+
+
+				// data to send in our API request
+				$api_params = array(
+					'edd_action' => 'deactivate_license',
+					'license'    => $license,
+					'item_name'  => urlencode( EDD_SL_ERP_PRO_ITEM_NAME ), // the name of our product in EDD
+					'url'        => home_url()
+				);
+
+				// Call the custom API.
+				$response = wp_remote_get( add_query_arg( $api_params, EDD_SL_ERP_PRO_STORE_URL ), array( 'timeout'   => 15,
+				                                                                                          'sslverify' => false
+					) );
+
+				// make sure the response came back okay
+				if ( is_wp_error( $response ) ) {
+					$data = array(
+						'res'   => false,
+						'error' => 'Contacting the server failed. Please try again later.'
+					);
+				} else {
+
+					// decode the license data
+					$license_data = json_decode( wp_remote_retrieve_body( $response ) );
+
+					if ( $license_data->license == 'deactivated' ) {
+						$opts->killLic();
+						$data = array(
+							'res' => true
+						);
+					} else {
+						$data = array(
+							'res'   => false,
+							'error' => 'Please check your input.'
+						);
+					}
+				}
+			}
+		} else {
+			$data = array(
+				'res'   => false,
+				'error' => 'Wrong input.'
+			);
+		}
+		echo json_encode( $data );
+		die();
+	}
+
+	public function liveLic() {
+		// listen for our activate button to be clicked
+		if ( isset( $_POST['erp_license_activate'] ) ) {
+
+			// run a quick security check
+			if ( ! check_admin_referer( 'erp_nonce', 'erp_nonce' ) ) {
+				$data = array(
+					'res'   => false,
+					'error' => 'You don\'t have the wrights!'
+				);
+			} else {// get out if we didn't click the Activate button
+				erpPROPaths::requireOnce( erpPROPaths::$erpPROMainOpts );
+				$opts = new erpPROMainOpts();
+				// retrieve the license from the database
+				$license = (string) filter_var( $_POST['erp_license_activate'], FILTER_SANITIZE_STRING, array( 'flags' => FILTER_NULL_ON_FAILURE ) );
+
+
+				// data to send in our API request
+				$api_params = array(
+					'edd_action' => 'activate_license',
+					'license'    => $license,
+					'item_name'  => urlencode( EDD_SL_ERP_PRO_ITEM_NAME ), // the name of our product in EDD
+					'url'        => home_url()
+				);
+
+				// Call the custom API.
+				$response = wp_remote_get( add_query_arg( $api_params, EDD_SL_ERP_PRO_STORE_URL ), array( 'timeout'   => 15,
+				                                                                                          'sslverify' => false
+					) );
+
+				// make sure the response came back okay
+				if ( is_wp_error( $response ) ) {
+					$data = array(
+						'res'   => false,
+						'error' => 'Error response'
+					);
+				} else {
+
+					// decode the license data
+					$license_data = json_decode( wp_remote_retrieve_body( $response ) );
+
+					// $license_data->license will be either "valid" or "invalid"
+					if ( $license_data->license == 'valid' ) {
+						$opts->setLicStatus( true, false );
+						$opts->setRechkLic( false, false );
+						$opts->setLic( $license, true );
+						$data = array(
+							'res'      => true,
+							'response' => $license_data->license
+						);
+					} else {
+						$opts->setLicStatus( false, false );
+						$opts->setRechkLic( false, false );
+						$opts->setLic( $license, true );
+						$data = array(
+							'res'      => false,
+							'response' => $license_data->license
+						);
+					}
+				}
+			}
+		} else {
+			$data = array(
+				'res'   => false,
+				'error' => 'Wrong input.'
+			);
+		}
+		echo json_encode( $data );
+		die();
+	}
+
+	/**
+	 * Hooks shortcode helper to MCE editor
+	 *
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
+	 * @since 1.0.0
+	 */
+	function erpPROButtonHook() {
+		if ( current_user_can( 'edit_posts' ) && get_user_option( 'rich_editing' ) == 'true' ) {
+			add_filter( "mce_external_plugins", array(
+				$this,
+				"defineMCEHelperJS"
+			) );
+			add_filter( 'mce_buttons', array(
+				$this,
+				'registerMCEButton'
+			) );
+		}
+	}
+
+	/**
+	 * Adds custom button to MCE editor
+	 *
+	 * @param array $buttons
+	 *
+	 * @return array
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
+	 * @since 1.0.0
+	 */
+	function registerMCEButton( $buttons ) {
+		$screen = get_current_screen();
+		if ( ! isset( $screen->id ) || $screen->id !== 'post' ) {
+			return $buttons;
+		}
+		array_push( $buttons, "|", "erpproshortcodehelper" );
+
+		return $buttons;
+	}
+
+	/**
+	 * Defines path to shortcode helper js file
+	 *
+	 * @param array $pluginArray
+	 *
+	 * @return array
+	 * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
+	 * @since 1.0.0
+	 */
+	function defineMCEHelperJS( $pluginArray ) {
+		$screen = get_current_screen();
+		if ( ! isset( $screen->id ) || $screen->id !== 'post' ) {
+			return $pluginArray;
+		}
+		$pluginArray ['erpproshortcodehelper'] = plugins_url( '/assets/js/erpPROMCEPlugin.min.js', __FILE__ );
+
+		return $pluginArray;
+	}
 
 }

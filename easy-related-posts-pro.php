@@ -22,6 +22,8 @@
 if (!defined('WPINC')) {
     die;
 }
+//TODO DEBUG
+do_action('debug', 'Starting ERP');
 /* ----------------------------------------------------------------------------*
  * Global definitions
  * ---------------------------------------------------------------------------- */
@@ -44,9 +46,9 @@ if (!defined('ERP_PRO_RELATIVE_TABLE')) {
     define('ERP_PRO_RELATIVE_TABLE', ERP_PRO_SLUG . '_related');
 }
 
-define( 'EDD_SL_ERP_PRO_STORE_URL', 'http://erp.xdark.eu' );
+define('EDD_SL_ERP_PRO_STORE_URL', 'http://erp.xdark.eu');
 
-define( 'EDD_SL_ERP_PRO_ITEM_NAME', 'Easy Related Posts PRO' ); 
+define('EDD_SL_ERP_PRO_ITEM_NAME', 'Easy Related Posts PRO');
 
 /* ----------------------------------------------------------------------------*
  * Session functionality
@@ -138,6 +140,7 @@ add_shortcode('erp', 'erpPROShortcode');
 /* ----------------------------------------------------------------------------*
  * Dashboard and Administrative Functionality
  * ---------------------------------------------------------------------------- */
+
 /**
  */
 function erp_pro_updater() {
@@ -157,7 +160,10 @@ function erp_pro_updater() {
             )
     );
 }
+
 if (is_admin()) {
+    erpPROPaths::requireOnce(erpPROPaths::$WP_Admin_Notices);
+
     erpPROPaths::requireOnce(erpPROPaths::$easyRelatedPostsPROAdmin);
     add_action('plugins_loaded', array('easyRelatedPostsPROAdmin', 'get_instance'));
     add_action('admin_init', 'erp_pro_updater');
