@@ -118,11 +118,7 @@ if (!class_exists('VPluginThemeFactory')) {
             $absPath = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
             foreach ((array) $contents as $key => $value) {
                 if (is_array($value)) {
-	                //TODO DEBUG
-	                do_action('debug', 'Path '.$key.' is array, recursion');
 	                if($maxDepth < $depth){
-		                //TODO DEBUG
-		                do_action('debug', 'Passed depth, bailing out');
 		                continue;
 	                }
                     self::registerThemeInPathRecursive($absPath . $key, $name, $maxDepth, $depth + 1);
@@ -130,8 +126,6 @@ if (!class_exists('VPluginThemeFactory')) {
 	                if(strpos($value, '.php') === false){
 		                continue;
 	                }
-	                //TODO DEBUG
-	                do_action('debug', 'Path '.$value.' is file, registering');
                     self::registerThemeInPath($absPath . $value, $name);
                 }
             }
@@ -228,7 +222,6 @@ if (!class_exists('VPluginFileHelper')) {
             $count = count($tokens);
             for ($i = 2; $i < $count; $i++) {
                 if ($tokens[$i - 2][0] == T_CLASS && $tokens[$i - 1][0] == T_WHITESPACE && $tokens[$i][0] == T_STRING) {
-
                     $class_name = $tokens[$i][1];
                     $classes[] = $class_name;
                 }

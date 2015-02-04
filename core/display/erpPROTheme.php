@@ -338,8 +338,6 @@ abstract class erpPROTheme extends VPluginTheme {
     }
 
     public function formPostData(WP_Query $wpq, erpPROOptions $optionsObj, $ratings = array()) {
-	    //TODO DEBUG
-	    do_action('debug', 'Forming Post Data');
         erpPROPaths::requireOnce(erpPROPaths::$erpPROPostData);
 
         $from = get_the_ID();
@@ -373,8 +371,6 @@ abstract class erpPROTheme extends VPluginTheme {
         wp_reset_postdata();
 
         $this->setAdditionalViewData(array_merge($data, $this->options));
-	    //TODO DEBUG
-	    do_action('debug', 'Forming Post Data Done');
         return $this;
     }
 

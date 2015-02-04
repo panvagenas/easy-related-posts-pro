@@ -41,8 +41,6 @@ class erpPROWidget extends WP_Widget {
      * @author Panagiotis Vagenas <pan.vagenas@gmail.com>
      */
     public function widget($args, $instance) {
-	    //TODO DEBUG
-	    do_action('debug', 'Widget ' . $this->id . ' Starting');
         global $post;
 
         // get instance of main plugin
@@ -98,8 +96,6 @@ class erpPROWidget extends WP_Widget {
         echo $content;
         echo $args ['after_widget'];
 
-	    //TODO DEBUG
-	    do_action('debug', 'Widget ' . $this->id . ' Ended');
     }
 
     /**

@@ -163,8 +163,6 @@ class easyRelatedPostsPRO {
      * @since 1.0.0
      */
     public function contentFilter($content) {
-	    //TODO DEBUG
-	    do_action('debug', 'Starting Content filter');
         global $post;
         /**
          * Check if is time to take action
@@ -178,8 +176,6 @@ class easyRelatedPostsPRO {
             erpPROPaths::requireOnce(erpPROPaths::$VPluginThemeFactory);
             erpPROPaths::requireOnce(erpPROPaths::$erpProRelated);
 
-	        //TODO DEBUG
-	        do_action('debug', 'Getting related');
             $relatedObj = erpProRelated::get_instance($this->mainOpts);
             $result = $relatedObj->getRelated($post->ID);
             $ratings = $relatedObj->getRatingsFromRelDataObj();
@@ -187,8 +183,6 @@ class easyRelatedPostsPRO {
                 return $content;
             }
 
-	        //TODO DEBUG
-	        do_action('debug', 'Registering Themes');
 //            VPluginThemeFactory::registerThemeInPathRecursive(erpPROPaths::getAbsPath(erpPROPaths::$mainThemesFolder), $this->mainOpts->getDsplLayout());
 	        VPluginThemeFactory::registerThemeInPath(
 		        erpPROPaths::getAbsPath(erpPROPaths::$mainThemesFolder)
@@ -197,28 +191,20 @@ class easyRelatedPostsPRO {
 		        . 'Theme.php',
 		        $this->mainOpts->getDsplLayout()
 	        );
-	        //TODO DEBUG
-	        do_action('debug', 'Get theme');
             $theme = VPluginThemeFactory::getThemeByName($this->mainOpts->getDsplLayout(), 'main');
             if(!$theme){
                 return $content;
             }
             $theme->formPostData($result, $this->mainOpts, $ratings);
 
-	        //TODO DEBUG
-	        do_action('debug', 'Rendering Content');
             $relContent = $theme->render($theme->getBasePath());
 
             if(is_wp_error($relContent)){
                 return $content;
             }
 
-	        //TODO DEBUG
-	        do_action('debug', 'Content filter returning');
             return $this->mainOpts->getPosition() == 'top' ?  $relContent . $content : $content.$relContent;
         }
-	    //TODO DEBUG
-	    do_action('debug', 'Content filter returning');
         return $content;
     }
 
